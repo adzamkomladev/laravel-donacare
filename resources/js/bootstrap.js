@@ -11,7 +11,15 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+
+    // Add vendors
+    require('./vendor/bootstrap-notify');
+    require('./vendor/perfect-scrollbar.jquery.min.js');
+    require('./vendor/chartjs.min.js');
+    require('./vendor/now-ui-dashboard');
+    require('./vendor/bossware');
+    require('./vendor/demo');
+} catch (e) { }
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -39,3 +47,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+
+$(document).ready(function () {
+    // Javascript method's body can be found in assets/js/demos.js
+    demo.initDashboardPageCharts();
+
+});
