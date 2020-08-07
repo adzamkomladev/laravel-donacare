@@ -22726,7 +22726,7 @@ Created using IcoMoon - icomoon.io
   box-shadow: none;
 }
 
-#app {
+.auth-layout {
   height: 100vh;
   background-image: url(/images/login.jpg?63df528a841f1f3cb39122fefb79af46);
   background-size: cover;

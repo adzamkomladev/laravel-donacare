@@ -16,7 +16,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="auth-layout">
         @include('layouts.partials._auth_navbar')
 
         <main class="py-4">

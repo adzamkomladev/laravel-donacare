@@ -10,31 +10,35 @@
                    <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="input-group mb-4 @error('email') has-danger @enderror">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-                              <i class="now-ui-icons users_single-02"></i>
+                        <div class="form-group mb-4">
+                            <div class="input-group @error('telephone') has-danger @enderror">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                  <i class="fas fa-phone"></i>
+                                </div>
+                              </div>
+                              <input type="tel" class="form-control @error('telephone') form-control-danger @enderror" name="telephone" value="{{ old('telephone') }}" required autocomplete="telephone" autofocus placeholder="Phone number">
                             </div>
-                          </div>
-                          <input type="email" class="form-control @error('email') form-control-danger @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email address">
-                           @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            @error('telephone')
+                               <small class="form-text text-muted text-danger">
+                                   <strong>{{ $message }}</strong>
+                                </small>
                             @enderror
                         </div>
 
-                        <div class="input-group mb-4 @error('password') has-danger @enderror">
-                          <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fas fa-lock"></i>
+                        <div class="form-group">
+                            <div class="input-group mb-4 @error('password') has-danger @enderror">
+                              <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                              </div>
+                              <input type="password" class="form-control @error('password') form-control-danger @enderror" name="password" required autocomplete="current-password" placeholder="Your password">
                             </div>
-                          </div>
-                          <input type="password" class="form-control @error('password') form-control-danger @enderror" name="password" required autocomplete="current-password" placeholder="Your password">
-                           @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                            @error('password')
+                                <small class="form-text text-muted text-danger">
+                                   <strong>{{ $message }}</strong>
+                                </small>
                             @enderror
                         </div>
 
