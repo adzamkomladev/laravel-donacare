@@ -16,23 +16,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        @include('layouts.partials._app_sidebar')
+    <div id="app" class="auth-layout">
+        @include('layouts.partials._auth_navbar')
 
-        <div class="main-panel" id="main-panel">
-            @include('layouts.partials._app_navbar')
-
-            <div class="panel-header panel-header-lg">
-                <canvas id="bigDashboardChart"></canvas>
-            </div>
-
-            <main class="content">
-                @yield('content')
-            </main>
-
-            @include('layouts.partials._app_footer')
-        </div>
-
+        <main class="py-4">
+            @yield('content')
+        </main>
     </div>
 </body>
 </html>
