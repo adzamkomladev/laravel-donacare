@@ -16,15 +16,13 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="wrapper">
         @include('layouts.partials._app_sidebar')
 
         <div class="main-panel" id="main-panel">
             @include('layouts.partials._app_navbar')
 
-            <div class="panel-header panel-header-lg">
-                <canvas id="bigDashboardChart"></canvas>
-            </div>
+            <div class="panel-header panel-header-sm"></div>
 
             <main class="content">
                 @yield('content')
