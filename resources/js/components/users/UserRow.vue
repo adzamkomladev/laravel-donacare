@@ -13,9 +13,10 @@
                 <div v-if="!isAdmin" class="form-check">
                     <label class="form-check-label">
                         <input
+                            @click="onActivateUser"
                             class="form-check-input"
                             type="checkbox"
-                            checked
+                            v-model="user.activated"
                         />
                         <span class="form-check-sign"></span>
                     </label>
@@ -58,7 +59,7 @@
                         </small>
                         <div class="d-flex justify-content-between p-2">
                             <button
-                                @click.prevent="onTerminateUser()"
+                                @click.prevent="onTerminateUser"
                                 class="btn btn-success btn-fab btn-icon btn-icon-mini btn-round"
                             >
                                 <i class="fas fa-check"></i>
@@ -77,6 +78,8 @@
 </template>
 
 <script>
+import User from "../../services/user.js";
+
 export default {
     props: ["rowUser"],
     data() {
@@ -91,22 +94,42 @@ export default {
         }
     },
     methods: {
+        async onActivateUser() {
+            try {
+                await User.toggleActivation(this.user.id);
+
+                this.showNotification(
+                    "fas fa-check",
+                    `User ${
+                        this.user.activated ? "activated" : "deactivated"
+                    } successfully!`,
+                    "primary"
+                );
+            } catch (error) {
+                this.user.activated = !this.user.activated;
+
+                this.showNotification(
+                    "fas fa-times",
+                    `Failed to  ${
+                        this.user.activated ? "deactivate" : "activate"
+                    } user!`,
+                    "danger"
+                );
+            }
+        },
         onTerminateUser() {
             console.log("Terminate user");
-            $.notify(
-                {
-                    // options
-                    icon: "fas fa-check",
-                    message: "User terminated successfully"
-                },
-                {
-                    // settings
-                    type: "primary",
-                    timer: 3000
-                }
+
+            this.showNotification(
+                "fas fa-check",
+                "User terminated successfully!",
+                "primary"
             );
 
             this.canShow = false;
+        },
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
 };

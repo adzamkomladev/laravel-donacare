@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['toggleActivation']);
     }
 
     /**
@@ -93,5 +93,20 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    /**
+     * Toggle user activation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleActivation(Request $request, User $user)
+    {
+        $user->activated = !$user->activated;
+        $user->save();
+
+        return response()->json(['message' => 'No Content'], 204);
     }
 }
