@@ -30,7 +30,17 @@
 
             @include('layouts.partials._app_footer')
         </div>
-
     </div>
+
+    @auth
+        <script>
+            window.authState = @json(['user' => Auth::user()])
+        </script>
+    @endauth
+    @guest
+        <script>
+            window.authState = @json(['user' => []])
+        </script>
+    @endguest
 </body>
 </html>

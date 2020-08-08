@@ -45,7 +45,7 @@
             </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#pablo">
+          <a class="nav-link" href="{{ route('users.show', ['user' => Auth::id()]) }}">
             <i class="now-ui-icons users_single-02"></i>
             <p>
               <span class="d-lg-none d-md-block">{{ Auth::user()->telephone }}</span>
