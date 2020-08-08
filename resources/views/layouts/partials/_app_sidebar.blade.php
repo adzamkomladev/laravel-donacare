@@ -18,12 +18,14 @@
               <p>Home</p>
             </a>
         </li>
-        <li class="@if('users.index' === Route::currentRouteName()) active @endif">
-            <a href="{{ route('users.index') }}">
-              <i class="fas fa-users"></i>
-              <p>User Accounts</p>
-            </a>
-        </li>
+        @if (Auth::user()->role === 'admin')
+            <li class="@if('users.index' === Route::currentRouteName()) active @endif">
+                <a href="{{ route('users.index') }}">
+                    <i class="fas fa-users"></i>
+                    <p>User Accounts</p>
+                </a>
+            </li>
+        @endif
         <li>
             <a href="./prices.html">
               <i class="now-ui-icons education_atom"></i>
