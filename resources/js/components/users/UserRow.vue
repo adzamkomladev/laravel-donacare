@@ -33,9 +33,9 @@
                     class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
                     data-original-title="View user"
                 >
-                    <a href="user.html"
-                        ><i class="now-ui-icons users_circle-08"></i
-                    ></a>
+                    <a :href="showUserRoute">
+                        <i class="now-ui-icons users_circle-08"></i>
+                    </a>
                 </button>
                 <div class="btn-group dropleft">
                     <button
@@ -91,6 +91,9 @@ export default {
     computed: {
         isAdmin() {
             return this.user.role === "admin";
+        },
+        showUserRoute() {
+            return `/users/${this.user.id}`;
         }
     },
     methods: {

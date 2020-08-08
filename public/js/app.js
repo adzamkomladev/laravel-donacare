@@ -2020,6 +2020,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     isAdmin: function isAdmin() {
       return this.user.role === "admin";
+    },
+    showUserRoute: function showUserRoute() {
+      return "/users/".concat(this.user.id);
     }
   },
   methods: {
@@ -39157,7 +39160,7 @@ var render = function() {
                 }
               },
               [
-                _c("a", { attrs: { href: "user.html" } }, [
+                _c("a", { attrs: { href: _vm.showUserRoute } }, [
                   _c("i", { staticClass: "now-ui-icons users_circle-08" })
                 ])
               ]
