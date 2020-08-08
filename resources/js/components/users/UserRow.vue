@@ -1,54 +1,122 @@
 <template>
-    <tr>
-        <td class="text-left text-muted">
-            <i class="fas fa-user-cog fa-lg"></i>
-            <small>Admin</small>
-        </td>
-        <td class="text-left">Account name</td>
-        <td class="text-left"></td>
-        <td>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" checked />
-                    <span class="form-check-sign"></span>
-                </label>
-            </div>
-        </td>
-        <td>
-            <span class="badge badge-pill badge-success">Online</span>
-        </td>
-        <td class="td-actions text-right">
-            <button
-                type="button"
-                rel="tooltip"
-                title=""
-                class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
-                data-original-title="Edit Task"
-            >
-                <a href="user.html"
-                    ><i class="now-ui-icons users_circle-08"></i
-                ></a>
-            </button>
-            <button
-                type="button"
-                rel="tooltip"
-                title=""
-                class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
-                data-original-title="Remove"
-            >
-                <i
-                    class="now-ui-icons ui-1_simple-remove"
-                    title="delete this user"
-                ></i>
-            </button>
-        </td>
-    </tr>
+    <transition name="fade">
+        <tr v-if="canShow">
+            <td class="text-left text-muted">
+                <div v-if="isAdmin">
+                    <i class="fas fa-user-cog fa-lg"></i>
+                    <small>Admin</small>
+                </div>
+            </td>
+            <td class="text-left">Account name</td>
+            <td class="text-left">{{ user.telephone }}</td>
+            <td>
+                <div v-if="!isAdmin" class="form-check">
+                    <label class="form-check-label">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            checked
+                        />
+                        <span class="form-check-sign"></span>
+                    </label>
+                </div>
+            </td>
+            <td>
+                <span class="badge badge-pill badge-success">Online</span>
+            </td>
+            <td class="td-actions text-right">
+                <button
+                    type="button"
+                    rel="tooltip"
+                    title=""
+                    class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
+                    data-original-title="View user"
+                >
+                    <a href="user.html"
+                        ><i class="now-ui-icons users_circle-08"></i
+                    ></a>
+                </button>
+                <div class="btn-group dropleft">
+                    <button
+                        :disabled="isAdmin"
+                        type="button"
+                        class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        <i
+                            class="now-ui-icons ui-1_simple-remove"
+                            title="Terminate this user"
+                        ></i>
+                    </button>
+                    <div class="dropdown-menu p-2">
+                        <small>
+                            <strong>
+                                Are you sure you want to terminate this user?
+                            </strong>
+                        </small>
+                        <div class="d-flex justify-content-between p-2">
+                            <button
+                                @click.prevent="onTerminateUser()"
+                                class="btn btn-success btn-fab btn-icon btn-icon-mini btn-round"
+                            >
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button
+                                class="btn btn-light btn-fab btn-icon btn-icon-mini btn-round"
+                            >
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </transition>
 </template>
 
 <script>
 export default {
-    mounted() {
-        console.log("Component mounted.");
+    props: ["rowUser"],
+    data() {
+        return {
+            canShow: true,
+            user: this.rowUser
+        };
+    },
+    computed: {
+        isAdmin() {
+            return this.user.role === "admin";
+        }
+    },
+    methods: {
+        onTerminateUser() {
+            console.log("Terminate user");
+            $.notify(
+                {
+                    // options
+                    icon: "fas fa-check",
+                    message: "User terminated successfully"
+                },
+                {
+                    // settings
+                    type: "primary",
+                    timer: 3000
+                }
+            );
+
+            this.canShow = false;
+        }
     }
 };
 </script>
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.8s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+</style>

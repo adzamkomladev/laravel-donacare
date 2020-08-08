@@ -21,7 +21,7 @@
                                     <th class="text-right">Action</th>
                                 </thead>
                                 @foreach ($users as $user)
-                                    <tr is="user-row"></tr>
+                                    <tr is="user-row" :row-user="{{ $user }}"></tr>
                                 @endforeach
                             </tbody>
                         </table>
