@@ -36,4 +36,9 @@ class User extends Authenticatable
     protected $casts = [
         'telephone_verified_at' => 'datetime',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }
