@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/otp-verification', 'Auth\VerifyOTPController@show')->name('otp-verification');
+Route::patch('/verify-opt', 'Auth\VerifyOTPController@verify')->name('verify-otp');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Users

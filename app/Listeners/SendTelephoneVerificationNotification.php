@@ -27,6 +27,8 @@ class SendTelephoneVerificationNotification
      */
     public function handle(Registered $event)
     {
+        // TODO Setup SMS verification
+
         Log::info('Registered user OTP', ['otp' => $event->user->otp]);
     }
 }
