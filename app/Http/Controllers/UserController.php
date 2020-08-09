@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
+use App\Http\Middleware\CheckProfile;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class UserController extends Controller
     {
         $this->middleware('auth')->except(['toggleActivation']);
         $this->middleware(CheckOTP::class)->except(['toggleActivation']);
+        $this->middleware(CheckProfile::class)->except(['toggleActivation']);
     }
 
     /**

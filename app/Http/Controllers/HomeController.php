@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
+use App\Http\Middleware\CheckProfile;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,6 +17,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(CheckOTP::class);
+        $this->middleware(CheckProfile::class);
     }
 
     /**

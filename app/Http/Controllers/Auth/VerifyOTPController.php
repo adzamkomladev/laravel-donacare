@@ -53,6 +53,6 @@ class VerifyOTPController extends Controller
         $user->telephone_verified_at = now();
         $user->save();
 
-        return redirect()->route('home');
+        return redirect()->route('profiles.create');
     }
 }
