@@ -24,6 +24,10 @@ Vue.component(
     "profile-form",
     require("./components/users/ProfileForm.vue").default
 );
+Vue.component(
+    "user-details-card",
+    require("./components/users/UserDetailsCard.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
