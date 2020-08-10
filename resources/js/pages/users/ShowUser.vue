@@ -23,6 +23,8 @@
 import ProfileForm from "../../components/users/ProfileForm.vue";
 import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
 
+import Profile from "../../services/profile";
+
 export default {
     components: { ProfileForm, UserDetailsCard },
     props: ["selectedUser"],
@@ -33,7 +35,13 @@ export default {
     },
     methods: {
         onUpdateProfile(profile) {
-            console.log({ profile });
+            Profile.update(profile.id, { ...profile })
+                .then(response => {
+                    const { data } = response;
+
+                    this.user.profile = { ...data };
+                })
+                .catch(errror => console.log({ error }));
         }
     }
 };

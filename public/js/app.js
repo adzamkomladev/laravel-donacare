@@ -2271,6 +2271,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_users_ProfileForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/users/ProfileForm.vue */ "./resources/js/components/users/ProfileForm.vue");
 /* harmony import */ var _components_users_UserDetailsCard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/users/UserDetailsCard.vue */ "./resources/js/components/users/UserDetailsCard.vue");
+/* harmony import */ var _services_profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/profile */ "./resources/js/services/profile.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2292,6 +2299,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2307,8 +2315,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onUpdateProfile: function onUpdateProfile(profile) {
-      console.log({
-        profile: profile
+      var _this = this;
+
+      _services_profile__WEBPACK_IMPORTED_MODULE_2__["default"].update(profile.id, _objectSpread({}, profile)).then(function (response) {
+        var data = response.data;
+        _this.user.profile = _objectSpread({}, data);
+      })["catch"](function (errror) {
+        return console.log({
+          error: error
+        });
       });
     }
   }
@@ -52462,6 +52477,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowUser_vue_vue_type_template_id_33024a50___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowUser_vue_vue_type_template_id_33024a50___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/services/profile.js":
+/*!******************************************!*\
+  !*** ./resources/js/services/profile.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Profile; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Profile = /*#__PURE__*/function () {
+  function Profile() {
+    _classCallCheck(this, Profile);
+  }
+
+  _createClass(Profile, null, [{
+    key: "update",
+    value: function update(profileId, data) {
+      return axios.patch("/api/v1/profiles/".concat(profileId), data);
+    }
+  }]);
+
+  return Profile;
+}();
 
 
 
