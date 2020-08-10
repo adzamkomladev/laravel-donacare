@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <show-user></show-user>
+    <show-user :selected-user="{{ $user }}"></show-user>
 @endsection
+selected

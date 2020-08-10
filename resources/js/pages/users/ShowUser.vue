@@ -6,12 +6,15 @@
                     <h5 class="title">User Account Details</h5>
                 </div>
                 <div class="card-body">
-                    <ProfileForm />
+                    <ProfileForm
+                        @updateProfile="onUpdateProfile($event)"
+                        :selected-profile="user.profile"
+                    />
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <UserDetailsCard />
+            <UserDetailsCard :selected-user="user" />
         </div>
     </div>
 </template>
@@ -21,7 +24,18 @@ import ProfileForm from "../../components/users/ProfileForm.vue";
 import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
 
 export default {
-    components: { ProfileForm, UserDetailsCard }
+    components: { ProfileForm, UserDetailsCard },
+    props: ["selectedUser"],
+    data() {
+        return {
+            user: this.selectedUser
+        };
+    },
+    methods: {
+        onUpdateProfile(profile) {
+            console.log({ profile });
+        }
+    }
 };
 </script>
 

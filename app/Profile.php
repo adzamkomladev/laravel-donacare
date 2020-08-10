@@ -15,6 +15,15 @@ class Profile extends Model
         'user_id', 'first_name', 'last_name', 'other_names', 'gender', 'avatar'
     ];
 
+    protected $appends = [
+        'full_name'
+    ];
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->other_names} {$this->last_name}";
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
