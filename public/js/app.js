@@ -52541,7 +52541,7 @@ var User = /*#__PURE__*/function () {
   _createClass(User, null, [{
     key: "toggleActivation",
     value: function toggleActivation(userId) {
-      return axios.patch("api/v1/users/".concat(userId, "/toggle-activation"), {});
+      return axios.patch("/api/v1/users/".concat(userId, "/toggle-activation"), {});
     }
   }]);
 
