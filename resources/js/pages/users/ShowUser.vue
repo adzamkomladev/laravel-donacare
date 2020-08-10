@@ -40,8 +40,25 @@ export default {
                     const { data } = response;
 
                     this.user.profile = { ...data };
+
+                    this.showNotification(
+                        "fas fa-check",
+                        "Your profile has been updated!",
+                        "primary"
+                    );
                 })
-                .catch(errror => console.log({ error }));
+                .catch(error => {
+                    const errors = error?.response?.data?.errors;
+
+                    const [message] = Object.values(errors || {})[0] || [
+                        "Failed to update profile!"
+                    ];
+
+                    this.showNotification("fas fa-times", message, "danger");
+                });
+        },
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
 };

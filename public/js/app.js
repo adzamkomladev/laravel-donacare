@@ -2272,6 +2272,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_users_ProfileForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/users/ProfileForm.vue */ "./resources/js/components/users/ProfileForm.vue");
 /* harmony import */ var _components_users_UserDetailsCard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/users/UserDetailsCard.vue */ "./resources/js/components/users/UserDetailsCard.vue");
 /* harmony import */ var _services_profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/profile */ "./resources/js/services/profile.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2320,10 +2332,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _services_profile__WEBPACK_IMPORTED_MODULE_2__["default"].update(profile.id, _objectSpread({}, profile)).then(function (response) {
         var data = response.data;
         _this.user.profile = _objectSpread({}, data);
-      })["catch"](function (errror) {
-        return console.log({
-          error: error
-        });
+
+        _this.showNotification("fas fa-check", "Your profile has been updated!", "primary");
+      })["catch"](function (error) {
+        var _error$response, _error$response$data;
+
+        var errors = error === null || error === void 0 ? void 0 : (_error$response = error.response) === null || _error$response === void 0 ? void 0 : (_error$response$data = _error$response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.errors;
+
+        var _ref = Object.values(errors || {})[0] || ["Failed to update profile!"],
+            _ref2 = _slicedToArray(_ref, 1),
+            message = _ref2[0];
+
+        _this.showNotification("fas fa-times", message, "danger");
+      });
+    },
+    showNotification: function showNotification(icon, message, type) {
+      $.notify({
+        icon: icon,
+        message: message
+      }, {
+        type: type,
+        timer: 3000
       });
     }
   }
