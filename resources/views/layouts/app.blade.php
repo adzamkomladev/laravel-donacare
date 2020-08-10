@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +16,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
 <body>
     <div id="app" class="wrapper">
         @include('layouts.partials._app_sidebar')
@@ -35,12 +37,15 @@
     @auth
         <script>
             window.authState = @json(['user' => Auth::user()])
+
         </script>
     @endauth
     @guest
         <script>
             window.authState = @json(['user' => []])
+
         </script>
     @endguest
 </body>
+
 </html>
