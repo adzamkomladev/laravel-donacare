@@ -24,6 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
         'role' => $faker->randomElement(['admin', 'patient', 'donor']),
-        'activated' => $faker->randomElement([true, false])
+        'activated' => $faker->randomElement([true, false]),
+        'otp' => $faker->numberBetween(100000, 987654)
     ];
 });
