@@ -20,14 +20,7 @@ window.Vue = require("vue");
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component("user-row", require("./components/users/UserRow.vue").default);
-Vue.component(
-    "profile-form",
-    require("./components/users/ProfileForm.vue").default
-);
-Vue.component(
-    "user-details-card",
-    require("./components/users/UserDetailsCard.vue").default
-);
+Vue.component("show-user", require("./pages/users/ShowUser.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
