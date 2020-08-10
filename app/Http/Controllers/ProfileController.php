@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProfile;
 use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -19,9 +20,9 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(CheckOTP::class);
-        $this->middleware(CheckProfile::class)->except(['create', 'store']);
+        $this->middleware('auth')->except(['update']);
+        $this->middleware(CheckOTP::class)->except(['update']);
+        $this->middleware(CheckProfile::class)->except(['create', 'store', 'update']);
     }
 
     /**
@@ -94,7 +95,15 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
-        //
+        Validator::make($request->all(), [
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'other_names' => 'nullable|string|max:100',
+        ])->validate();
+
+        $profile->update($request->all());
+
+        return $profile;
     }
 
     /**
