@@ -2009,11 +2009,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["selectedProfile"],
+  props: ["selectedProfile", "canUpdateProfile"],
   data: function data() {
     return {
-      profile: this.selectedProfile
+      profile: this.selectedProfile,
+      canUpdate: this.canUpdateProfile
     };
   },
   methods: {
@@ -2272,6 +2278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_users_ProfileForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/users/ProfileForm.vue */ "./resources/js/components/users/ProfileForm.vue");
 /* harmony import */ var _components_users_UserDetailsCard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/users/UserDetailsCard.vue */ "./resources/js/components/users/UserDetailsCard.vue");
 /* harmony import */ var _services_profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/profile */ "./resources/js/services/profile.js");
+/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2311,6 +2318,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
 
 
 
@@ -2354,6 +2363,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: type,
         timer: 3000
       });
+    }
+  },
+  computed: {
+    canUpdateProfile: function canUpdateProfile() {
+      return _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].currentUser().id === this.user.id;
     }
   }
 });
@@ -39414,7 +39428,8 @@ var render = function() {
             attrs: {
               type: "text",
               placeholder: "Your first name",
-              required: ""
+              required: "",
+              readonly: !_vm.canUpdate
             },
             domProps: { value: _vm.profile.first_name },
             on: {
@@ -39446,7 +39461,8 @@ var render = function() {
             attrs: {
               type: "text",
               placeholder: "Your last name",
-              required: ""
+              required: "",
+              readonly: !_vm.canUpdate
             },
             domProps: { value: _vm.profile.last_name },
             on: {
@@ -39480,7 +39496,7 @@ var render = function() {
             attrs: {
               type: "text",
               placeholder: "Your other names",
-              required: ""
+              readonly: !_vm.canUpdate
             },
             domProps: { value: _vm.profile.other_names },
             on: {
@@ -39496,38 +39512,18 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary btn-round",
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.onUpdateProfile()
-          }
-        }
-      },
-      [_vm._v("\n        Update\n    ")]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-4 pr-1" }, [
         _c("div", { staticClass: "form-group" }, [
           _c("label", [_vm._v("Date of birth")]),
           _vm._v(" "),
           _c("input", {
             staticClass: "form-control",
-            attrs: { type: "date", placeholder: "Your date of birth" }
+            attrs: {
+              type: "date",
+              placeholder: "Your date of birth",
+              readonly: !_vm.canUpdate
+            }
           })
         ])
       ]),
@@ -39538,17 +39534,17 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("input", {
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Your home address" }
+            attrs: {
+              type: "text",
+              placeholder: "Your home address",
+              readonly: !_vm.canUpdate
+            }
           })
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "form-group" }, [
           _c("label", [_vm._v("About Me")]),
@@ -39559,14 +39555,31 @@ var staticRenderFns = [
               rows: "4",
               cols: "80",
               placeholder: "Here can be your description",
-              value: "Mike"
+              readonly: !_vm.canUpdate
             }
           })
         ])
       ])
-    ])
-  }
-]
+    ]),
+    _vm._v(" "),
+    _vm.canUpdate
+      ? _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-round",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.onUpdateProfile()
+              }
+            }
+          },
+          [_vm._v("\n        Update\n    ")]
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39898,7 +39911,10 @@ var render = function() {
           { staticClass: "card-body" },
           [
             _c("ProfileForm", {
-              attrs: { "selected-profile": _vm.user.profile },
+              attrs: {
+                "selected-profile": _vm.user.profile,
+                "can-update-profile": _vm.canUpdateProfile
+              },
               on: {
                 updateProfile: function($event) {
                   return _vm.onUpdateProfile($event)
@@ -52506,6 +52522,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowUser_vue_vue_type_template_id_33024a50___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowUser_vue_vue_type_template_id_33024a50___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/services/auth.js":
+/*!***************************************!*\
+  !*** ./resources/js/services/auth.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Auth; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Auth = /*#__PURE__*/function () {
+  function Auth() {
+    _classCallCheck(this, Auth);
+  }
+
+  _createClass(Auth, null, [{
+    key: "currentUser",
+    value: function currentUser() {
+      return window.authState.user || {};
+    }
+  }]);
+
+  return Auth;
+}();
 
 
 

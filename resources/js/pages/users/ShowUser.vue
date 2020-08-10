@@ -9,6 +9,7 @@
                     <ProfileForm
                         @updateProfile="onUpdateProfile($event)"
                         :selected-profile="user.profile"
+                        :can-update-profile="canUpdateProfile"
                     />
                 </div>
             </div>
@@ -24,6 +25,7 @@ import ProfileForm from "../../components/users/ProfileForm.vue";
 import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
 
 import Profile from "../../services/profile";
+import Auth from "../../services/auth";
 
 export default {
     components: { ProfileForm, UserDetailsCard },
@@ -59,6 +61,11 @@ export default {
         },
         showNotification(icon, message, type) {
             $.notify({ icon, message }, { type, timer: 3000 });
+        }
+    },
+    computed: {
+        canUpdateProfile() {
+            return Auth.currentUser().id === this.user.id;
         }
     }
 };

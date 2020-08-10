@@ -10,6 +10,7 @@
                         v-model="profile.first_name"
                         placeholder="Your first name"
                         required
+                        :readonly="!canUpdate"
                     />
                 </div>
             </div>
@@ -22,6 +23,7 @@
                         v-model="profile.last_name"
                         placeholder="Your last name"
                         required
+                        :readonly="!canUpdate"
                     />
                 </div>
             </div>
@@ -35,7 +37,7 @@
                         class="form-control"
                         v-model="profile.other_names"
                         placeholder="Your other names"
-                        required
+                        :readonly="!canUpdate"
                     />
                 </div>
             </div>
@@ -48,6 +50,7 @@
                         type="date"
                         class="form-control"
                         placeholder="Your date of birth"
+                        :readonly="!canUpdate"
                     />
                 </div>
             </div>
@@ -58,6 +61,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Your home address"
+                        :readonly="!canUpdate"
                     />
                 </div>
             </div>
@@ -71,7 +75,7 @@
                         cols="80"
                         class="form-control"
                         placeholder="Here can be your description"
-                        value="Mike"
+                        :readonly="!canUpdate"
                     >
                     </textarea>
                 </div>
@@ -79,6 +83,7 @@
         </div>
 
         <button
+            v-if="canUpdate"
             @click.prevent="onUpdateProfile()"
             class="btn btn-primary btn-round"
         >
@@ -89,10 +94,11 @@
 
 <script>
 export default {
-    props: ["selectedProfile"],
+    props: ["selectedProfile", "canUpdateProfile"],
     data() {
         return {
-            profile: this.selectedProfile
+            profile: this.selectedProfile,
+            canUpdate: this.canUpdateProfile
         };
     },
     methods: {
