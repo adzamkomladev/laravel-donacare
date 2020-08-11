@@ -32,3 +32,6 @@ Route::get('users/{user}', 'UserController@show')->name('users.show');
 // Profile
 Route::get('profiles/create', 'ProfileController@create')->name('profiles.create');
 Route::post('profiles', 'ProfileController@store')->name('profiles.store');
+
+// Services
+Route::get('services', 'ServiceController@index')->name('services.index');
