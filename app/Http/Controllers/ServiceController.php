@@ -2,11 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CheckOTP;
+use App\Http\Middleware\CheckProfile;
 use App\Service;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['toggleAvailability']);
+        $this->middleware(CheckOTP::class)->except(['toggleAvailability']);
+        $this->middleware(CheckProfile::class)->except(['toggleAvailability']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -83,5 +98,20 @@ class ServiceController extends Controller
     public function destroy(Service $service)
     {
         //
+    }
+
+    /**
+     * Toggle service availability.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Service  $service
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleAvailability(Request $request, Service $service)
+    {
+        $service->available = !$service->available;
+        $service->save();
+
+        return response()->json(['message' => 'No Content'], 204);
     }
 }

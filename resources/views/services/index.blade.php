@@ -14,91 +14,20 @@
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
-                                <th>#</th>
                                 <th>Service</th>
-                                <th>Price</th>
-                                <th>Remove</th>
+                                <th>Price (GH₵)</th>
+                                <th>Availability</th>
+                                <th>No. of requests</th>
+                                <th>Actions</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>0</td>
-                                    <td>product/service 1</td>
-                                    <td>xx</td>
-                                    <td>
-                                        <button type="button" rel="tooltip" title=""
-                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
-                                            data-original-title="Remove">
-                                            <i class="now-ui-icons ui-1_simple-remove" title="delete this user"></i>
-                                        </button>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>
-                                        product/service 1
-                                    </td>
-                                    <td>
-                                        xx
-                                    </td>
-                                    <td>
-                                        <button type="button" rel="tooltip" title=""
-                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
-                                            data-original-title="Remove">
-                                            <i class="now-ui-icons ui-1_simple-remove" title="delete this user"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>
-                                        product/service 1
-                                    </td>
-                                    <td>
-                                        xx
-                                    </td>
-                                    <td>
-                                        <button type="button" rel="tooltip" title=""
-                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
-                                            data-original-title="Remove">
-                                            <i class="now-ui-icons ui-1_simple-remove" title="delete this user"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>
-                                        product/service 1
-                                    </td>
-                                    <td>
-                                        xx
-                                    </td>
-                                    <td>
-                                        <button type="button" rel="tooltip" title=""
-                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
-                                            data-original-title="Remove">
-                                            <i class="now-ui-icons ui-1_simple-remove" title="delete this user"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>0</td>
-                                    <td>
-                                        product/service 1
-                                    </td>
-                                    <td>
-                                        xx
-                                    </td>
-                                    <td>
-                                        <button type="button" rel="tooltip" title=""
-                                            class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
-                                            data-original-title="Remove">
-                                            <i class="now-ui-icons ui-1_simple-remove" title="delete this user"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                @foreach ($services as $service)
+                                    <tr is="service-row" :row-service="{{ $service }}"></tr>
+                                @endforeach
                             </tbody>
                         </table>
+
+                        {{ $services->links() }}
                     </div>
                 </div>
             </div>

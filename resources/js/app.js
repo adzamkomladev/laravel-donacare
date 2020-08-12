@@ -21,6 +21,10 @@ window.Vue = require("vue");
 
 Vue.component("user-row", require("./components/users/UserRow.vue").default);
 Vue.component("show-user", require("./pages/users/ShowUser.vue").default);
+Vue.component(
+    "service-row",
+    require("./components/services/ServiceRow.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
