@@ -40,7 +40,7 @@
                     </button>
                     <div class="dropdown-menu">
                         <a
-                            @click.prevent="onShowServiceDetails"
+                            @click.prevent="onSelectService"
                             class="dropdown-item"
                             data-toggle="modal"
                             data-target="#service-details-modal"
@@ -49,8 +49,10 @@
                         </a>
                         <a
                             v-if="isAdmin"
+                            @click.prevent="onSelectService"
                             class="dropdown-item"
-                            :href="updateServiceRoute"
+                            data-toggle="modal"
+                            data-target="#service-update-modal"
                         >
                             Update
                         </a>
@@ -105,6 +107,13 @@ import Service from "../../services/service.js";
 export default {
     name: "ServiceRow",
     props: ["rowService"],
+    created() {
+        eventBus.$on("updatedService", service => {
+            if (this.service.id === service.id) {
+                this.service = { ...service };
+            }
+        });
+    },
     data() {
         return {
             canShow: true,
@@ -114,9 +123,6 @@ export default {
     computed: {
         isAdmin() {
             return Auth.currentUser().role === "admin";
-        },
-        updateServiceRoute() {
-            return `/services/${this.service.id}/edit`;
         },
         isLow() {
             return this.service.id < 5;
@@ -129,8 +135,8 @@ export default {
         }
     },
     methods: {
-        onShowServiceDetails() {
-            eventBus.$emit("showServiceDetails", this.service);
+        onSelectService() {
+            eventBus.$emit("selectedService", { ...this.service });
         },
         async onToggleAvailability() {
             try {

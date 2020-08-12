@@ -29,6 +29,10 @@ Vue.component(
     "service-details-modal",
     require("./components/services/ServiceDetailsModal.vue").default
 );
+Vue.component(
+    "service-update-modal",
+    require("./components/services/ServiceUpdateModal.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

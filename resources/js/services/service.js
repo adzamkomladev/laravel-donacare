@@ -5,4 +5,8 @@ export default class Service {
             {}
         );
     }
+
+    static update(serviceId, data) {
+        return axios.put(`/api/v1/services/${serviceId}`, data);
+    }
 }

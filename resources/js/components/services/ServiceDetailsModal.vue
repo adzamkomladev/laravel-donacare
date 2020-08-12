@@ -7,7 +7,7 @@
         role="dialog"
     >
         <div class="modal-dialog" role="document">
-            <div class="card card-user">
+            <div class="card card-user modal-content">
                 <div class="image">
                     <img
                         src="/img/service-backdrop.jpg"
@@ -53,7 +53,7 @@ import { eventBus } from "../../events/event-bus.js";
 export default {
     name: "ServiceDetailsModal",
     created() {
-        eventBus.$on("showServiceDetails", service => (this.service = service));
+        eventBus.$on("selectedService", service => (this.service = service));
     },
     data() {
         return {

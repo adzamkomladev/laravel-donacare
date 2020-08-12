@@ -6,6 +6,7 @@ use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
 use App\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
@@ -17,9 +18,9 @@ class ServiceController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['toggleAvailability']);
-        $this->middleware(CheckOTP::class)->except(['toggleAvailability']);
-        $this->middleware(CheckProfile::class)->except(['toggleAvailability']);
+        $this->middleware('auth')->except(['toggleAvailability', 'update']);
+        $this->middleware(CheckOTP::class)->except(['toggleAvailability', 'update']);
+        $this->middleware(CheckProfile::class)->except(['toggleAvailability', 'update']);
     }
 
     /**
@@ -86,7 +87,16 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'available' => 'required|boolean'
+        ])->validate();
+
+        $service->update($request->all());
+
+        return $service;
     }
 
     /**

@@ -34,4 +34,5 @@
         </div>
     </div>
     <service-details-modal></service-details-modal>
+    <service-update-modal></service-update-modal>
 @endsection
