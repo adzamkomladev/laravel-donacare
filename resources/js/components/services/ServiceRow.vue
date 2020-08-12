@@ -10,7 +10,7 @@
                             @click="onToggleAvailability"
                             class="form-check-input"
                             type="checkbox"
-                            v-model="service.activated"
+                            v-model="service.available"
                         />
                         <span class="form-check-sign"></span>
                     </label>
@@ -39,7 +39,12 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" :href="showServiceRoute">
+                        <a
+                            @click.prevent="onShowServiceDetails"
+                            class="dropdown-item"
+                            data-toggle="modal"
+                            data-target="#service-details-modal"
+                        >
                             Details
                         </a>
                         <a
@@ -92,10 +97,13 @@
 </template>
 
 <script>
+import { eventBus } from "../../events/event-bus.js";
+
 import Auth from "../../services/auth.js";
 import Service from "../../services/service.js";
 
 export default {
+    name: "ServiceRow",
     props: ["rowService"],
     data() {
         return {
@@ -106,9 +114,6 @@ export default {
     computed: {
         isAdmin() {
             return Auth.currentUser().role === "admin";
-        },
-        showServiceRoute() {
-            return `/services/${this.service.id}`;
         },
         updateServiceRoute() {
             return `/services/${this.service.id}/edit`;
@@ -124,6 +129,9 @@ export default {
         }
     },
     methods: {
+        onShowServiceDetails() {
+            eventBus.$emit("showServiceDetails", this.service);
+        },
         async onToggleAvailability() {
             try {
                 await Service.toggleAvailability(this.service.id);
@@ -132,7 +140,7 @@ export default {
                     "fas fa-check",
                     `Service made ${
                         this.service.available ? "available" : "unavailable"
-                    } successfully!`,
+                    }!`,
                     "primary"
                 );
             } catch (error) {
@@ -140,8 +148,8 @@ export default {
 
                 this.showNotification(
                     "fas fa-times",
-                    `Failed to set service as ${
-                        this.service.available ? "'unavailable'" : "'activate'"
+                    `Failed to make service ${
+                        this.service.available ? "unavailable" : "available"
                     }!`,
                     "danger"
                 );

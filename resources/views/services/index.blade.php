@@ -33,4 +33,5 @@
             </div>
         </div>
     </div>
+    <service-details-modal></service-details-modal>
 @endsection
