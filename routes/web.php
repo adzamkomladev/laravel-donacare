@@ -35,3 +35,5 @@ Route::post('profiles', 'ProfileController@store')->name('profiles.store');
 
 // Services
 Route::get('services', 'ServiceController@index')->name('services.index');
+Route::get('services/create', 'ServiceController@create')->name('services.create');
+Route::post('services', 'ServiceController@store')->name('services.store');

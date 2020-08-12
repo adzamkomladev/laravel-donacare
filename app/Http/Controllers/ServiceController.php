@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
+use App\Http\Requests\StoreService;
 use App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -42,18 +43,26 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        $services = Service::latest()->paginate(3);
+
+        return view('services.create', ['services' => $services]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreService  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreService $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['available'] = true;
+
+        Service::create($validated);
+
+        return redirect()->route('services.index');
     }
 
     /**
