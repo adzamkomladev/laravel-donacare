@@ -44,8 +44,25 @@ class User extends Authenticatable
      */
     protected $with = ['profile'];
 
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $role
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function serviceRequests()
+    {
+        return $this->hasMany(ServiceRequest::class);
     }
 }
