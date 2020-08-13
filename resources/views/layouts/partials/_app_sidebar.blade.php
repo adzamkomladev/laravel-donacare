@@ -26,12 +26,13 @@
                     </a>
                 </li>
             @endif
-            <li>
-                <a href="./prices.html">
-                    <i class="now-ui-icons education_atom"></i>
-                    <p>Charges and Prices</p>
+            <li class="@if('services.index' === Route::currentRouteName()) active @endif">
+                <a href="{{ route('services.index') }}">
+                    <i class="fas fa-briefcase"></i>
+                    <p>Services</p>
                 </a>
             </li>
+
             <li>
                 <a href="./reports.html">
                     <i class="now-ui-icons education_atom"></i>

@@ -84,7 +84,7 @@
 
         <button
             v-if="canUpdate"
-            @click.prevent="onUpdateProfile()"
+            @click.prevent="onUpdateProfile"
             class="btn btn-primary btn-round"
         >
             Update

@@ -121,8 +121,6 @@ export default {
             }
         },
         onTerminateUser() {
-            console.log("Terminate user");
-
             this.showNotification(
                 "fas fa-check",
                 "User terminated successfully!",
