@@ -9,6 +9,18 @@ require("./bootstrap");
 window.Vue = require("vue");
 
 /**
+ * Initialize google maps
+ */
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "AIzaSyC3bknNVeAMEeU6JHH-3DthopwZFJ15LYw",
+        libraries: "places" // necessary for places input
+    }
+});
+
+/**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
@@ -32,6 +44,14 @@ Vue.component(
 Vue.component(
     "service-update-modal",
     require("./components/services/ServiceUpdateModal.vue").default
+);
+Vue.component(
+    "provider-proximity-map",
+    require("./components/service-requests/ProviderProximityMap.vue").default
+);
+Vue.component(
+    "obtain-current-location",
+    require("./components/auth/ObtainCurrentLocation.vue").default
 );
 
 /**

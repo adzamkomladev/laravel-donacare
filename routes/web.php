@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes();
@@ -37,3 +37,13 @@ Route::post('profiles', 'ProfileController@store')->name('profiles.store');
 Route::get('services', 'ServiceController@index')->name('services.index');
 Route::get('services/create', 'ServiceController@create')->name('services.create');
 Route::post('services', 'ServiceController@store')->name('services.store');
+
+// Service request
+Route::get('service-requests/create/step-one', 'ServiceRequestController@createStepOne')->name('service-requests.create.step-one');
+Route::post('service-requests/step-one', 'ServiceRequestController@storeStepOne')->name('service-requests.store.step-one');
+Route::get('service-requests/create/step-two/{serviceRequest}', 'ServiceRequestController@createStepTwo')->name('service-requests.create.step-two');
+Route::get('service-requests/create/step-three/{serviceRequest}', 'ServiceRequestController@createStepThree')->name('service-requests.create.step-three');
+
+
+// File upload for service request
+Route::post('files/{serviceRequest}', 'FileController@store')->name('files.store');

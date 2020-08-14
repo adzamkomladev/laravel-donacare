@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Location extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,11 +12,11 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'price', 'available'
+        'user_id', 'name', 'address', 'lng', 'lat',
     ];
 
-    public function serviceRequests()
+    public function user()
     {
-        return $this->hasMany(ServiceRequest::class);
+        return $this->belongsTo(User::class);
     }
 }
