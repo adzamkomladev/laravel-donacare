@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="card modal-content">
                 <div class="card-body">
-                    <!--<form>
+                    <form>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -32,7 +32,6 @@
                                         cols="80"
                                         class="form-control"
                                         v-model="complaint.response"
-                                        disabled
                                         required
                                     >
                                     </textarea>
@@ -46,17 +45,18 @@
                         <div class="row" v-if="isAdmin">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="submit" id="sbmt" class="form-control s" value="add">
+<!--                                    <input type="submit" id="sbmt" class="form-control s" value="add">-->
                                     <button
                                         @click.prevent="onUpdate"
                                         class="btn btn-success btn-round btn-lg"
+                                        data-dismiss="modal"
                                     >
                                         Submit
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </form>-->
+                    </form>
                 </div>
             </div>
         </div>
@@ -71,7 +71,6 @@
     export default {
         name: "ComplaintUpdateModel",
         created() {
-            console.log('ComplaintUpdateModel')
             eventBus.$on(
                 "selectedComplaint",
                 complaint => (this.complaint = {...complaint})
@@ -95,7 +94,7 @@
                 this.errorMessage = "";
 
                 try {
-                    const {data} = await Complaint.update(this.service.id, {
+                    const {data} = await Complaint.update(this.complaint.id, {
                         ...this.complaint
                     });
 

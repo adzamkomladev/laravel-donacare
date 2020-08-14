@@ -1973,13 +1973,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      canShow: true,
       complaint: this.rowComplaint
     };
   },
   computed: {
     isAdmin: function isAdmin() {
       return _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].currentUser().role === "admin";
+    },
+    canShow: function canShow() {
+      return _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].currentUser().role === "admin" || this.rowComplaint.id === _services_auth__WEBPACK_IMPORTED_MODULE_1__["default"].currentUser().id;
     },
     isAddressed: function isAddressed() {
       return this.complaint.status === "addressed";
@@ -2106,7 +2108,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     var _this = this;
 
-    console.log('ComplaintUpdateModel');
     _events_event_bus__WEBPACK_IMPORTED_MODULE_1__["eventBus"].$on("selectedComplaint", function (complaint) {
       return _this.complaint = _objectSpread({}, complaint);
     });
@@ -2138,7 +2139,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this2.errorMessage = "";
                 _context.prev = 2;
                 _context.next = 5;
-                return _services_complaint__WEBPACK_IMPORTED_MODULE_2__["default"].update(_this2.service.id, _objectSpread({}, _this2.complaint));
+                return _services_complaint__WEBPACK_IMPORTED_MODULE_2__["default"].update(_this2.complaint.id, _objectSpread({}, _this2.complaint));
 
               case 5:
                 _yield$Complaint$upda = _context.sent;
@@ -40385,9 +40386,7 @@ var render = function() {
   return _c("transition", { attrs: { name: "fade" } }, [
     _vm.canShow
       ? _c("tr", [
-          _c("td", { staticClass: "text-left" }, [
-            _vm._v(_vm._s(_vm.complaint.user))
-          ]),
+          _c("td", { staticClass: "text-left" }, [_vm._v("complaint name")]),
           _vm._v(" "),
           _c("td", { staticClass: "text-left" }, [
             _c(
@@ -40458,33 +40457,138 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: { id: "complaint-update-modal", tabindex: "-1", role: "dialog" }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "card modal-content" }, [
-              _c("div", { staticClass: "card-body" })
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: { id: "complaint-update-modal", tabindex: "-1", role: "dialog" }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "card modal-content" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("form", [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Complaint")]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.complaint.description,
+                          expression: "complaint.description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        rows: "4",
+                        cols: "80",
+                        disabled: "",
+                        required: ""
+                      },
+                      domProps: { value: _vm.complaint.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.complaint,
+                            "description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12 pr-1" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Response")]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.complaint.response,
+                          expression: "complaint.response"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { rows: "4", cols: "80", required: "" },
+                      domProps: { value: _vm.complaint.response },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.complaint,
+                            "response",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  staticClass: "my-3 text-danger font-weight-bold text-center"
+                },
+                [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(_vm.errorMessage) +
+                      "\n                        "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.isAdmin
+                ? _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success btn-round btn-lg",
+                            attrs: { "data-dismiss": "modal" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.onUpdate($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                        Submit\n                                    "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                : _vm._e()
             ])
-          ]
-        )
-      ]
-    )
-  }
-]
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54723,8 +54827,8 @@ var Complaint = /*#__PURE__*/function () {
 
   _createClass(Complaint, null, [{
     key: "update",
-    value: function update(serviceId, data) {
-      return axios.put("/api/v1/complaints/".concat(complaint), data);
+    value: function update(complaintId, data) {
+      return axios.put("/api/v1/complaints/".concat(complaintId), data);
     }
   }]);
 

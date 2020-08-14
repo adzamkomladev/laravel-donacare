@@ -33,6 +33,5 @@
             </div>
         </div>
     </div>
-    <service-details-modal></service-details-modal>
-    <service-update-modal></service-update-modal>
+    <complaint-update-modal></complaint-update-modal>
 @endsection

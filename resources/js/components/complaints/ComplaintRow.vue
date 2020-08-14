@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
         <tr v-if="canShow">
-            <td class="text-left">{{ complaint.user }}</td>
+            <td class="text-left">complaint name</td>
             <td class="text-left">
 <!--                <template v-if="isAdmin">-->
                     <a
@@ -43,13 +43,15 @@
         },
         data() {
             return {
-                canShow: true,
                 complaint: this.rowComplaint
             };
         },
         computed: {
             isAdmin() {
                 return Auth.currentUser().role === "admin";
+            },
+            canShow() {
+                return Auth.currentUser().role === "admin" || this.rowComplaint.id === Auth.currentUser().id;
             },
             isAddressed() {
                 return this.complaint.status === "addressed";

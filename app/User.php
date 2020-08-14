@@ -42,7 +42,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['profile'];
+    protected $with = ['profile', 'complaint'];
 
     public function profile()
     {

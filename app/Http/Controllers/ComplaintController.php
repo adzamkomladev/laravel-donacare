@@ -103,6 +103,7 @@ class ComplaintController extends Controller
         ])->validate();
 
         $complaint->update($request->all());
+        $complaint->status = 'addressed';
         $complaint->address_date = Carbon::now()->toDateTimeString();
         $complaint->save();
 

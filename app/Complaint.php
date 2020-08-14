@@ -15,8 +15,10 @@ class Complaint extends Model
         'address_date' => 'datetime',
     ];
 
+//    protected $with = ['user'];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault();;
     }
 }
