@@ -37,3 +37,8 @@ Route::post('profiles', 'ProfileController@store')->name('profiles.store');
 Route::get('services', 'ServiceController@index')->name('services.index');
 Route::get('services/create', 'ServiceController@create')->name('services.create');
 Route::post('services', 'ServiceController@store')->name('services.store');
+
+// Complaints
+Route::get('complaints', 'ComplaintController@index')->name('complaints.index');
+Route::get('complaints/create', 'ComplaintController@create')->name('complaints.create');
+Route::post('complaints', 'ComplaintController@store')->name('complaints.store');
