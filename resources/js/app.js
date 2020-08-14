@@ -33,6 +33,14 @@ Vue.component(
     "service-update-modal",
     require("./components/services/ServiceUpdateModal.vue").default
 );
+Vue.component(
+    "complaint-row",
+    require("./components/complaints/ComplaintRow.vue").default
+);
+Vue.component(
+    "complaint-update-modal",
+    require("./components/complaints/ComplaintUpdateModel.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

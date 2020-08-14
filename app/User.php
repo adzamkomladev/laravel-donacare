@@ -42,10 +42,15 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['profile'];
+    protected $with = ['profile', 'complaint'];
 
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function complaint()
+    {
+        return $this->hasMany(Complaint::class);
     }
 }

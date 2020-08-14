@@ -32,17 +32,17 @@
                     <p>Services</p>
                 </a>
             </li>
+            <li class="@if('complaints.index' === Route::currentRouteName()) active @endif">
+                <a href="{{ route('complaints.index') }}">
+                    <i class="now-ui-icons education_atom"></i>
+                    <p>Complaints</p>
+                </a>
+            </li>
 
             <li>
                 <a href="./reports.html">
                     <i class="now-ui-icons education_atom"></i>
                     <p>Reports</p>
-                </a>
-            </li>
-            <li>
-                <a href="./complaints.html">
-                    <i class="now-ui-icons education_atom"></i>
-                    <p>Complaints</p>
                 </a>
             </li>
             <li>
