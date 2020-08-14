@@ -15,8 +15,11 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('service_request_id')->nullable()->constrained();
-            $table->json('value')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->string('name', 100)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->double('lng', 10, 6)->nullable();
+            $table->double('lat', 10, 6)->nullable();
             $table->timestamps();
         });
     }

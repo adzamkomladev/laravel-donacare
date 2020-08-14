@@ -20,4 +20,5 @@
             </div>
         </div>
     </div>
+    <obtain-current-location></obtain-current-location>
 @endsection

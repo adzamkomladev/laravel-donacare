@@ -65,14 +65,16 @@ class ServiceRequestController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage: step two
+     * Show the form for creating a new resource: step one
      *
-     * @param  StoreServiceRequestStepOne  $request
+     * @param  ServiceRequest  $serviceRequest
      * @return \Illuminate\Http\Response
      */
-    public function storeStepTwo(StoreServiceRequestStepOne $request)
+    public function createStepThree(ServiceRequest $serviceRequest)
     {
-        dd($request->all());
+        return view('service_requests.create_step_three', [
+            'serviceRequest' => $serviceRequest
+        ]);
     }
 
     /**
