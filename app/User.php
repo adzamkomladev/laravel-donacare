@@ -42,7 +42,19 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['profile', 'complaint'];
+    protected $with = ['profile', 'location', 'complaint'];
+
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $role
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
 
     public function profile()
     {
@@ -52,5 +64,15 @@ class User extends Authenticatable
     public function complaint()
     {
         return $this->hasMany(Complaint::class);
+    }
+
+    public function serviceRequests()
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
+
+    public function location()
+    {
+        return $this->hasOne(Location::class);
     }
 }

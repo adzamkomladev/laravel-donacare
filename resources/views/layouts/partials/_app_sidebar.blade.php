@@ -51,6 +51,12 @@
                     <p>Logs</p>
                 </a>
             </li>
+            <li class="@if('service-requests.create.step-one' === Route::currentRouteName()) active @endif">
+                <a href="{{ route('service-requests.create.step-one') }}">
+                    <i class="fas fa-procedures"></i>
+                    <p>Make a request</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

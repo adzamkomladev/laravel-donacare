@@ -27,4 +27,6 @@ Route::group(['prefix' => 'v1'], function () {
     Route::put('/services/{service}', 'ServiceController@update');
 
     Route::put('/complaints/{complaint}', 'ComplaintController@update');
+
+    Route::post('/locations', 'LocationController@store');
 });

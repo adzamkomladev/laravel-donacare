@@ -14,4 +14,9 @@ class Service extends Model
     protected $fillable = [
         'name', 'description', 'price', 'available'
     ];
+
+    public function serviceRequests()
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
 }
