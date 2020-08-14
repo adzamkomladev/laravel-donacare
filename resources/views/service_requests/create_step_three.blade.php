@@ -5,10 +5,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Start request process</h4>
+                    <h4 class="card-title">Step 3: Select provider</h4>
+                    <small>Total cost {{ 'GHC ' . $serviceRequest->service->price }}</small>
+
                 </div>
                 <div class="card-body">
-                    <provider-proximity-map></provider-proximity-map>
+                    <provider-proximity-map :all-providers="{{ $providers }}"></provider-proximity-map>
                 </div>
             </div>
         </div>

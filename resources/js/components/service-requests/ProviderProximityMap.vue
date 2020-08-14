@@ -1,41 +1,42 @@
 <template>
-    <div>
-        <div>
-            <h2>Search and add a pin</h2>
-            <label>
-                <gmap-autocomplete @place_changed="setPlace">
-                </gmap-autocomplete>
-                <button @click="addMarker">Add</button>
-            </label>
-            <br />
+    <div class="row">
+        <div class="col-md-8">
+            <gmap-map
+                :center="center"
+                :zoom="12"
+                style="width:100%;  height: 400px;"
+            >
+                <gmap-marker
+                    :key="index"
+                    v-for="(m, index) in providersMarkers"
+                    :position="m.position"
+                    @click="onClickMarker(index)"
+                    :clickable="true"
+                ></gmap-marker>
+            </gmap-map>
         </div>
-        <br />
-        <gmap-map
-            :center="center"
-            :zoom="12"
-            style="width:100%;  height: 400px;"
-        >
-            <gmap-marker
-                :key="index"
-                v-for="(m, index) in markers"
-                :position="m.position"
-                @click="center = m.position"
-            ></gmap-marker>
-        </gmap-map>
+        <div class="col-md-4">
+            {{ selectedProvider }}
+        </div>
     </div>
 </template>
 
 <script>
+import Auth from "../../services/auth.js";
+
 export default {
     name: "GoogleMap",
+    props: ["allProviders"],
     data() {
         return {
             // default to Montreal to keep it simple
             // change this to whatever makes sense
             center: { lat: 45.508, lng: -73.587 },
+            providers: this.allProviders,
             markers: [],
             places: [],
-            currentPlace: null
+            currentPlace: null,
+            selectedProvider: {}
         };
     },
 
@@ -60,13 +61,25 @@ export default {
                 this.currentPlace = null;
             }
         },
+        onClickMarker(index) {
+            console.log(index);
+            this.selectedProvider = this.providers[index];
+        },
         geolocate: function() {
-            navigator.geolocation.getCurrentPosition(position => {
-                this.center = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-            });
+            this.center = {
+                lat: Auth.currentUser().location.lat,
+                lng: Auth.currentUser().location.lng
+            };
+        }
+    },
+    computed: {
+        providersMarkers() {
+            return this.providers.map(provider => ({
+                position: {
+                    lat: provider.location.lat,
+                    lng: provider.location.lng
+                }
+            }));
         }
     }
 };

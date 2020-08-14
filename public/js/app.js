@@ -1985,6 +1985,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_auth_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/auth.js */ "./resources/js/services/auth.js");
 //
 //
 //
@@ -2008,12 +2009,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GoogleMap",
+  props: ["allProviders"],
   data: function data() {
     return {
       // default to Montreal to keep it simple
@@ -2022,9 +2021,11 @@ __webpack_require__.r(__webpack_exports__);
         lat: 45.508,
         lng: -73.587
       },
+      providers: this.allProviders,
       markers: [],
       places: [],
-      currentPlace: null
+      currentPlace: null,
+      selectedProvider: {}
     };
   },
   mounted: function mounted() {
@@ -2049,13 +2050,25 @@ __webpack_require__.r(__webpack_exports__);
         this.currentPlace = null;
       }
     },
+    onClickMarker: function onClickMarker(index) {
+      console.log(index);
+      this.selectedProvider = this.providers[index];
+    },
     geolocate: function geolocate() {
-      var _this = this;
-
-      navigator.geolocation.getCurrentPosition(function (position) {
-        _this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
+      this.center = {
+        lat: _services_auth_js__WEBPACK_IMPORTED_MODULE_0__["default"].currentUser().location.lat,
+        lng: _services_auth_js__WEBPACK_IMPORTED_MODULE_0__["default"].currentUser().location.lng
+      };
+    }
+  },
+  computed: {
+    providersMarkers: function providersMarkers() {
+      return this.providers.map(function (provider) {
+        return {
+          position: {
+            lat: provider.location.lat,
+            lng: provider.location.lng
+          }
         };
       });
     }
@@ -40595,49 +40608,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", [
-        _c("h2", [_vm._v("Search and add a pin")]),
-        _vm._v(" "),
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "col-md-8" },
+      [
         _c(
-          "label",
-          [
-            _c("gmap-autocomplete", { on: { place_changed: _vm.setPlace } }),
-            _vm._v(" "),
-            _c("button", { on: { click: _vm.addMarker } }, [_vm._v("Add")])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("br")
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "gmap-map",
-        {
-          staticStyle: { width: "100%", height: "400px" },
-          attrs: { center: _vm.center, zoom: 12 }
-        },
-        _vm._l(_vm.markers, function(m, index) {
-          return _c("gmap-marker", {
-            key: index,
-            attrs: { position: m.position },
-            on: {
-              click: function($event) {
-                _vm.center = m.position
+          "gmap-map",
+          {
+            staticStyle: { width: "100%", height: "400px" },
+            attrs: { center: _vm.center, zoom: 12 }
+          },
+          _vm._l(_vm.providersMarkers, function(m, index) {
+            return _c("gmap-marker", {
+              key: index,
+              attrs: { position: m.position, clickable: true },
+              on: {
+                click: function($event) {
+                  return _vm.onClickMarker(index)
+                }
               }
-            }
-          })
-        }),
-        1
-      )
-    ],
-    1
-  )
+            })
+          }),
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-4" }, [
+      _vm._v("\n        " + _vm._s(_vm.selectedProvider) + "\n    ")
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

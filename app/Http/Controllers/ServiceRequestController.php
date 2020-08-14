@@ -72,8 +72,11 @@ class ServiceRequestController extends Controller
      */
     public function createStepThree(ServiceRequest $serviceRequest)
     {
+        $providers = User::ofRole('provider')->get();
+
         return view('service_requests.create_step_three', [
-            'serviceRequest' => $serviceRequest
+            'serviceRequest' => $serviceRequest,
+            'providers' => $providers
         ]);
     }
 

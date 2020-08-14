@@ -6,6 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Step 2: Upload prescription images</h4>
+                    <small>Total cost {{ 'GHC ' . $serviceRequest->service->price }}</small>
                 </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('files.store', ['serviceRequest' => $serviceRequest->id]) }}"
