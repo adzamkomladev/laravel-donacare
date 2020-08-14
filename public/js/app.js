@@ -63518,8 +63518,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _type
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/kbee/Documents/Projects/Work/Bittech/laravel-blood-donor/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/kbee/Documents/Projects/Work/Bittech/laravel-blood-donor/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/snad/Laravel/laravel-blood-donor/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/snad/Laravel/laravel-blood-donor/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
