@@ -38,6 +38,11 @@ Route::get('services', 'ServiceController@index')->name('services.index');
 Route::get('services/create', 'ServiceController@create')->name('services.create');
 Route::post('services', 'ServiceController@store')->name('services.store');
 
+// Complaints
+Route::get('complaints', 'ComplaintController@index')->name('complaints.index');
+Route::get('complaints/create', 'ComplaintController@create')->name('complaints.create');
+Route::post('complaints', 'ComplaintController@store')->name('complaints.store');
+
 // Service request
 Route::get('service-requests/create/step-one', 'ServiceRequestController@createStepOne')->name('service-requests.create.step-one');
 Route::post('service-requests/step-one', 'ServiceRequestController@storeStepOne')->name('service-requests.store.step-one');
@@ -47,3 +52,8 @@ Route::get('service-requests/create/step-three/{serviceRequest}', 'ServiceReques
 
 // File upload for service request
 Route::post('files/{serviceRequest}', 'FileController@store')->name('files.store');
+
+// Paystack
+Route::get('/pay', 'PaymentController@index')->name('payment.index');
+Route::post('/pay', 'PaymentController@redirectToGateway')->name('payment.pay');
+

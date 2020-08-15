@@ -26,6 +26,8 @@ Route::group(['prefix' => 'v1'], function () {
     Route::patch('/services/{service}/toggle-availability', 'ServiceController@toggleAvailability');
     Route::put('/services/{service}', 'ServiceController@update');
 
+    Route::put('/complaints/{complaint}', 'ComplaintController@update');
+
     Route::post('/locations', 'LocationController@store');
 
     Route::patch('/service-requests/{serviceRequest}/select-provider', 'ServiceRequestController@selectProvider');

@@ -42,7 +42,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $with = ['profile', 'location'];
+    protected $with = ['profile', 'location', 'complaint'];
 
     /**
      * Scope a query to only include users of a given role.
@@ -59,6 +59,11 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function complaint()
+    {
+        return $this->hasMany(Complaint::class);
     }
 
     public function serviceRequests()

@@ -7,7 +7,7 @@
                     <small>Admin</small>
                 </div>
             </td>
-            <td class="text-left">Account name</td>
+            <td class="text-left">{{ user.profile.full_name }}</td>
             <td class="text-left">{{ user.telephone }}</td>
             <td>
                 <div v-if="!isAdmin" class="form-check">

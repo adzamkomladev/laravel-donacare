@@ -46,6 +46,14 @@ Vue.component(
     require("./components/services/ServiceUpdateModal.vue").default
 );
 Vue.component(
+    "complaint-row",
+    require("./components/complaints/ComplaintRow.vue").default
+);
+Vue.component(
+    "complaint-update-modal",
+    require("./components/complaints/ComplaintUpdateModel.vue").default
+);
+Vue.component(
     "provider-proximity-map",
     require("./components/service-requests/ProviderProximityMap.vue").default
 );
