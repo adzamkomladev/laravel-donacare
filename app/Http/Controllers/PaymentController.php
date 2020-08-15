@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
+use App\ServiceRequest;
 use Illuminate\Http\Request;
 use Unicodeveloper\Paystack\Paystack;
 
@@ -22,8 +23,9 @@ class PaymentController extends Controller
         $this->middleware(CheckProfile::class);
     }
 
-    public function index(){
-        return view('payment.index');
+    public function index(ServiceRequest $serviceRequest)
+    {
+        return view('payment.index', ['serviceRequest' => $serviceRequest]);
     }
     /**
      * Redirect the User to Paystack Payment Page

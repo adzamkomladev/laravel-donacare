@@ -16,8 +16,8 @@
                     </provider-proximity-map>
 
                     <a class="btn btn-primary btn-round mb-3"
-                        href="{{ route('service-requests.create.step-three', ['serviceRequest' => $serviceRequest->id]) }}">
-                        Save and continue
+                        href="{{ route('payment.index', ['serviceRequest' => $serviceRequest->id]) }}">
+                        Move to payment
                     </a>
                 </div>
             </div>

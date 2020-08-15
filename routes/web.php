@@ -54,6 +54,5 @@ Route::get('service-requests/create/step-three/{serviceRequest}', 'ServiceReques
 Route::post('files/{serviceRequest}', 'FileController@store')->name('files.store');
 
 // Paystack
-Route::get('/pay', 'PaymentController@index')->name('payment.index');
+Route::get('/pay/{serviceRequest}', 'PaymentController@index')->name('payment.index');
 Route::post('/pay', 'PaymentController@redirectToGateway')->name('payment.pay');
-
