@@ -34,7 +34,7 @@
             </li>
             <li class="@if('complaints.index' === Route::currentRouteName()) active @endif">
                 <a href="{{ route('complaints.index') }}">
-                    <i class="now-ui-icons education_atom"></i>
+                    <i class="fas fa-comment"></i>
                     <p>Complaints</p>
                 </a>
             </li>

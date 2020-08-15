@@ -51,7 +51,7 @@ Vue.component(
 );
 Vue.component(
     "complaint-update-modal",
-    require("./components/complaints/ComplaintUpdateModel.vue").default
+    require("./components/complaints/ComplaintUpdateModal.vue").default
 );
 Vue.component(
     "provider-proximity-map",
