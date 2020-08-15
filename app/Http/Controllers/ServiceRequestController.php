@@ -8,6 +8,7 @@ use App\ServiceRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceRequestController extends Controller
 {
@@ -123,5 +124,23 @@ class ServiceRequestController extends Controller
     public function destroy(ServiceRequest $serviceRequest)
     {
         //
+    }
+
+    /**
+     * Select provider for service request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ServiceRequest  $serviceRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function selectProvider(Request $request, ServiceRequest $serviceRequest)
+    {
+        Validator::make($request->all(), [
+            'provider_id' => 'required|integer|exists:users,id',
+        ])->validate();
+
+        $serviceRequest->update($request->all());
+
+        return $serviceRequest;
     }
 }
