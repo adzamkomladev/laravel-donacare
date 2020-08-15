@@ -40,12 +40,7 @@
 
 <script>
 export default {
-    props: ["selectedUser"],
-    data() {
-        return {
-            user: this.selectedUser
-        };
-    },
+    props: ["user"],
     computed: {
         avatarUrl() {
             return (

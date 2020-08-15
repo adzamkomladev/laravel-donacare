@@ -16,27 +16,33 @@
             </gmap-map>
         </div>
         <div class="col-md-4">
-            {{ selectedProvider }}
+            <UserDetailsCard v-if="selectedProvider" :user="selectedProvider" />
+            <button
+                v-if="selectedProvider"
+                @click.prevent="onSelectProvider"
+                class="btn btn-primary btn-round mt-3"
+            >
+                Select provider
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-import Auth from "../../services/auth.js";
+import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
+
+import Auth from "../../services/auth";
+import ServiceRequest from "../../services/service-request";
 
 export default {
     name: "GoogleMap",
-    props: ["allProviders"],
+    components: { UserDetailsCard },
+    props: ["allProviders", "serviceRequest"],
     data() {
         return {
-            // default to Montreal to keep it simple
-            // change this to whatever makes sense
-            center: { lat: 45.508, lng: -73.587 },
+            center: { lat: 0.18702, lng: 5.55602 },
             providers: this.allProviders,
-            markers: [],
-            places: [],
-            currentPlace: null,
-            selectedProvider: {}
+            selectedProvider: null
         };
     },
 
@@ -45,31 +51,43 @@ export default {
     },
 
     methods: {
-        // receives a place object via the autocomplete component
-        setPlace(place) {
-            this.currentPlace = place;
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 3000 });
         },
-        addMarker() {
-            if (this.currentPlace) {
-                const marker = {
-                    lat: this.currentPlace.geometry.location.lat(),
-                    lng: this.currentPlace.geometry.location.lng()
-                };
-                this.markers.push({ position: marker });
-                this.places.push(this.currentPlace);
-                this.center = marker;
-                this.currentPlace = null;
-            }
-        },
+
         onClickMarker(index) {
-            console.log(index);
-            this.selectedProvider = this.providers[index];
+            this.selectedProvider = {
+                ...this.providers[index],
+                profile: { ...this.providers[index].profile },
+                location: { ...this.providers[index].location }
+            };
         },
-        geolocate: function() {
+        geolocate() {
             this.center = {
                 lat: Auth.currentUser().location.lat,
                 lng: Auth.currentUser().location.lng
             };
+        },
+        async onSelectProvider() {
+            try {
+                await ServiceRequest.selectProvider(this.serviceRequest.id, {
+                    provider_id: this.selectedProvider.id
+                });
+
+                this.showNotification(
+                    "fas fa-check",
+                    "You have selected a provider!",
+                    "primary"
+                );
+            } catch (error) {
+                const errors = error?.response?.data?.errors;
+
+                const [message] = Object.values(errors || {})[0] || [
+                    "Failed to select provider! Try again."
+                ];
+
+                this.showNotification("fas fa-times", message, "danger");
+            }
         }
     },
     computed: {

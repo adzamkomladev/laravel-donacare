@@ -27,4 +27,6 @@ Route::group(['prefix' => 'v1'], function () {
     Route::put('/services/{service}', 'ServiceController@update');
 
     Route::post('/locations', 'LocationController@store');
+
+    Route::patch('/service-requests/{serviceRequest}/select-provider', 'ServiceRequestController@selectProvider');
 });
