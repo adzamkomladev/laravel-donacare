@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ServiceRequestController extends Controller
 {
@@ -151,6 +152,34 @@ class ServiceRequestController extends Controller
     {
         Validator::make($request->all(), [
             'provider_id' => 'required|integer|exists:users,id',
+        ])->validate();
+
+        $serviceRequest->update($request->all());
+
+        return $serviceRequest;
+    }
+
+    /**
+     * Update service request status.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ServiceRequest  $serviceRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request, ServiceRequest $serviceRequest)
+    {
+        Validator::make($request->all(), [
+            'status' => [
+                'required',
+                Rule::in([
+                    'initiated',
+                    'incomplete',
+                    'assigned',
+                    'completed',
+                    'done',
+                    'pending'
+                ])
+            ],
         ])->validate();
 
         $serviceRequest->update($request->all());

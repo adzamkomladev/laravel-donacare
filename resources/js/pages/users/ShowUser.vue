@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <UserDetailsCard :selected-user="user" />
+            <UserDetailsCard :user="user" />
         </div>
     </div>
 </template>
