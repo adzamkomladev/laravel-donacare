@@ -61,6 +61,10 @@ Vue.component(
     "obtain-current-location",
     require("./components/auth/ObtainCurrentLocation.vue").default
 );
+Vue.component(
+    "service-request-row",
+    require("./components/service-requests/ServiceRequestRow.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

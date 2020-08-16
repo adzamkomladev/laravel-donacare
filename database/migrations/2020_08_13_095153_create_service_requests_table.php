@@ -22,7 +22,7 @@ class CreateServiceRequestsTable extends Migration
             $table->foreignId('service_id')->nullable()->constrained();
 
             $table->text('description');
-            $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('initiated');
+            $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('incomplete');
             $table->string('hospital_name', 255)->nullable();
             $table->string('hospital_contact', 255)->nullable();
             $table->string('hospital_location', 255)->nullable();

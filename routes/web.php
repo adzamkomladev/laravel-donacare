@@ -48,7 +48,8 @@ Route::get('service-requests/create/step-one', 'ServiceRequestController@createS
 Route::post('service-requests/step-one', 'ServiceRequestController@storeStepOne')->name('service-requests.store.step-one');
 Route::get('service-requests/create/step-two/{serviceRequest}', 'ServiceRequestController@createStepTwo')->name('service-requests.create.step-two');
 Route::get('service-requests/create/step-three/{serviceRequest}', 'ServiceRequestController@createStepThree')->name('service-requests.create.step-three');
-
+Route::get('service-requests', 'ServiceRequestController@index')->name('service-requests.index');
+Route::get('service-requests/{serviceRequest}', 'ServiceRequestController@show')->name('service-requests.show');
 
 // File upload for service request
 Route::post('files/{serviceRequest}', 'FileController@store')->name('files.store');
