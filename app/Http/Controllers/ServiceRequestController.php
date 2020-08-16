@@ -19,7 +19,21 @@ class ServiceRequestController extends Controller
      */
     public function index()
     {
-        //
+        $role = Auth::user()->role;
+
+        $serviceRequests = [];
+
+        if ($role === 'admin') {
+            $serviceRequests  = ServiceRequest::with(['provider', 'service'])->paginate(6);
+        } else if ($role === 'provider') {
+            $serviceRequests  =
+                ServiceRequest::with(['patient', 'service'])->where('provider_id', Auth::id())->paginate(6);
+        } else {
+            $serviceRequests  =
+                ServiceRequest::with(['provider', 'service'])->where('patient_id', Auth::id())->paginate(6);
+        }
+
+        return view('service_requests.index', ['serviceRequests' => $serviceRequests]);
     }
 
     /**
@@ -89,7 +103,7 @@ class ServiceRequestController extends Controller
      */
     public function show(ServiceRequest $serviceRequest)
     {
-        //
+        return view('service_requests.show', ['serviceRequest' => $serviceRequest]);
     }
 
     /**

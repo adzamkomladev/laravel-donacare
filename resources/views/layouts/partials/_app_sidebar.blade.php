@@ -34,11 +34,16 @@
             </li>
             <li class="@if('complaints.index' === Route::currentRouteName()) active @endif">
                 <a href="{{ route('complaints.index') }}">
-                    <i class="now-ui-icons education_atom"></i>
+                    <i class="fas fa-comment"></i>
                     <p>Complaints</p>
                 </a>
             </li>
-
+            <li class="@if('service-requests.index' === Route::currentRouteName()) active @endif">
+                <a href="{{ route('service-requests.index') }}">
+                    <i class="fas fa-folder-open"></i>
+                    <p>Service requests</p>
+                </a>
+            </li>
             <li>
                 <a href="./reports.html">
                     <i class="now-ui-icons education_atom"></i>
@@ -51,12 +56,14 @@
                     <p>Logs</p>
                 </a>
             </li>
-            <li class="@if('service-requests.create.step-one' === Route::currentRouteName()) active @endif">
-                <a href="{{ route('service-requests.create.step-one') }}">
-                    <i class="fas fa-procedures"></i>
-                    <p>Make a request</p>
-                </a>
-            </li>
+            @if (Auth::user()->role === 'patient')
+                <li class="@if('service-requests.create.step-one' === Route::currentRouteName()) active @endif">
+                    <a href="{{ route('service-requests.create.step-one') }}">
+                        <i class="fas fa-procedures"></i>
+                        <p>Make a request</p>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

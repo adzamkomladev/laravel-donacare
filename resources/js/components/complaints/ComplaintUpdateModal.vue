@@ -69,7 +69,7 @@
     import Auth from "../../services/auth";
 
     export default {
-        name: "ComplaintUpdateModel",
+        name: "ComplaintUpdateModal",
         created() {
             eventBus.$on(
                 "selectedComplaint",
