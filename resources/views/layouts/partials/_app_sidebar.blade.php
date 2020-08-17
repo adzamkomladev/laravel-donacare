@@ -4,10 +4,10 @@
 -->
     <div class="logo">
         <a href="{{ url('/') }}" class="simple-text logo-mini">
-            {{ config('app.name', 'Laravel') }}
+            {{ config('app.name', 'Blood donor') }}
         </a>
         <a href="{{ route('home') }}" class="simple-text logo-normal">
-            admin
+            Dashboard
         </a>
     </div>
     <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -44,7 +44,7 @@
                     <p>Service requests</p>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="./reports.html">
                     <i class="now-ui-icons education_atom"></i>
                     <p>Reports</p>
@@ -55,7 +55,7 @@
                     <i class="now-ui-icons education_atom"></i>
                     <p>Logs</p>
                 </a>
-            </li>
+            </li> --}}
             @if (Auth::user()->role === 'patient')
                 <li class="@if('service-requests.create.step-one' === Route::currentRouteName()) active @endif">
                     <a href="{{ route('service-requests.create.step-one') }}">

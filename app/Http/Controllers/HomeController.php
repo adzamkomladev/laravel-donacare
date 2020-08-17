@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
+use App\Service;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,6 +29,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $latestUsers = User::latest()->paginate(6);
+        $topServices =  Service::all()->sortBy(function ($service) {
+            return count($service->serviceRequests);
+        })->slice(0, 6);
+
+        return view('home', ['users' => $latestUsers, 'services' => $topServices]);
     }
 }

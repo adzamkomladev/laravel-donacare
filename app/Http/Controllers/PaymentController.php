@@ -6,7 +6,7 @@ use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
 use App\ServiceRequest;
 use Illuminate\Http\Request;
-use Unicodeveloper\Paystack\Paystack;
+use Paystack;
 
 class PaymentController extends Controller
 {
@@ -33,7 +33,9 @@ class PaymentController extends Controller
      */
     public function redirectToGateway(Request $request)
     {
-        dd($request);
+        return redirect()->route('service-requests.index');
+
+        //dd($request);
         return Paystack::getAuthorizationUrl()->redirectNow();
     }
 
@@ -45,7 +47,6 @@ class PaymentController extends Controller
     {
         $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want

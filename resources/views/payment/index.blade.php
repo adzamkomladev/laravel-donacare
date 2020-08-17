@@ -11,15 +11,16 @@
                     <form action="{{ route('payment.pay') }}" method="POST" accept-charset="UTF-8" class="form-horizontal"
                         role="form">
                         @csrf
-                        {{-- <input type="hidden" name="reference"
-                            value="{{ Paystack::genTranxRef() }}"> --}}
-
+                        <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
+                        <input type="hidden" name="currency" value="GHS">
+                        <input type="hidden" name="orderID" value="{{ $serviceRequest->id }}">
+                        <input type="hidden" name="quantity" value="1">
                         <div class="row">
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="email" class="form-control @error('email') form-control-danger @enderror"
-                                        name="name" value="{{ old('email') }}" required placeholder="Email">
+                                        name="email" value="{{ old('email') }}" required placeholder="Email">
                                 </div>
                             </div>
                             <div class="col-md-6 pl-1">
@@ -27,7 +28,7 @@
                                     <label>Amount</label>
                                     <input type="number" step=".01" min="0"
                                         class="form-control @error('amount') form-control-danger @enderror"
-                                        placeholder="Amount" name="price" value="{{ old('amount') }}" required>
+                                        placeholder="Amount" name="amount" value="{{ old('amount') }}" required>
                                 </div>
                             </div>
                         </div>

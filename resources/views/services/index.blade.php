@@ -6,9 +6,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Services</h4>
-                    <a id="prntrpt" href="{{ route('services.create') }}" class="btn btn-round btn-primary">
-                        <i class="fas fa-plus"></i> Add service
-                    </a>
+                    @if (Auth::user()->role === 'admin')
+                        <a id="prntrpt" href="{{ route('services.create') }}" class="btn btn-round btn-primary">
+                            <i class="fas fa-plus"></i> Add service
+                        </a>
+                    @endif
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

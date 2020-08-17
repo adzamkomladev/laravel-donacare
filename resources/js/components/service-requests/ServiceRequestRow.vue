@@ -3,7 +3,7 @@
         <tr v-if="canShow">
             <td class="text-left">{{ serviceRequest.service.name }}</td>
             <td class="text-left">{{ serviceRequest.service.price }}</td>
-            <td class="text-left">{{ serviceRequest.provider.full_name }}</td>
+            <td class="text-left">{{ displayName }}</td>
             <td class="text-left">
                 <span v-if="isLow" class="badge badge-pill badge-danger">
                     {{ serviceRequest.status }}
@@ -47,8 +47,8 @@ export default {
             const isProvider = Auth.currentUser().role === "provider";
 
             return isProvider
-                ? this.serviceRequest.patient.full_name
-                : this.serviceRequest.provider.full_name;
+                ? this.serviceRequest.patient.profile.full_name
+                : this.serviceRequest.provider.profile.full_name;
         },
         isLow() {
             return (

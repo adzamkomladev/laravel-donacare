@@ -13,7 +13,7 @@ class ServiceRequest extends Model
      */
     protected $fillable = [
         'patient_id', 'provider_id', 'service_id', 'description', 'hospital_name',
-        'hospital_contact', 'hospital_location', 'doctor_name', 'doctor_contact',
+        'hospital_contact', 'hospital_location', 'doctor_name', 'doctor_contact', 'status'
     ];
 
     public function patient()
