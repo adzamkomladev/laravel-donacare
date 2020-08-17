@@ -17,9 +17,21 @@
                     <i class="fas fa-user-tag"></i>
                     {{ user.role }}
                 </p>
-                <p class="text-muted location-text">
+                <p
+                    v-if="user.profile.home_address"
+                    class="text-muted location-text"
+                >
                     <i class="fas fa-map-marker-alt"></i>
-                    Recent location: Accra old Essuman road, 134.
+                    Home address: {{ user.profile.home_address }}
+                </p>
+                <p class="text-muted location-text">
+                    Blood group: {{ user.profile.blood_group }}
+                </p>
+                <p class="text-muted location-text">
+                    Mobile money number: {{ user.profile.mobile_money_number }}
+                </p>
+                <p class="text-muted location-text">
+                    Mobile money name: {{ user.profile.mobile_money_name }}
                 </p>
             </div>
         </div>

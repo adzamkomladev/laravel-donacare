@@ -115,7 +115,7 @@
                                             <input id="mobile-money_name" type="text"
                                                 class="form-control @error('mobile_money_name') form-control-danger @enderror"
                                                 name="mobile_money_name" value="{{ old('mobile_money_name') }}" required
-                                                autofocus placeholder="Your mobile money number">
+                                                autofocus placeholder="Your mobile money name">
                                         </div>
                                         @error('mobile_money_name')
                                         <small class="form-text text-muted text-danger">
@@ -132,7 +132,7 @@
                                             <input id="mobile-money-number" type="text"
                                                 class="form-control @error('mobile_money_number') form-control-danger @enderror"
                                                 name="mobile_money_number" value="{{ old('mobile_money_number') }}" required
-                                                autofocus placeholder="Mobile money number">
+                                                autofocus placeholder="Your mobile money number">
                                         </div>
                                         @error('mobile_money_number')
                                         <small class="form-text text-muted text-danger">
@@ -160,14 +160,23 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="blood-group">Blood group</label>
+                                        <label for="blood_group">Blood group</label>
                                         <div class="input-group @error('blood_group') has-danger @enderror">
-                                            <input id="blood-group" type="text"
+                                            <select id="blood_group"
                                                 class="form-control @error('blood_group') form-control-danger @enderror"
-                                                name="blood_group" value="{{ old('blood_group') }}" required autofocus
-                                                placeholder="Your blood group">
+                                                name="blood_group" required>
+                                                <option value="O+" selected>O positive</option>
+                                                <option value="O-">O negative</option>
+                                                <option value="A+">A positive</option>
+                                                <option value="A-">A negative</option>
+                                                <option value="B+">B positive</option>
+                                                <option value="B-">B negative</option>
+                                                <option value="AB+">AB positive</option>
+                                                <option value="AB-">AB negative</option>
+                                            </select>
                                         </div>
                                         @error('blood_group')
                                         <small class="form-text text-muted text-danger">
