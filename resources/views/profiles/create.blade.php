@@ -74,7 +74,7 @@
                                                 class="form-control @error('role') form-control-danger @enderror"
                                                 name="role" required>
                                                 <option value="patient">Patient</option>
-                                                <option value="provider">Provider</option>
+                                                <option value="provider">Donor</option>
                                             </select>
                                         </div>
                                         @error('role')
@@ -103,6 +103,77 @@
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="mobile-money_name">Mobile number name</label>
+                                        <div class="input-group @error('mobile_money_name') has-danger @enderror">
+                                            <input id="mobile-money_name" type="text"
+                                                class="form-control @error('mobile_money_name') form-control-danger @enderror"
+                                                name="mobile_money_name" value="{{ old('mobile_money_name') }}" required
+                                                autofocus placeholder="Your mobile money number">
+                                        </div>
+                                        @error('mobile_money_name')
+                                        <small class="form-text text-muted text-danger">
+                                            <strong>{{ $message }}</strong>
+                                        </small>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="mobile-money-number">Last name</label>
+                                        <div class="input-group @error('mobile_money_number') has-danger @enderror">
+                                            <input id="mobile-money-number" type="text"
+                                                class="form-control @error('mobile_money_number') form-control-danger @enderror"
+                                                name="mobile_money_number" value="{{ old('mobile_money_number') }}" required
+                                                autofocus placeholder="Mobile money number">
+                                        </div>
+                                        @error('mobile_money_number')
+                                        <small class="form-text text-muted text-danger">
+                                            <strong>{{ $message }}</strong>
+                                        </small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="email">Emai address</label>
+                                        <div class="input-group @error('email') has-danger @enderror">
+                                            <input id="email" type="email"
+                                                class="form-control @error('email') form-control-danger @enderror"
+                                                name="email" value="{{ old('email') }}" autofocus
+                                                placeholder="Your email address">
+                                        </div>
+                                        @error('email')
+                                        <small class="form-text text-muted text-danger">
+                                            <strong>{{ $message }}</strong>
+                                        </small>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="blood-group">Blood group</label>
+                                        <div class="input-group @error('blood_group') has-danger @enderror">
+                                            <input id="blood-group" type="text"
+                                                class="form-control @error('blood_group') form-control-danger @enderror"
+                                                name="blood_group" value="{{ old('blood_group') }}" required autofocus
+                                                placeholder="Your blood group">
+                                        </div>
+                                        @error('blood_group')
+                                        <small class="form-text text-muted text-danger">
+                                            <strong>{{ $message }}</strong>
+                                        </small>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

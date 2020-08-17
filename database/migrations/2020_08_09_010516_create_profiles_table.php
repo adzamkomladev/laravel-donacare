@@ -18,9 +18,13 @@ class CreateProfilesTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->string('first_name', 50);
             $table->string('last_name', 50);
-            $table->string('other_names', 100);
+            $table->string('other_names', 100)->nullable();
             $table->text('avatar')->nullable();
             $table->enum('gender', ['male', 'female']);
+            $table->string('blood_group', 100);
+            $table->string('email', 100)->nullable();
+            $table->string('mobile_money_name', 100);
+            $table->string('mobile_money_number', 15);
             $table->timestamps();
         });
     }
