@@ -27,6 +27,11 @@ class StoreProfile extends FormRequest
         return [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
+            'other_names' => 'nullable|string|max:100',
+            'email' => 'nullable|string|max:100',
+            'mobile_money_name' => 'required|string|max:100',
+            'mobile_money_number' => 'required|string|max:15',
+            'blood_group' => 'required|string|max:100',
             'gender' => ['required', Rule::in(['male', 'female'])],
             'role' => ['required', Rule::in(['patient', 'provider'])],
         ];
