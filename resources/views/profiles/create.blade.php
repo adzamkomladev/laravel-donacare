@@ -127,7 +127,7 @@
 
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="mobile-money-number">Last name</label>
+                                        <label for="mobile-money-number">Mobile money number</label>
                                         <div class="input-group @error('mobile_money_number') has-danger @enderror">
                                             <input id="mobile-money-number" type="text"
                                                 class="form-control @error('mobile_money_number') form-control-danger @enderror"
