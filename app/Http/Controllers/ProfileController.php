@@ -99,6 +99,7 @@ class ProfileController extends Controller
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             'other_names' => 'nullable|string|max:100',
+            'home_address' => 'nullable|string|max:100',
         ])->validate();
 
         $profile->update($request->all());
