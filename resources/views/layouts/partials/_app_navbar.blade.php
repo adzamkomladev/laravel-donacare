@@ -19,6 +19,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
 
             <ul class="navbar-nav">
+                <navbar-actions></navbar-actions>
                 <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                         <p>

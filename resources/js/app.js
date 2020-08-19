@@ -69,6 +69,10 @@ Vue.component(
     "update-status-form",
     require("./components/service-requests/UpdateStatusForm.vue").default
 );
+Vue.component(
+    "navbar-actions",
+    require("./components/layouts/NavbarActions.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
