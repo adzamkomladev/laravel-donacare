@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('telephone_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('role', ['admin', 'patient', 'provider'])->nullable();
+            $table->enum('role', ['admin', 'patient', 'donor'])->nullable();
             $table->timestamps();
         });
     }

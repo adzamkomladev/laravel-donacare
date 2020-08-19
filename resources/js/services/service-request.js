@@ -1,7 +1,7 @@
 export default class ServiceRequest {
-    static selectProvider(serviceRequestId, data) {
+    static selectDonor(serviceRequestId, data) {
         return axios.patch(
-            `/api/v1/service-requests/${serviceRequestId}/select-provider`,
+            `/api/v1/service-requests/${serviceRequestId}/select-donor`,
             data
         );
     }

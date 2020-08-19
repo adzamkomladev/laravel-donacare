@@ -30,6 +30,6 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::post('/locations', 'LocationController@store');
 
-    Route::patch('/service-requests/{serviceRequest}/select-provider', 'ServiceRequestController@selectProvider');
+    Route::patch('/service-requests/{serviceRequest}/select-donor', 'ServiceRequestController@selectDonor');
     Route::patch('/service-requests/{serviceRequest}/update-status', 'ServiceRequestController@updateStatus');
 });

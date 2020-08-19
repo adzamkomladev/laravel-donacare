@@ -2663,10 +2663,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2739,15 +2739,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     UserDetailsCard: _components_users_UserDetailsCard_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ["allProviders", "serviceRequest"],
+  props: ["allDonors", "serviceRequest"],
   data: function data() {
     return {
       center: {
         lat: 0.18702,
         lng: 5.55602
       },
-      providers: this.allProviders,
-      selectedProvider: null
+      donors: this.allDonors,
+      selectedDonor: null
     };
   },
   mounted: function mounted() {
@@ -2764,9 +2764,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     onClickMarker: function onClickMarker(index) {
-      this.selectedProvider = _objectSpread(_objectSpread({}, this.providers[index]), {}, {
-        profile: _objectSpread({}, this.providers[index].profile),
-        location: _objectSpread({}, this.providers[index].location)
+      this.selectedDonor = _objectSpread(_objectSpread({}, this.donors[index]), {}, {
+        profile: _objectSpread({}, this.donors[index].profile),
+        location: _objectSpread({}, this.donors[index].location)
       });
     },
     geolocate: function geolocate() {
@@ -2775,7 +2775,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         lng: _services_auth__WEBPACK_IMPORTED_MODULE_2__["default"].currentUser().location.lng
       };
     },
-    onSelectProvider: function onSelectProvider() {
+    onSelectDonor: function onSelectDonor() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2787,12 +2787,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _services_service_request__WEBPACK_IMPORTED_MODULE_3__["default"].selectProvider(_this.serviceRequest.id, {
-                  provider_id: _this.selectedProvider.id
+                return _services_service_request__WEBPACK_IMPORTED_MODULE_3__["default"].selectDonor(_this.serviceRequest.id, {
+                  donor_id: _this.selectedDonor.id
                 });
 
               case 3:
-                _this.showNotification("fas fa-check", "You have selected a provider!", "primary");
+                _this.showNotification("fas fa-check", "You have selected a donor!", "primary");
 
                 _context.next = 11;
                 break;
@@ -2801,7 +2801,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context.prev = 6;
                 _context.t0 = _context["catch"](0);
                 errors = _context.t0 === null || _context.t0 === void 0 ? void 0 : (_error$response = _context.t0.response) === null || _error$response === void 0 ? void 0 : (_error$response$data = _error$response.data) === null || _error$response$data === void 0 ? void 0 : _error$response$data.errors;
-                _ref = Object.values(errors || {})[0] || ["Failed to select provider! Try again."], _ref2 = _slicedToArray(_ref, 1), message = _ref2[0];
+                _ref = Object.values(errors || {})[0] || ["Failed to select donor! Try again."], _ref2 = _slicedToArray(_ref, 1), message = _ref2[0];
 
                 _this.showNotification("fas fa-times", message, "danger");
 
@@ -2815,12 +2815,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: {
-    providersMarkers: function providersMarkers() {
-      return this.providers.map(function (provider) {
+    donorsMarkers: function donorsMarkers() {
+      return this.donors.map(function (donor) {
         return {
           position: {
-            lat: provider.location.lat,
-            lng: provider.location.lng
+            lat: donor.location.lat,
+            lng: donor.location.lng
           }
         };
       });
@@ -2884,8 +2884,8 @@ __webpack_require__.r(__webpack_exports__);
       return "/service-requests/".concat(this.serviceRequest.id);
     },
     displayName: function displayName() {
-      var isProvider = _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].currentUser().role === "provider";
-      return isProvider ? this.serviceRequest.patient.profile.full_name : this.serviceRequest.provider.profile.full_name;
+      var isDonor = _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].currentUser().role === "donor";
+      return isDonor ? this.serviceRequest.patient.profile.full_name : this.serviceRequest.donor.profile.full_name;
     },
     isLow: function isLow() {
       return this.serviceRequest.status === "incomplete" || this.serviceRequest.status === "pending";
@@ -42663,10 +42663,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=template&id=047b64b4&":
-/*!****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=template&id=047b64b4& ***!
-  \****************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=template&id=ce28844a&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=template&id=ce28844a& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -42689,7 +42689,7 @@ var render = function() {
             staticStyle: { width: "100%", height: "400px" },
             attrs: { center: _vm.center, zoom: 12 }
           },
-          _vm._l(_vm.providersMarkers, function(m, index) {
+          _vm._l(_vm.donorsMarkers, function(m, index) {
             return _c("gmap-marker", {
               key: index,
               attrs: { position: m.position, clickable: true },
@@ -42710,11 +42710,11 @@ var render = function() {
       "div",
       { staticClass: "col-md-4" },
       [
-        _vm.selectedProvider
-          ? _c("UserDetailsCard", { attrs: { user: _vm.selectedProvider } })
+        _vm.selectedDonor
+          ? _c("UserDetailsCard", { attrs: { user: _vm.selectedDonor } })
           : _vm._e(),
         _vm._v(" "),
-        _vm.selectedProvider
+        _vm.selectedDonor
           ? _c(
               "button",
               {
@@ -42722,11 +42722,11 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    return _vm.onSelectProvider($event)
+                    return _vm.onSelectDonor($event)
                   }
                 }
               },
-              [_vm._v("\n            Select provider\n        ")]
+              [_vm._v("\n            Select donor\n        ")]
             )
           : _vm._e()
       ],
@@ -58879,7 +58879,7 @@ Vue.component("service-details-modal", __webpack_require__(/*! ./components/serv
 Vue.component("service-update-modal", __webpack_require__(/*! ./components/services/ServiceUpdateModal.vue */ "./resources/js/components/services/ServiceUpdateModal.vue")["default"]);
 Vue.component("complaint-row", __webpack_require__(/*! ./components/complaints/ComplaintRow.vue */ "./resources/js/components/complaints/ComplaintRow.vue")["default"]);
 Vue.component("complaint-update-modal", __webpack_require__(/*! ./components/complaints/ComplaintUpdateModal.vue */ "./resources/js/components/complaints/ComplaintUpdateModal.vue")["default"]);
-Vue.component("provider-proximity-map", __webpack_require__(/*! ./components/service-requests/ProviderProximityMap.vue */ "./resources/js/components/service-requests/ProviderProximityMap.vue")["default"]);
+Vue.component("donor-proximity-map", __webpack_require__(/*! ./components/service-requests/DonorProximityMap.vue */ "./resources/js/components/service-requests/DonorProximityMap.vue")["default"]);
 Vue.component("obtain-current-location", __webpack_require__(/*! ./components/auth/ObtainCurrentLocation.vue */ "./resources/js/components/auth/ObtainCurrentLocation.vue")["default"]);
 Vue.component("service-request-row", __webpack_require__(/*! ./components/service-requests/ServiceRequestRow.vue */ "./resources/js/components/service-requests/ServiceRequestRow.vue")["default"]);
 Vue.component("update-status-form", __webpack_require__(/*! ./components/service-requests/UpdateStatusForm.vue */ "./resources/js/components/service-requests/UpdateStatusForm.vue")["default"]);
@@ -59391,17 +59391,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/service-requests/ProviderProximityMap.vue":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/service-requests/ProviderProximityMap.vue ***!
-  \***************************************************************************/
+/***/ "./resources/js/components/service-requests/DonorProximityMap.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/service-requests/DonorProximityMap.vue ***!
+  \************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ProviderProximityMap_vue_vue_type_template_id_047b64b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProviderProximityMap.vue?vue&type=template&id=047b64b4& */ "./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=template&id=047b64b4&");
-/* harmony import */ var _ProviderProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProviderProximityMap.vue?vue&type=script&lang=js& */ "./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=script&lang=js&");
+/* harmony import */ var _DonorProximityMap_vue_vue_type_template_id_ce28844a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DonorProximityMap.vue?vue&type=template&id=ce28844a& */ "./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=template&id=ce28844a&");
+/* harmony import */ var _DonorProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DonorProximityMap.vue?vue&type=script&lang=js& */ "./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -59411,9 +59411,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ProviderProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ProviderProximityMap_vue_vue_type_template_id_047b64b4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ProviderProximityMap_vue_vue_type_template_id_047b64b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _DonorProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DonorProximityMap_vue_vue_type_template_id_ce28844a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DonorProximityMap_vue_vue_type_template_id_ce28844a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -59423,38 +59423,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/service-requests/ProviderProximityMap.vue"
+component.options.__file = "resources/js/components/service-requests/DonorProximityMap.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************/
+/***/ "./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProviderProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProviderProximityMap.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProviderProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DonorProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DonorProximityMap.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DonorProximityMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=template&id=047b64b4&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=template&id=047b64b4& ***!
-  \**********************************************************************************************************/
+/***/ "./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=template&id=ce28844a&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=template&id=ce28844a& ***!
+  \*******************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProviderProximityMap_vue_vue_type_template_id_047b64b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProviderProximityMap.vue?vue&type=template&id=047b64b4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/ProviderProximityMap.vue?vue&type=template&id=047b64b4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProviderProximityMap_vue_vue_type_template_id_047b64b4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DonorProximityMap_vue_vue_type_template_id_ce28844a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DonorProximityMap.vue?vue&type=template&id=ce28844a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/service-requests/DonorProximityMap.vue?vue&type=template&id=ce28844a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DonorProximityMap_vue_vue_type_template_id_ce28844a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProviderProximityMap_vue_vue_type_template_id_047b64b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DonorProximityMap_vue_vue_type_template_id_ce28844a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -60368,9 +60368,9 @@ var ServiceRequest = /*#__PURE__*/function () {
   }
 
   _createClass(ServiceRequest, null, [{
-    key: "selectProvider",
-    value: function selectProvider(serviceRequestId, data) {
-      return axios.patch("/api/v1/service-requests/".concat(serviceRequestId, "/select-provider"), data);
+    key: "selectDonor",
+    value: function selectDonor(serviceRequestId, data) {
+      return axios.patch("/api/v1/service-requests/".concat(serviceRequestId, "/select-donor"), data);
     }
   }, {
     key: "updateStatus",

@@ -49,7 +49,7 @@
                 <div class="card-body">
                     <h4>Bill summary</h4>
                     <p><strong>Service:</strong> {{ $serviceRequest->service->name }}</p>
-                    <p><strong>Provider:</strong> {{ $serviceRequest->provider->profile->full_name }}</p>
+                    <p><strong>Donor:</strong> {{ $serviceRequest->donor->profile->full_name }}</p>
                     <p><strong>Address:</strong> {{ $serviceRequest->service->user->location->address ?? 'Close by' }}</p>
                     <p class="text-right">Total: <strong> (GHc) {{ $serviceRequest->service->price }}<strong></p>
                 </div>

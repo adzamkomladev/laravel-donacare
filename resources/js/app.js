@@ -54,8 +54,8 @@ Vue.component(
     require("./components/complaints/ComplaintUpdateModal.vue").default
 );
 Vue.component(
-    "provider-proximity-map",
-    require("./components/service-requests/ProviderProximityMap.vue").default
+    "donor-proximity-map",
+    require("./components/service-requests/DonorProximityMap.vue").default
 );
 Vue.component(
     "obtain-current-location",

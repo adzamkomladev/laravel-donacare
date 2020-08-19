@@ -34,7 +34,7 @@
                                 </label>
                                 <p id="hospital-location">{{ $serviceRequest->hospital_location ?? 'N/A' }}</p>
                             </div>
-                            <div class="provider">
+                            <div class="donor">
 
                             </div>
                         </div>
@@ -66,22 +66,22 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="provider" class="font-weight-bold text-dark text-uppercase">Provider</label>
-                            <div id="provider" class="card text-center">
-                                <img width="120px" src="/img/avatar-default.png" alt="Provider avatar"
+                            <label for="donor" class="font-weight-bold text-dark text-uppercase">Donor</label>
+                            <div id="donor" class="card text-center">
+                                <img width="120px" src="/img/avatar-default.png" alt="Donor avatar"
                                     class="img-fluid rounded-circle mb-3">
                                 <p>
-                                    <a href="{{ route('users.show', ['user' => $serviceRequest->provider_id]) }}">
+                                    <a href="{{ route('users.show', ['user' => $serviceRequest->donor_id]) }}">
                                         <i class="fas fa-share-square"></i>
                                     </a>
-                                    {{ $serviceRequest->provider->profile->full_name }}
+                                    {{ $serviceRequest->donor->profile->full_name }}
                                 </p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="patient" class="font-weight-bold text-dark text-uppercase">Patient</label>
                             <div id="patient" class="card text-center">
-                                <img width="120px" src="/img/avatar-default.png" alt="Provider avatar"
+                                <img width="120px" src="/img/avatar-default.png" alt="Donor avatar"
                                     class="img-fluid rounded-circle mb-3">
                                 <p>
                                     <a href="{{ route('users.show', ['user' => $serviceRequest->patient_id]) }}">
