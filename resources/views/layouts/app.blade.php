@@ -25,7 +25,7 @@
         <div class="main-panel" id="main-panel">
             @include('layouts.partials._app_navbar')
 
-            <div class="panel-header panel-header-sm"></div>
+            <x-panel-header></x-panel-header>
 
             <main class="content">
                 @yield('content')
