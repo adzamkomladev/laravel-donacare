@@ -12,7 +12,9 @@ class Profile extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'other_names', 'gender', 'avatar', 'blood_group', 'mobile_money_name', 'mobile_money_number', 'home_address'
+        'user_id', 'first_name', 'last_name', 'other_names',
+         'gender', 'avatar', 'blood_group', 'mobile_money_name',
+          'mobile_money_number', 'home_address', 'type', 'jurisdiction'
     ];
 
     protected $appends = [

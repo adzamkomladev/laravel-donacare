@@ -12,6 +12,10 @@ $factory->define(Profile::class, function (Faker $faker) {
         'first_name' => $faker->firstName($gender),
         'last_name' => $faker->lastName,
         'other_names' => $faker->firstName($gender),
-        'gender' => $gender
+        'gender' => $gender,
+        'blood_group' => $faker->randomElement(['O+', 'O-', 'A+', 'A-', 'AB+', 'AB-', 'B+', 'B-']),
+        'mobile_money_name' => $faker->firstName($gender),
+        'mobile_money_number' => $faker->e164PhoneNumber,
+        'email' => $faker->email
     ];
 });
