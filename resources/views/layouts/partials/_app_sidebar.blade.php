@@ -14,52 +14,52 @@
         <ul class="nav">
             <li class="@if('home' === Route::currentRouteName()) active @endif">
                 <a href="{{ route('home') }}">
-                    <i class="fas fa-home"></i>
+                    <x-nav-icon/>
                     <p>Home</p>
                 </a>
             </li>
             @if (Auth::user()->role === 'admin')
                 <li class="@if('users.index' === Route::currentRouteName()) active @endif">
                     <a href="{{ route('users.index') }}">
-                        <i class="fas fa-users"></i>
+                        <x-nav-icon/>
                         <p>User Accounts</p>
                     </a>
                 </li>
             @endif
             <li class="@if('services.index' === Route::currentRouteName()) active @endif">
                 <a href="{{ route('services.index') }}">
-                    <i class="fas fa-briefcase"></i>
+                    <x-nav-icon/>
                     <p>Services</p>
                 </a>
             </li>
             <li class="@if('complaints.index' === Route::currentRouteName()) active @endif">
                 <a href="{{ route('complaints.index') }}">
-                    <i class="fas fa-comment"></i>
+                    <x-nav-icon/>
                     <p>Complaints</p>
                 </a>
             </li>
             <li class="@if('service-requests.index' === Route::currentRouteName()) active @endif">
                 <a href="{{ route('service-requests.index') }}">
-                    <i class="fas fa-folder-open"></i>
+                    <x-nav-icon/>
                     <p>Service requests</p>
                 </a>
             </li>
             {{-- <li>
                 <a href="./reports.html">
-                    <i class="now-ui-icons education_atom"></i>
+                    <x-nav-icon/>
                     <p>Reports</p>
                 </a>
             </li>
             <li>
                 <a href="./logs.html">
-                    <i class="now-ui-icons education_atom"></i>
+                    <x-nav-icon/>
                     <p>Logs</p>
                 </a>
             </li> --}}
             @if (Auth::user()->role === 'patient')
                 <li class="@if('service-requests.create.step-one' === Route::currentRouteName()) active @endif">
                     <a href="{{ route('service-requests.create.step-one') }}">
-                        <i class="fas fa-procedures"></i>
+                        <x-nav-icon/>
                         <p>Make a request</p>
                     </a>
                 </li>

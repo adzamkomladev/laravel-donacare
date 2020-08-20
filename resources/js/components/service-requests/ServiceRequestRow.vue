@@ -44,11 +44,11 @@ export default {
             return `/service-requests/${this.serviceRequest.id}`;
         },
         displayName() {
-            const isProvider = Auth.currentUser().role === "provider";
+            const isDonor = Auth.currentUser().role === "donor";
 
-            return isProvider
+            return isDonor
                 ? this.serviceRequest.patient.profile.full_name
-                : this.serviceRequest.provider.profile.full_name;
+                : this.serviceRequest.donor.profile.full_name;
         },
         isLow() {
             return (

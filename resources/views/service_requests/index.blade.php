@@ -14,7 +14,7 @@
                                 <th>Service</th>
                                 <th>Price (GH₵)</th>
                                 <th>
-                                    {{ Auth::user()->role === 'provider' ? 'Patient' : 'Provider' }}
+                                    {{ Auth::user()->role === 'donor' ? 'Patient' : 'Donor' }}
                                 </th>
                                 <th>Status</th>
                                 <th>Actions</th>

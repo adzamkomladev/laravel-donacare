@@ -8,7 +8,7 @@
             >
                 <gmap-marker
                     :key="index"
-                    v-for="(m, index) in providersMarkers"
+                    v-for="(m, index) in donorsMarkers"
                     :position="m.position"
                     @click="onClickMarker(index)"
                     :clickable="true"
@@ -16,13 +16,13 @@
             </gmap-map>
         </div>
         <div class="col-md-4">
-            <UserDetailsCard v-if="selectedProvider" :user="selectedProvider" />
+            <UserDetailsCard v-if="selectedDonor" :user="selectedDonor" />
             <button
-                v-if="selectedProvider"
-                @click.prevent="onSelectProvider"
+                v-if="selectedDonor"
+                @click.prevent="onSelectDonor"
                 class="btn btn-primary btn-round mt-3"
             >
-                Select provider
+                Select donor
             </button>
         </div>
     </div>
@@ -37,12 +37,12 @@ import ServiceRequest from "../../services/service-request";
 export default {
     name: "GoogleMap",
     components: { UserDetailsCard },
-    props: ["allProviders", "serviceRequest"],
+    props: ["allDonors", "serviceRequest"],
     data() {
         return {
             center: { lat: 0.18702, lng: 5.55602 },
-            providers: this.allProviders,
-            selectedProvider: null
+            donors: this.allDonors,
+            selectedDonor: null
         };
     },
 
@@ -56,10 +56,10 @@ export default {
         },
 
         onClickMarker(index) {
-            this.selectedProvider = {
-                ...this.providers[index],
-                profile: { ...this.providers[index].profile },
-                location: { ...this.providers[index].location }
+            this.selectedDonor = {
+                ...this.donors[index],
+                profile: { ...this.donors[index].profile },
+                location: { ...this.donors[index].location }
             };
         },
         geolocate() {
@@ -68,22 +68,22 @@ export default {
                 lng: Auth.currentUser().location.lng
             };
         },
-        async onSelectProvider() {
+        async onSelectDonor() {
             try {
-                await ServiceRequest.selectProvider(this.serviceRequest.id, {
-                    provider_id: this.selectedProvider.id
+                await ServiceRequest.selectDonor(this.serviceRequest.id, {
+                    donor_id: this.selectedDonor.id
                 });
 
                 this.showNotification(
                     "fas fa-check",
-                    "You have selected a provider!",
+                    "You have selected a donor!",
                     "primary"
                 );
             } catch (error) {
                 const errors = error?.response?.data?.errors;
 
                 const [message] = Object.values(errors || {})[0] || [
-                    "Failed to select provider! Try again."
+                    "Failed to select donor! Try again."
                 ];
 
                 this.showNotification("fas fa-times", message, "danger");
@@ -91,11 +91,11 @@ export default {
         }
     },
     computed: {
-        providersMarkers() {
-            return this.providers.map(provider => ({
+        donorsMarkers() {
+            return this.donors.map(donor => ({
                 position: {
-                    lat: provider.location.lat,
-                    lng: provider.location.lng
+                    lat: donor.location.lat,
+                    lng: donor.location.lng
                 }
             }));
         }

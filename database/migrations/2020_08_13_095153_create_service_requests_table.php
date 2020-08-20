@@ -17,8 +17,8 @@ class CreateServiceRequestsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('patient_id')->nullable();
             $table->foreign('patient_id')->references('id')->on('users');
-            $table->unsignedBigInteger('provider_id')->nullable();
-            $table->foreign('provider_id')->references('id')->on('users');
+            $table->unsignedBigInteger('donor_id')->nullable();
+            $table->foreign('donor_id')->references('id')->on('users');
             $table->foreignId('service_id')->nullable()->constrained();
 
             $table->text('description');

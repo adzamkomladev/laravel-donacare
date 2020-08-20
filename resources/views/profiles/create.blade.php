@@ -74,7 +74,7 @@
                                                 class="form-control @error('role') form-control-danger @enderror"
                                                 name="role" required>
                                                 <option value="patient">Patient</option>
-                                                <option value="provider">Donor</option>
+                                                <option value="donor">Donor</option>
                                             </select>
                                         </div>
                                         @error('role')

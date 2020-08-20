@@ -25,13 +25,13 @@ class ServiceRequestController extends Controller
         $serviceRequests = [];
 
         if ($role === 'admin') {
-            $serviceRequests  = ServiceRequest::with(['provider', 'service'])->paginate(6);
-        } else if ($role === 'provider') {
+            $serviceRequests  = ServiceRequest::with(['donor', 'service'])->paginate(6);
+        } else if ($role === 'donor') {
             $serviceRequests  =
-                ServiceRequest::with(['patient', 'service'])->where('provider_id', Auth::id())->paginate(6);
+                ServiceRequest::with(['patient', 'service'])->where('donor_id', Auth::id())->paginate(6);
         } else {
             $serviceRequests  =
-                ServiceRequest::with(['provider', 'service'])->where('patient_id', Auth::id())->paginate(6);
+                ServiceRequest::with(['donor', 'service'])->where('patient_id', Auth::id())->paginate(6);
         }
 
         return view('service_requests.index', ['serviceRequests' => $serviceRequests]);
@@ -88,11 +88,11 @@ class ServiceRequestController extends Controller
      */
     public function createStepThree(ServiceRequest $serviceRequest)
     {
-        $providers = User::ofRole('provider')->get();
+        $donors = User::ofRole('donor')->get();
 
         return view('service_requests.create_step_three', [
             'serviceRequest' => $serviceRequest,
-            'providers' => $providers
+            'donors' => $donors
         ]);
     }
 
@@ -142,16 +142,16 @@ class ServiceRequestController extends Controller
     }
 
     /**
-     * Select provider for service request.
+     * Select donor for service request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\ServiceRequest  $serviceRequest
      * @return \Illuminate\Http\Response
      */
-    public function selectProvider(Request $request, ServiceRequest $serviceRequest)
+    public function selectDonor(Request $request, ServiceRequest $serviceRequest)
     {
         Validator::make($request->all(), [
-            'provider_id' => 'required|integer|exists:users,id',
+            'donor_id' => 'required|integer|exists:users,id',
         ])->validate();
 
         $serviceRequest->update($request->all());

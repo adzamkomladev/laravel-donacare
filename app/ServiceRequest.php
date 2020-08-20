@@ -12,8 +12,9 @@ class ServiceRequest extends Model
      * @var array
      */
     protected $fillable = [
-        'patient_id', 'provider_id', 'service_id', 'description', 'hospital_name',
-        'hospital_contact', 'hospital_location', 'doctor_name', 'doctor_contact', 'status'
+        'patient_id', 'donor_id', 'service_id', 'description', 'hospital_name',
+        'hospital_contact', 'hospital_location', 'doctor_name',
+         'doctor_contact', 'status', 'type'
     ];
 
     public function patient()
@@ -21,9 +22,9 @@ class ServiceRequest extends Model
         return $this->belongsTo(User::class, 'patient_id');
     }
 
-    public function provider()
+    public function donor()
     {
-        return $this->belongsTo(User::class, 'provider_id');
+        return $this->belongsTo(User::class, 'donor_id');
     }
 
     public function service()

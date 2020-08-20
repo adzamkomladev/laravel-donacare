@@ -13,6 +13,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @stack('styles')
@@ -25,7 +28,7 @@
         <div class="main-panel" id="main-panel">
             @include('layouts.partials._app_navbar')
 
-            <div class="panel-header panel-header-sm"></div>
+            <x-panel-header></x-panel-header>
 
             <main class="content">
                 @yield('content')

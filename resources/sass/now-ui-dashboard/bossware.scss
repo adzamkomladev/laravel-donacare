@@ -2,19 +2,19 @@
     float: right;
 }
 #complstgrn{
-    color: #18ce0f;
+    color: hsl(117, 86%, 43%);
 }
 #complstrd{
     color: #f96332;
 }
 #sbmt{
-    background:#18ce0f;
+    background:hsl(117, 86%, 43%);
     color: #fff;
 }
 #sbmt:hover{
-    color:#18ce0f;
+    color:hsl(117, 86%, 43%);
     background: #fff;
-    border: 1px solid #18ce0f;
+    border: 1px solid hsl(117, 86%, 43%);
 }
 #comp{
     background: rgba(249, 99, 50, 0.5);
@@ -27,11 +27,86 @@
     height: 4em;
 }
 #jui:hover{
-    color: #18ce0f;
+    color: hsl(117, 86%, 43%);
 }
 #stat_on{
-    color: #18ce0f;
+    color: hsl(117, 86%, 43%);
 }
 #stat_off{
     color: #f96332;
+}
+#ntf{
+    color:#f96332;
+    /* background: rgba(249, 99, 50, 0.5); */
+}
+#ord{
+    color:hsl(117, 86%, 43%);
+}
+#ordd{
+    background: hsla(117, 86%, 43%, 50%);
+}
+#ordd:hover{
+    background: hsl(117, 86%, 43%);
+}
+svc{
+    color: hsl(117, 86%, 43%);
+}
+eta{
+    color: #f96332;
+}
+#mr{
+    background: #f96332;
+}
+#mr:hover{
+    background: hsl(117, 86%, 43%);
+}
+#mr2{
+    background: #f96332;
+}
+#mr2:hover{
+    background: hsl(117, 86%, 43%);
+}
+gp{
+    color: #09c;
+}
+#ad{
+    background: #fff;
+    border:1px solid hsl(117, 86%, 43%);
+    padding: 0.5em;
+}
+#ad:hover{
+    background: hsl(117, 86%, 43%);
+    color:#fff;
+}
+#rm{
+    background: #fff;
+    border:1px solid #f96332;
+    padding: 0.5em;
+}
+#rm:hover{
+    background: #f96332;
+    color:#fff;
+}
+#btm{
+    margin-top: -1.4em;
+}
+#hm{
+    background: orange;
+    height: 4em;
+    color: #fff;    
+}
+#hm ul li{
+    display: inline-block;
+}
+#hm ul li a{    
+    text-decoration: none;
+    color: #fff;
+    font-size: 3em;
+    margin-left: 3em;
+}
+#hm ul li a:hover{
+    border-bottom:4px solid #fff;
+}
+#admn{
+    margin-left: 10em;
 }

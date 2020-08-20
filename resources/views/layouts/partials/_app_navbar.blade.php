@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary navbar-absolute">
+<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute" @if ('home' === Route::currentRouteName()) id="bgtop"
+    style="background-image:url('{{ asset('img/bg.png') }}');" @endif>
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -19,6 +20,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
 
             <ul class="navbar-nav">
+                <navbar-actions></navbar-actions>
                 <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                         <p>
