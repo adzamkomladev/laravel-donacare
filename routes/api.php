@@ -34,3 +34,19 @@ Route::group(['prefix' => 'v1'], function () {
     Route::patch('/service-requests/{serviceRequest}/select-donor', 'ServiceRequestController@selectDonor');
     Route::patch('/service-requests/{serviceRequest}/update-status', 'ServiceRequestController@updateStatus');
 });
+
+Route::group(['prefix' => 'v2'], function () {
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::post('login', 'API\AuthController@login');
+    Route::post('register', 'API\AuthController@register');
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('verify-otp', 'API\AuthController@verifyOtp');
+    });
+});
+
+
+
