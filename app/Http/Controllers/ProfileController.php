@@ -6,9 +6,14 @@ use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
 use App\Http\Requests\StoreProfile;
 use App\Profile;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -20,15 +25,17 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['update']);
-        $this->middleware(CheckOTP::class)->except(['update']);
-        $this->middleware(CheckProfile::class)->except(['create', 'store', 'update']);
+        $this->middleware('auth')->except(['update', 'updateJurisdiction']);
+        $this->middleware(CheckOTP::class)->except(['update', 'updateJurisdiction']);
+        $this->middleware(CheckProfile::class)->except([
+            'create', 'store', 'update', 'updateJurisdiction'
+        ]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -38,7 +45,7 @@ class ProfileController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function create()
     {
@@ -48,8 +55,8 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreProfile  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreProfile $request
+     * @return RedirectResponse
      */
     public function store(StoreProfile $request)
     {
@@ -67,8 +74,8 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param Profile $profile
+     * @return Response
      */
     public function show(Profile $profile)
     {
@@ -78,8 +85,8 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param Profile $profile
+     * @return Response
      */
     public function edit(Profile $profile)
     {
@@ -89,9 +96,9 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Profile $profile
+     * @return Profile
      */
     public function update(Request $request, Profile $profile)
     {
@@ -110,11 +117,40 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
+     * @param Profile $profile
+     * @return Response
      */
     public function destroy(Profile $profile)
     {
         //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Profile $profile
+     * @return Application|Factory|Response|View
+     */
+    public function editJurisdiction(Profile $profile)
+    {
+        return view('profiles.update-jurisdiction', ['profile' => $profile]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param Profile $profile
+     * @return Profile
+     */
+    public function updateJurisdiction(Request $request, Profile $profile)
+    {
+        Validator::make($request->all(), [
+            'jurisdiction' => 'required|string|max:100',
+        ])->validate();
+
+        $profile->update($request->all());
+
+        return $profile;
     }
 }

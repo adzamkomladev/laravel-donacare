@@ -73,6 +73,10 @@ Vue.component(
     "navbar-actions",
     require("./components/layouts/NavbarActions.vue").default
 );
+Vue.component(
+    "update-jurisdiction",
+    require("./pages/users/UpdateJurisdiction.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
