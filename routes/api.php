@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckOTP;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,9 +47,15 @@ Route::group(['prefix' => 'v2'], function () {
 
         Route::post('verify-otp', 'API\AuthController@verifyOtp');
 
-        Route::post('profiles', 'API\ProfileController@store');
-        Route::get('profiles/{id}', 'API\ProfileController@show');
-        Route::put('profiles/{id}', 'API\ProfileController@update');
+        Route::middleware([CheckOTP::class])->group(function () {
+            Route::post('profiles', 'API\ProfileController@store');
+            Route::get('profiles/{id}', 'API\ProfileController@show');
+            Route::put('profiles/{id}', 'API\ProfileController@update');
+
+            Route::get('users', 'API\UserController@index');
+            Route::get('users/{id}', 'API\UserController@show');
+            Route::put('users/{id}', 'API\UserController@update');
+        });
     });
 });
 

@@ -20,7 +20,7 @@ class CheckOTP
             if ($request->expectsJson()) {
                 return response([
                     'error' => true,
-                    'payload'=> ['message' => 'Telephone number has not been verified']
+                    'payload'=> ['message' => 'OTP has not been verified']
                 ], 422);
             }
 

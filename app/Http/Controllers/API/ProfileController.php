@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Profile;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -50,6 +51,9 @@ class ProfileController extends Controller
 
         $profileData = $request->all();
         $profileData['user_id'] = Auth::id();
+
+        $user = User::find($profileData['user_id']);
+        $user->update(['role' => $request['role']]);
 
         $profile = Profile::create($profileData);
 
@@ -102,7 +106,6 @@ class ProfileController extends Controller
             'jurisdiction' => 'nullable|string|max:100',
             'type' => ['nullable' , Rule::in(['organ', 'blood', 'funds'])],
             'gender' => ['required', Rule::in(['male', 'female'])],
-            'role' => ['required', Rule::in(['patient', 'donor'])],
         ]);
 
         if ($validator->fails()) {
