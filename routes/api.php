@@ -36,15 +36,19 @@ Route::group(['prefix' => 'v1'], function () {
 });
 
 Route::group(['prefix' => 'v2'], function () {
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     Route::post('login', 'API\AuthController@login');
     Route::post('register', 'API\AuthController@register');
 
     Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+
         Route::post('verify-otp', 'API\AuthController@verifyOtp');
+
+        Route::post('profiles', 'API\ProfileController@store');
+        Route::get('profiles/{id}', 'API\ProfileController@show');
+        Route::put('profiles/{id}', 'API\ProfileController@update');
     });
 });
 
