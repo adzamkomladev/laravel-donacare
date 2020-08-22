@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
+use App\ServiceRequest;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -16,15 +19,15 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['toggleActivation']);
-        $this->middleware(CheckOTP::class)->except(['toggleActivation']);
-        $this->middleware(CheckProfile::class)->except(['toggleActivation']);
+        $this->middleware('auth')->except(['toggleActivation', 'serviceRequests']);
+        $this->middleware(CheckOTP::class)->except(['toggleActivation', 'serviceRequests']);
+        $this->middleware(CheckProfile::class)->except(['toggleActivation', 'serviceRequests']);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -34,9 +37,28 @@ class UserController extends Controller
     }
 
     /**
+     * All service requests of user.
+     *
+     * @param User $user
+     * @return ServiceRequest[]|Collection|Response
+     */
+    public function serviceRequests(User $user)
+    {
+        if ($user->role === 'patient') {
+            return ServiceRequest::where('patient_id', $user->id)->get();
+        }
+
+        if ($user->role === 'donor') {
+            return ServiceRequest::where('donor_id', $user->id)->get();
+        }
+
+        return ServiceRequest::all();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -46,19 +68,18 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function show(User $user)
     {
@@ -68,8 +89,8 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -79,9 +100,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function update(Request $request, User $user)
     {
@@ -91,8 +112,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return Response
      */
     public function destroy(User $user)
     {
@@ -102,9 +123,9 @@ class UserController extends Controller
     /**
      * Toggle user activation.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function toggleActivation(Request $request, User $user)
     {

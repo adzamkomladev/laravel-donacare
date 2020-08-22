@@ -3,118 +3,115 @@
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a
-                    class="nav-link dropdown-toggle"
-                    id="navbarDropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
                     aria-expanded="false"
+                    aria-haspopup="true"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    id="navbarDropdownMenuLink"
                 >
                     <i class="now-ui-icons health_ambulance"></i>
                     <p>
-                        <span class="d-lg-none d-md-block" title="make request"
-                            >Make Request</span
-                        >
+                        <span class="d-lg-none d-md-block" title="make request">
+                            Make Request
+                        </span>
                     </p>
                 </a>
                 <div
-                    class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
+                    class="dropdown-menu dropdown-menu-right"
                 >
-                    <strong class="dropdown-item"
-                        ><lc class="now-ui-icons media-2_sound-wave"></lc
-                        ><eta> Make request</eta></strong
-                    >
+                    <strong class="dropdown-item">
+                        <i class="now-ui-icons media-2_sound-wave"></i>
+                        <span> Make request</span>
+                    </strong>
                     <button class="dropdown-item" id="ord">
-                        <a id="mr" class="btn btn-round btn-primary col-lg-4"
-                            >Blood</a
-                        >
-                        <a id="mr" class="btn btn-round btn-primary col-lg-4"
-                            >Organ</a
-                        >
-                        <a id="mr" class="btn btn-round btn-primary col-lg-4"
-                            >Funds</a
-                        >
+                        <a class="btn btn-round btn-primary col-lg-4">
+                            Blood
+                        </a>
+                        <a class="btn btn-round btn-primary col-lg-4">
+                            Organ
+                        </a>
+                        <a class="btn btn-round btn-primary col-lg-4">
+                            Funds
+                        </a>
                     </button>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a
-                    class="nav-link dropdown-toggle"
-                    id="navbarDropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
                     aria-expanded="false"
+                    aria-haspopup="true"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
                 >
                     <i class="now-ui-icons design_bullet-list-67"></i>
                     <p>
-                        <span class="d-lg-none d-md-block"
-                            >Active requests</span
-                        >
+                        <span class="d-lg-none d-md-block">
+                            Active requests
+                        </span>
                     </p>
                 </a>
                 <div
-                    class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
+                    class="dropdown-menu dropdown-menu-right"
                 >
-                    <strong class="dropdown-item"
-                        ><lc class="now-ui-icons business_bulb-63"></lc
-                        ><eta> Active Requests</eta></strong
-                    >
-                    <a class="dropdown-item" href="#"
-                        ><svc>Active request 1</svc></a
-                    >
-                    <a class="dropdown-item" href="#"
-                        ><svc>Active request 2</svc></a
-                    >
-                    <a class="dropdown-item" href="#"
-                        ><svc>Active request 3</svc></a
-                    >
+                    <div class="dropdown-item" v-if="isEmpty">
+                        <span>No items here</span>
+                    </div>
+                    <template v-else>
+                        <strong class="dropdown-item">
+                            <i class="now-ui-icons business_bulb-63"></i>
+                            <span>{{ activeServiceRequest.service.name }}</span>
+                        </strong>
+                        <a
+                            class="dropdown-item"
+                            href="#"
+                            v-for="serviceRequest in topFourServiceRequests"
+                        >
+                            <span>
+                                {{ serviceRequest.service.name }}
+                            </span>
+                        </a>
+                    </template>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a
-                    class="nav-link dropdown-toggle"
-                    id="navbarDropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
                     aria-expanded="false"
+                    aria-haspopup="true"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
                 >
                     <i class="now-ui-icons location_pin"></i>
                     <p>
-                        <span class="d-lg-none d-md-block">ETA</span>
+                        <span class="d-lg-none d-md-block">Active request</span>
                     </p>
                 </a>
                 <div
-                    class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
+                    class="dropdown-menu dropdown-menu-right"
                 >
-                    <strong class="dropdown-item"
-                        ><lc class="now-ui-icons location_map-big"></lc
-                        ><eta> ETA</eta></strong
-                    >
-                    <a class="dropdown-item" href="#"
-                        ><lc class="now-ui-icons location_pin"></lc> help for
-                        <svc>Blood</svc> arrives in <eta>30 minutes</eta></a
-                    >
-                    <a class="dropdown-item" href="#"
-                        ><lc class="now-ui-icons location_pin"></lc> help for
-                        <svc>left inner ventricle</svc> arrives in
-                        <eta>1 hourr 45 minutes</eta></a
-                    >
-                    <a class="dropdown-item" href="#"
-                        ><lc class="now-ui-icons location_pin"></lc> help for
-                        <svc>testacle sac</svc> arrives in
-                        <eta>30 years</eta></a
-                    >
+                    <template v-if="!isEmpty && activeServiceRequest">
+                        <strong class="dropdown-item">
+                            <i class="now-ui-icons location_map-big"></i>
+                            <span>{{ activeServiceRequest.service.name }}</span>
+                        </strong>
+                        <a class="dropdown-item" href="#">
+                            <i class="now-ui-icons location_pin"></i>
+                            help for Blood arrives in 30 minutes
+                        </a>
+                    </template>
+                    <div class="dropdown-item" v-else>
+                        <span>No active request</span>
+                    </div>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a
-                    class="nav-link dropdown-toggle"
-                    id="navbarDropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
                     aria-expanded="false"
+                    aria-haspopup="true"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
                 >
                     <i class="now-ui-icons education_paper"></i>
                     <p>
@@ -122,13 +119,13 @@
                     </p>
                 </a>
                 <div
-                    class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
+                    class="dropdown-menu dropdown-menu-right"
                 >
-                    <strong class="dropdown-item"
-                        ><lc class="now-ui-icons location_bookmark"></lc
-                        ><eta> News Feeds</eta></strong
-                    >
+                    <strong class="dropdown-item">
+                        <i class="now-ui-icons location_bookmark"></i>
+                        <span> News Feeds</span>
+                    </strong>
                     <a class="dropdown-item" href="#">Feed 1</a>
                     <a class="dropdown-item" href="#">Feed 1</a>
                     <a class="dropdown-item" href="#">Feed 1</a>
@@ -140,7 +137,24 @@
 
 <script>
 export default {
-    name: "PatientActions"
+    name: "PatientActions",
+    props: ["userServiceRequests"],
+    computed: {
+        isEmpty() {
+            return (
+                !this.userServiceRequests || !this.userServiceRequests.length
+            );
+        },
+        topFourServiceRequests() {
+            return this.userServiceRequests.slice(0, 4);
+        },
+        activeServiceRequest() {
+            const [serviceRequest] = this.topFourServiceRequests.filter(
+                serviceRequest => serviceRequest.status === "assigned"
+            );
+            return serviceRequest;
+        }
+    }
 };
 </script>
 

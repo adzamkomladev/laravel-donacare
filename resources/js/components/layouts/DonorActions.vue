@@ -52,46 +52,16 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                 >
-                    <strong class="dropdown-item" id=""
-                        ><button
+                    <strong
+                        v-for="serviceRequest in serviceRequestsToDisplay"
+                        class="dropdown-item"
+                    >
+                        <button
                             id="ad"
                             class="now-ui-icons ui-1_simple-add"
                         ></button>
-                        Kwame needs <eta>Blood 1 pack </eta
-                        ><svc>Group A+</svc> @Hospitalname</strong
-                    >
-                    <strong class="dropdown-item" id=""
-                        ><button
-                            id="ad"
-                            class="now-ui-icons ui-1_simple-add"
-                        ></button>
-                        Kofi needs <eta>Blood 1 pack </eta
-                        ><svc>Group AB</svc> @Hospitalname</strong
-                    >
-                    <strong class="dropdown-item" id=""
-                        ><button
-                            id="ad"
-                            class="now-ui-icons ui-1_simple-add"
-                        ></button>
-                        Yaw needs a <eta>Liver 1 piece </eta
-                        ><svc>Group O+</svc> @Hospitalname</strong
-                    >
-                    <strong class="dropdown-item" id=""
-                        ><button
-                            id="ad"
-                            class="now-ui-icons ui-1_simple-add"
-                        ></button>
-                        James needs <eta>funds of 20,000 </eta
-                        ><svc>before: 20-10-2020</svc> @Hospitalname</strong
-                    >
-                    <strong class="dropdown-item" id=""
-                        ><button
-                            id="ad"
-                            class="now-ui-icons ui-1_simple-add"
-                        ></button>
-                        Sarpong needs <eta>funds of 1,000,000 </eta
-                        ><svc>before: 20-10-2020</svc> @Hospitalname</strong
-                    >
+                        <span>{{ serviceRequest | serviceRequestText }}</span>
+                    </strong>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -111,67 +81,16 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                 >
-                    <strong class="dropdown-item" id="">
+                    <strong
+                        v-for="serviceRequest in serviceRequestsToDisplay"
+                        class="dropdown-item"
+                        id=""
+                    >
                         <button
                             id="rm"
                             class="now-ui-icons ui-1_simple-delete"
                         ></button>
-                        Kwame needs <eta>Blood 1 pack </eta
-                        ><svc>Group A+</svc> @Hospitalname
-                        <br />
-                        <button class="dropdown-item" id="ord">
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                title="click to view profile"
-                                >details</a
-                            >
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                >map</a
-                            >
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                >payments</a
-                            >
-                        </button>
-                    </strong>
-                    <strong class="dropdown-item" id="">
-                        <button
-                            id="rm"
-                            class="now-ui-icons ui-1_simple-delete"
-                        ></button>
-                        Kofi needs <eta>Blood 1 pack </eta
-                        ><svc>Group AB</svc> @Hospitalname
-                        <br />
-                        <button class="dropdown-item" id="ord">
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                title="click to view profile"
-                                >details</a
-                            >
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                >map</a
-                            >
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                >payments</a
-                            >
-                        </button>
-                    </strong>
-                    <strong class="dropdown-item" id="">
-                        <button
-                            id="rm"
-                            class="now-ui-icons ui-1_simple-delete"
-                        ></button>
-                        Yaw needs a <eta>Liver 1 piece </eta
-                        ><svc>Group O+</svc> @Hospitalname
+                        <span>{{ serviceRequest | serviceRequestText }}</span>
                         <br />
                         <button class="dropdown-item" id="ord">
                             <a
@@ -199,8 +118,74 @@
 </template>
 
 <script>
+import ServiceRequest from "../../services/service-request";
+
 export default {
-    name: "DonorActions"
+    name: "DonorActions",
+    props: ["userServiceRequests"],
+    async onMounted() {
+        await this.initializeServiceRequests();
+    },
+    data() {
+        return {
+            myServiceRequests: this.userServiceRequests,
+            serviceRequests: []
+        };
+    },
+    method: {
+        async initializeServiceRequests() {
+            const { data } = await ServiceRequest.all();
+
+            this.serviceRequests = data;
+        },
+        onAddToDonorServiceRequests(serviceRequest) {
+            console.log(serviceRequest, "addtodonorrequest");
+        },
+        onRemoveFromDonorServiceRequests(serviceRequest) {
+            console.log(serviceRequest, "removefromdonorrequest");
+        }
+    },
+    computed: {
+        myServiceRequestsToDisplay() {
+            return this.myServiceRequests
+                .filter(serviceRequest => serviceRequest.status === "assigned")
+                .sort((a, b) => {
+                    const dateA = new Date(a.updated_at);
+                    const dateB = new Date(b.updated_at);
+
+                    if (a < b) return -1;
+
+                    if (a > b) return 1;
+
+                    return 0;
+                });
+        },
+        serviceRequestsToDisplay() {
+            return this.serviceRequests
+                .filter(serviceRequest => serviceRequest.status === "requested")
+                .sort((a, b) => {
+                    const dateA = new Date(a.updated_at);
+                    const dateB = new Date(b.updated_at);
+
+                    if (a < b) return -1;
+
+                    if (a > b) return 1;
+
+                    return 0;
+                });
+        }
+    },
+    filters: {
+        serviceRequestText(serviceRequest) {
+            const patientName = serviceRequest.patient.profile.first_name;
+            const serviceType = serviceRequest.service.name;
+            const hospitalName = serviceRequest.hospital_name;
+            const value = serviceRequest.value;
+            const patientBloodType = serviceRequest.patient.profile.bloodType;
+
+            return `${patientName} needs ${serviceType} (${value}) ${patientBloodType} @${hospitalName}`;
+        }
+    }
 };
 </script>
 
