@@ -11,4 +11,19 @@ export default class ServiceRequest {
             data
         );
     }
+    static serviceRequestWithinJurisdiction(jurisdiction=null) {
+        let url = '/api/v1/service-requests';
+
+        if (jurisdiction) {
+            url += '?jurisdiction='+jurisdiction;
+        }
+
+        return axios.get(url);
+    }
+
+    static userServiceRequests(userId) {
+        return axios.get(
+            `/api/v1/users/${userId}/service-requests`,
+        );
+    }
 }

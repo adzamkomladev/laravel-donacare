@@ -6,13 +6,15 @@
                     <h5 class="title">Set Working Jurisdiction</h5>
                 </div>
                 <div class="card-body">
-                    <JurisdictionForm :selected-jurisdiction="profile.jurisdiction"
-                                      @updateJurisdiction="onUpdateJurisdiction($event)"/>
+                    <JurisdictionForm
+                        :selected-jurisdiction="profile.jurisdiction"
+                        @updateJurisdiction="onUpdateJurisdiction($event)"
+                    />
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <DisplayJurisdiction :jurisdiction="profile.jurisdiction"/>
+            <DisplayJurisdiction :jurisdiction="profile.jurisdiction" />
         </div>
     </div>
 </template>
@@ -25,17 +27,20 @@ import Profile from "../../services/profile";
 
 export default {
     name: "UpdateJurisdiction",
-    components: {JurisdictionForm, DisplayJurisdiction},
+    components: { JurisdictionForm, DisplayJurisdiction },
     props: ["selectedProfile"],
     data() {
         return {
             profile: this.selectedProfile
-        }
+        };
     },
     methods: {
         async onUpdateJurisdiction(jurisdiction) {
             try {
-                const {data} = await Profile.updateJurisdiction(this.profile.id, {jurisdiction});
+                const { data } = await Profile.updateJurisdiction(
+                    this.profile.id,
+                    { jurisdiction }
+                );
                 this.profile.jurisdiction = jurisdiction;
                 this.showNotification(
                     "fas fa-check",
@@ -53,8 +58,8 @@ export default {
             }
         },
         showNotification(icon, message, type) {
-            $.notify({icon, message}, {type, timer: 3000});
+            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
-}
+};
 </script>

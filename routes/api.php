@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'v1'], function () {
     Route::patch('/users/{user}/toggle-activation', 'UserController@toggleActivation');
+    Route::get('/users/{user}/service-requests', 'UserController@serviceRequests');
 
     Route::patch('/profiles/{profile}', 'ProfileController@update');
     Route::patch('profiles/{profile}/jurisdiction', 'ProfileController@updateJurisdiction');
@@ -32,6 +33,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::post('/locations', 'LocationController@store');
 
+    Route::get('/service-requests', 'ServiceRequestController@allServiceRequests');
     Route::patch('/service-requests/{serviceRequest}/select-donor', 'ServiceRequestController@selectDonor');
     Route::patch('/service-requests/{serviceRequest}/update-status', 'ServiceRequestController@updateStatus');
 });

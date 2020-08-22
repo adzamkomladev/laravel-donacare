@@ -6,7 +6,9 @@ use App\Http\Requests\StoreServiceRequestStepOne;
 use App\Service;
 use App\ServiceRequest;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -16,7 +18,7 @@ class ServiceRequestController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -38,9 +40,19 @@ class ServiceRequestController extends Controller
     }
 
     /**
+     * All service requests for frontend API.
+     *
+     * @return ServiceRequest[]|Collection|Response
+     */
+    public function allServiceRequests()
+    {
+        return ServiceRequest::all();
+    }
+
+    /**
      * Show the form for creating a new resource: step one
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function createStepOne()
     {
@@ -53,7 +65,7 @@ class ServiceRequestController extends Controller
      * Store a newly created resource in storage: step one
      *
      * @param  StoreServiceRequestStepOne  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function storeStepOne(StoreServiceRequestStepOne $request)
     {
@@ -71,7 +83,7 @@ class ServiceRequestController extends Controller
      * Show the form for creating a new resource: step one
      *
      * @param  ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function createStepTwo(ServiceRequest $serviceRequest)
     {
@@ -84,7 +96,7 @@ class ServiceRequestController extends Controller
      * Show the form for creating a new resource: step one
      *
      * @param  ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function createStepThree(ServiceRequest $serviceRequest)
     {
@@ -99,8 +111,8 @@ class ServiceRequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @param ServiceRequest $serviceRequest
+     * @return Response
      */
     public function show(ServiceRequest $serviceRequest)
     {
@@ -110,8 +122,8 @@ class ServiceRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @param ServiceRequest $serviceRequest
+     * @return Response
      */
     public function edit(ServiceRequest $serviceRequest)
     {
@@ -121,9 +133,9 @@ class ServiceRequestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ServiceRequest $serviceRequest
+     * @return Response
      */
     public function update(Request $request, ServiceRequest $serviceRequest)
     {
@@ -133,8 +145,8 @@ class ServiceRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @param ServiceRequest $serviceRequest
+     * @return Response
      */
     public function destroy(ServiceRequest $serviceRequest)
     {
@@ -144,9 +156,9 @@ class ServiceRequestController extends Controller
     /**
      * Select donor for service request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ServiceRequest $serviceRequest
+     * @return Response
      */
     public function selectDonor(Request $request, ServiceRequest $serviceRequest)
     {
@@ -162,9 +174,9 @@ class ServiceRequestController extends Controller
     /**
      * Update service request status.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ServiceRequest  $serviceRequest
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ServiceRequest $serviceRequest
+     * @return Response
      */
     public function updateStatus(Request $request, ServiceRequest $serviceRequest)
     {

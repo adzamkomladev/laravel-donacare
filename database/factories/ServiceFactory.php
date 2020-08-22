@@ -7,9 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Service::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
+        'name' => $faker->randomElement(['blood', 'organ', 'funds']),
         'description' => $faker->paragraph(6),
-        'price' => $faker->randomFloat(2, 10, 99999.99),
+        'price' => $faker->randomFloat(2, 10, 999.99),
         'available' => $faker->boolean
     ];
 });

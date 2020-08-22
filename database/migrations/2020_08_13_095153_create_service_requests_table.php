@@ -20,8 +20,11 @@ class CreateServiceRequestsTable extends Migration
             $table->unsignedBigInteger('donor_id')->nullable();
             $table->foreign('donor_id')->references('id')->on('users');
             $table->foreignId('service_id')->nullable()->constrained();
+            $table->foreignId('location_id')->nullable()->constrained();
 
             $table->text('description');
+            $table->text('value');
+            $table->double('cost', 10, 2);
             $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('incomplete');
             $table->string('hospital_name', 255)->nullable();
             $table->string('hospital_contact', 255)->nullable();

@@ -2257,6 +2257,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_service_request__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/service-request */ "./resources/js/services/service-request.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2376,89 +2385,103 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "DonorActions"
+  name: "DonorActions",
+  props: ["userServiceRequests"],
+  onMounted: function onMounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.initializeServiceRequests();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  data: function data() {
+    return {
+      myServiceRequests: this.userServiceRequests,
+      serviceRequests: []
+    };
+  },
+  method: {
+    initializeServiceRequests: function initializeServiceRequests() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _yield$ServiceRequest, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _services_service_request__WEBPACK_IMPORTED_MODULE_1__["default"].all();
+
+              case 2:
+                _yield$ServiceRequest = _context2.sent;
+                data = _yield$ServiceRequest.data;
+                _this2.serviceRequests = data;
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    onAddToDonorServiceRequests: function onAddToDonorServiceRequests(serviceRequest) {
+      console.log(serviceRequest, "addtodonorrequest");
+    },
+    onRemoveFromDonorServiceRequests: function onRemoveFromDonorServiceRequests(serviceRequest) {
+      console.log(serviceRequest, "removefromdonorrequest");
+    }
+  },
+  computed: {
+    myServiceRequestsToDisplay: function myServiceRequestsToDisplay() {
+      return this.myServiceRequests.filter(function (serviceRequest) {
+        return serviceRequest.status === "assigned";
+      }).sort(function (a, b) {
+        var dateA = new Date(a.updated_at);
+        var dateB = new Date(b.updated_at);
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+      });
+    },
+    serviceRequestsToDisplay: function serviceRequestsToDisplay() {
+      return this.serviceRequests.filter(function (serviceRequest) {
+        return serviceRequest.status === "requested";
+      }).sort(function (a, b) {
+        var dateA = new Date(a.updated_at);
+        var dateB = new Date(b.updated_at);
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+      });
+    }
+  },
+  filters: {
+    serviceRequestText: function serviceRequestText(serviceRequest) {
+      var patientName = serviceRequest.patient.profile.first_name;
+      var serviceType = serviceRequest.service.name;
+      var hospitalName = serviceRequest.hospital_name;
+      var value = serviceRequest.value;
+      var patientBloodType = serviceRequest.patient.profile.bloodType;
+      return "".concat(patientName, " needs ").concat(serviceType, " (").concat(value, ") ").concat(patientBloodType, " @").concat(hospitalName);
+    }
+  }
 });
 
 /***/ }),
@@ -2472,9 +2495,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PatientActions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PatientActions */ "./resources/js/components/layouts/PatientActions.vue");
 /* harmony import */ var _DonorActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DonorActions */ "./resources/js/components/layouts/DonorActions.vue");
+/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/auth */ "./resources/js/services/auth.js");
+/* harmony import */ var _services_service_request__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/service-request */ "./resources/js/services/service-request.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2482,6 +2514,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2491,10 +2530,71 @@ __webpack_require__.r(__webpack_exports__);
     PatientActions: _PatientActions__WEBPACK_IMPORTED_MODULE_1__["default"],
     DonorActions: _DonorActions__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.getUserServiceRequests();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
   data: function data() {
     return {
-      currentUser: _services_auth__WEBPACK_IMPORTED_MODULE_0__["default"].currentUser()
+      currentUser: _services_auth__WEBPACK_IMPORTED_MODULE_3__["default"].currentUser(),
+      userServiceRequests: []
     };
+  },
+  methods: {
+    getUserServiceRequests: function getUserServiceRequests() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _yield$ServiceRequest, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return _services_service_request__WEBPACK_IMPORTED_MODULE_4__["default"].userServiceRequests(_this2.currentUser.id);
+
+              case 3:
+                _yield$ServiceRequest = _context2.sent;
+                data = _yield$ServiceRequest.data;
+                _this2.userServiceRequests = data;
+                console.log({
+                  data: data
+                });
+                _context2.next = 12;
+                break;
+
+              case 9:
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](0);
+                console.log({
+                  error: _context2.t0
+                });
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 9]]);
+      }))();
+    }
   },
   computed: {
     isPatient: function isPatient() {
@@ -2517,9 +2617,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 //
 //
 //
@@ -2658,7 +2767,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "PatientActions"
+  name: "PatientActions",
+  props: ["userServiceRequests"],
+  computed: {
+    isEmpty: function isEmpty() {
+      return !this.userServiceRequests || !this.userServiceRequests.length;
+    },
+    topFourServiceRequests: function topFourServiceRequests() {
+      return this.userServiceRequests.slice(0, 4);
+    },
+    activeServiceRequest: function activeServiceRequest() {
+      var _this$topFourServiceR = this.topFourServiceRequests.filter(function (serviceRequest) {
+        return serviceRequest.status === "assigned";
+      }),
+          _this$topFourServiceR2 = _slicedToArray(_this$topFourServiceR, 1),
+          serviceRequest = _this$topFourServiceR2[0];
+
+      return serviceRequest;
+    }
+  }
 });
 
 /***/ }),
@@ -4144,6 +4271,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -42125,87 +42254,19 @@ var render = function() {
             staticClass: "dropdown-menu dropdown-menu-right",
             attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
           },
-          [
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-add",
-                  attrs: { id: "ad" }
-                }),
-                _vm._v("\n                    Kwame needs "),
-                _c("eta", [_vm._v("Blood 1 pack ")]),
-                _c("svc", [_vm._v("Group A+")]),
-                _vm._v(" @Hospitalname")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-add",
-                  attrs: { id: "ad" }
-                }),
-                _vm._v("\n                    Kofi needs "),
-                _c("eta", [_vm._v("Blood 1 pack ")]),
-                _c("svc", [_vm._v("Group AB")]),
-                _vm._v(" @Hospitalname")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-add",
-                  attrs: { id: "ad" }
-                }),
-                _vm._v("\n                    Yaw needs a "),
-                _c("eta", [_vm._v("Liver 1 piece ")]),
-                _c("svc", [_vm._v("Group O+")]),
-                _vm._v(" @Hospitalname")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-add",
-                  attrs: { id: "ad" }
-                }),
-                _vm._v("\n                    James needs "),
-                _c("eta", [_vm._v("funds of 20,000 ")]),
-                _c("svc", [_vm._v("before: 20-10-2020")]),
-                _vm._v(" @Hospitalname")
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-add",
-                  attrs: { id: "ad" }
-                }),
-                _vm._v("\n                    Sarpong needs "),
-                _c("eta", [_vm._v("funds of 1,000,000 ")]),
-                _c("svc", [_vm._v("before: 20-10-2020")]),
-                _vm._v(" @Hospitalname")
-              ],
-              1
-            )
-          ]
+          _vm._l(_vm.serviceRequestsToDisplay, function(serviceRequest) {
+            return _c("strong", { staticClass: "dropdown-item" }, [
+              _c("button", {
+                staticClass: "now-ui-icons ui-1_simple-add",
+                attrs: { id: "ad" }
+              }),
+              _vm._v(" "),
+              _c("span", [
+                _vm._v(_vm._s(_vm._f("serviceRequestText")(serviceRequest)))
+              ])
+            ])
+          }),
+          0
         )
       ]),
       _vm._v(" "),
@@ -42218,8 +42279,8 @@ var render = function() {
             staticClass: "dropdown-menu dropdown-menu-right",
             attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
           },
-          [
-            _c(
+          _vm._l(_vm.serviceRequestsToDisplay, function(serviceRequest) {
+            return _c(
               "strong",
               { staticClass: "dropdown-item", attrs: { id: "" } },
               [
@@ -42227,55 +42288,18 @@ var render = function() {
                   staticClass: "now-ui-icons ui-1_simple-delete",
                   attrs: { id: "rm" }
                 }),
-                _vm._v("\n                    Kwame needs "),
-                _c("eta", [_vm._v("Blood 1 pack ")]),
-                _c("svc", [_vm._v("Group A+")]),
-                _vm._v(" @Hospitalname\n                    "),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(_vm._s(_vm._f("serviceRequestText")(serviceRequest)))
+                ]),
+                _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _vm._m(4)
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-delete",
-                  attrs: { id: "rm" }
-                }),
-                _vm._v("\n                    Kofi needs "),
-                _c("eta", [_vm._v("Blood 1 pack ")]),
-                _c("svc", [_vm._v("Group AB")]),
-                _vm._v(" @Hospitalname\n                    "),
-                _c("br"),
-                _vm._v(" "),
-                _vm._m(5)
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "strong",
-              { staticClass: "dropdown-item", attrs: { id: "" } },
-              [
-                _c("button", {
-                  staticClass: "now-ui-icons ui-1_simple-delete",
-                  attrs: { id: "rm" }
-                }),
-                _vm._v("\n                    Yaw needs a "),
-                _c("eta", [_vm._v("Liver 1 piece ")]),
-                _c("svc", [_vm._v("Group O+")]),
-                _vm._v(" @Hospitalname\n                    "),
-                _c("br"),
-                _vm._v(" "),
-                _vm._m(6)
-              ],
-              1
+                _vm._m(4, true)
+              ]
             )
-          ]
+          }),
+          0
         )
       ])
     ])
@@ -42432,80 +42456,6 @@ var staticRenderFns = [
         )
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "dropdown-item", attrs: { id: "ord" } },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "ordd", title: "click to view profile" }
-          },
-          [_vm._v("details")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "ordd" }
-          },
-          [_vm._v("map")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "ordd" }
-          },
-          [_vm._v("payments")]
-        )
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "dropdown-item", attrs: { id: "ord" } },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "ordd", title: "click to view profile" }
-          },
-          [_vm._v("details")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "ordd" }
-          },
-          [_vm._v("map")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "ordd" }
-          },
-          [_vm._v("payments")]
-        )
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -42532,9 +42482,17 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.isPatient ? _c("PatientActions") : _vm._e(),
+      _vm.isPatient
+        ? _c("PatientActions", {
+            attrs: { "service-requests": _vm.userServiceRequests }
+          })
+        : _vm._e(),
       _vm._v(" "),
-      _vm.isDonor ? _c("DonorActions") : _vm._e()
+      _vm.isDonor
+        ? _c("DonorActions", {
+            attrs: { "user-service-requests": _vm.userServiceRequests }
+          })
+        : _vm._e()
     ],
     1
   )
@@ -42563,8 +42521,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("ul", { staticClass: "navbar-nav" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c("li", { staticClass: "nav-item dropdown" }, [
-        _vm._m(0),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "div",
@@ -42573,18 +42533,37 @@ var render = function() {
             attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
           },
           [
-            _c(
-              "strong",
-              { staticClass: "dropdown-item" },
-              [
-                _c("lc", { staticClass: "now-ui-icons media-2_sound-wave" }),
-                _c("eta", [_vm._v(" Make request")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _vm._m(1)
-          ]
+            _vm.isEmpty
+              ? _c("div", { staticClass: "dropdown-item" }, [
+                  _c("span", [_vm._v("No items here")])
+                ])
+              : [
+                  _c("strong", { staticClass: "dropdown-item" }, [
+                    _c("i", { staticClass: "now-ui-icons business_bulb-63" }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.activeServiceRequest.service.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.topFourServiceRequests, function(serviceRequest) {
+                    return _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [
+                        _c("span", [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(serviceRequest.service.name) +
+                              "\n                        "
+                          )
+                        ])
+                      ]
+                    )
+                  })
+                ]
+          ],
+          2
         )
       ]),
       _vm._v(" "),
@@ -42598,136 +42577,27 @@ var render = function() {
             attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
           },
           [
-            _c(
-              "strong",
-              { staticClass: "dropdown-item" },
-              [
-                _c("lc", { staticClass: "now-ui-icons business_bulb-63" }),
-                _c("eta", [_vm._v(" Active Requests")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [_c("svc", [_vm._v("Active request 1")])],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [_c("svc", [_vm._v("Active request 2")])],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [_c("svc", [_vm._v("Active request 3")])],
-              1
-            )
-          ]
+            !_vm.isEmpty && _vm.activeServiceRequest
+              ? [
+                  _c("strong", { staticClass: "dropdown-item" }, [
+                    _c("i", { staticClass: "now-ui-icons location_map-big" }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.activeServiceRequest.service.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ]
+              : _c("div", { staticClass: "dropdown-item" }, [
+                  _c("span", [_vm._v("No active request")])
+                ])
+          ],
+          2
         )
       ]),
       _vm._v(" "),
-      _c("li", { staticClass: "nav-item dropdown" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "dropdown-menu dropdown-menu-right",
-            attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
-          },
-          [
-            _c(
-              "strong",
-              { staticClass: "dropdown-item" },
-              [
-                _c("lc", { staticClass: "now-ui-icons location_map-big" }),
-                _c("eta", [_vm._v(" ETA")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [
-                _c("lc", { staticClass: "now-ui-icons location_pin" }),
-                _vm._v(" help for\n                    "),
-                _c("svc", [_vm._v("Blood")]),
-                _vm._v(" arrives in "),
-                _c("eta", [_vm._v("30 minutes")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [
-                _c("lc", { staticClass: "now-ui-icons location_pin" }),
-                _vm._v(" help for\n                    "),
-                _c("svc", [_vm._v("left inner ventricle")]),
-                _vm._v(" arrives in\n                    "),
-                _c("eta", [_vm._v("1 hourr 45 minutes")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [
-                _c("lc", { staticClass: "now-ui-icons location_pin" }),
-                _vm._v(" help for\n                    "),
-                _c("svc", [_vm._v("testacle sac")]),
-                _vm._v(" arrives in\n                    "),
-                _c("eta", [_vm._v("30 years")])
-              ],
-              1
-            )
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item dropdown" }, [
-        _vm._m(4),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "dropdown-menu dropdown-menu-right",
-            attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
-          },
-          [
-            _c(
-              "strong",
-              { staticClass: "dropdown-item" },
-              [
-                _c("lc", { staticClass: "now-ui-icons location_bookmark" }),
-                _c("eta", [_vm._v(" News Feeds")])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Feed 1")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Feed 1")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Feed 1")
-            ])
-          ]
-        )
-      ])
+      _vm._m(4)
     ])
   ])
 }
@@ -42736,83 +42606,80 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle",
-        attrs: {
-          id: "navbarDropdownMenuLink",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _c("i", { staticClass: "now-ui-icons health_ambulance" }),
-        _vm._v(" "),
-        _c("p", [
-          _c(
-            "span",
-            {
-              staticClass: "d-lg-none d-md-block",
-              attrs: { title: "make request" }
-            },
-            [_vm._v("Make Request")]
-          )
-        ])
-      ]
-    )
+    return _c("li", { staticClass: "nav-item dropdown" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link dropdown-toggle",
+          attrs: {
+            "aria-expanded": "false",
+            "aria-haspopup": "true",
+            "data-toggle": "dropdown",
+            id: "navbarDropdownMenuLink"
+          }
+        },
+        [
+          _c("i", { staticClass: "now-ui-icons health_ambulance" }),
+          _vm._v(" "),
+          _c("p", [
+            _c(
+              "span",
+              {
+                staticClass: "d-lg-none d-md-block",
+                attrs: { title: "make request" }
+              },
+              [
+                _vm._v(
+                  "\n                        Make Request\n                    "
+                )
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "dropdown-menu dropdown-menu-right",
+          attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
+        },
+        [
+          _c("strong", { staticClass: "dropdown-item" }, [
+            _c("i", { staticClass: "now-ui-icons media-2_sound-wave" }),
+            _vm._v(" "),
+            _c("span", [_vm._v(" Make request")])
+          ]),
+          _vm._v(" "),
+          _c("button", { staticClass: "dropdown-item", attrs: { id: "ord" } }, [
+            _c("a", { staticClass: "btn btn-round btn-primary col-lg-4" }, [
+              _vm._v("\n                        Blood\n                    ")
+            ]),
+            _vm._v(" "),
+            _c("a", { staticClass: "btn btn-round btn-primary col-lg-4" }, [
+              _vm._v("\n                        Organ\n                    ")
+            ]),
+            _vm._v(" "),
+            _c("a", { staticClass: "btn btn-round btn-primary col-lg-4" }, [
+              _vm._v("\n                        Funds\n                    ")
+            ])
+          ])
+        ]
+      )
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "button",
-      { staticClass: "dropdown-item", attrs: { id: "ord" } },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "mr" }
-          },
-          [_vm._v("Blood")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "mr" }
-          },
-          [_vm._v("Organ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-round btn-primary col-lg-4",
-            attrs: { id: "mr" }
-          },
-          [_vm._v("Funds")]
-        )
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
       "a",
       {
         staticClass: "nav-link dropdown-toggle",
         attrs: {
-          id: "navbarDropdownMenuLink",
-          "data-toggle": "dropdown",
+          "aria-expanded": "false",
           "aria-haspopup": "true",
-          "aria-expanded": "false"
+          "data-toggle": "dropdown"
         }
       },
       [
@@ -42820,7 +42687,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _c("span", { staticClass: "d-lg-none d-md-block" }, [
-            _vm._v("Active requests")
+            _vm._v(
+              "\n                        Active requests\n                    "
+            )
           ])
         ])
       ]
@@ -42835,17 +42704,18 @@ var staticRenderFns = [
       {
         staticClass: "nav-link dropdown-toggle",
         attrs: {
-          id: "navbarDropdownMenuLink",
-          "data-toggle": "dropdown",
+          "aria-expanded": "false",
           "aria-haspopup": "true",
-          "aria-expanded": "false"
+          "data-toggle": "dropdown"
         }
       },
       [
         _c("i", { staticClass: "now-ui-icons location_pin" }),
         _vm._v(" "),
         _c("p", [
-          _c("span", { staticClass: "d-lg-none d-md-block" }, [_vm._v("ETA")])
+          _c("span", { staticClass: "d-lg-none d-md-block" }, [
+            _vm._v("Active request")
+          ])
         ])
       ]
     )
@@ -42854,27 +42724,66 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link dropdown-toggle",
-        attrs: {
-          id: "navbarDropdownMenuLink",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _c("i", { staticClass: "now-ui-icons education_paper" }),
-        _vm._v(" "),
-        _c("p", [
-          _c("span", { staticClass: "d-lg-none d-md-block" }, [
-            _vm._v("News Feeds")
+    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "now-ui-icons location_pin" }),
+      _vm._v(
+        "\n                        help for Blood arrives in 30 minutes\n                    "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item dropdown" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link dropdown-toggle",
+          attrs: {
+            "aria-expanded": "false",
+            "aria-haspopup": "true",
+            "data-toggle": "dropdown"
+          }
+        },
+        [
+          _c("i", { staticClass: "now-ui-icons education_paper" }),
+          _vm._v(" "),
+          _c("p", [
+            _c("span", { staticClass: "d-lg-none d-md-block" }, [
+              _vm._v("News Feeds")
+            ])
           ])
-        ])
-      ]
-    )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "dropdown-menu dropdown-menu-right",
+          attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
+        },
+        [
+          _c("strong", { staticClass: "dropdown-item" }, [
+            _c("i", { staticClass: "now-ui-icons location_bookmark" }),
+            _vm._v(" "),
+            _c("span", [_vm._v(" News Feeds")])
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("Feed 1")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("Feed 1")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("Feed 1")
+          ])
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -61054,6 +60963,23 @@ var ServiceRequest = /*#__PURE__*/function () {
     key: "updateStatus",
     value: function updateStatus(serviceRequestId, data) {
       return axios.patch("/api/v1/service-requests/".concat(serviceRequestId, "/update-status"), data);
+    }
+  }, {
+    key: "serviceRequestWithinJurisdiction",
+    value: function serviceRequestWithinJurisdiction() {
+      var jurisdiction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var url = '/api/v1/service-requests';
+
+      if (jurisdiction) {
+        url += '?jurisdiction=' + jurisdiction;
+      }
+
+      return axios.get(url);
+    }
+  }, {
+    key: "userServiceRequests",
+    value: function userServiceRequests(userId) {
+      return axios.get("/api/v1/users/".concat(userId, "/service-requests"));
     }
   }]);
 
