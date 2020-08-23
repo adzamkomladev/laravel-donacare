@@ -5,22 +5,56 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Step 3: Select donor</h4>
-                    <small>
-                        Total cost <strong>{{ 'GHC ' . $serviceRequest->service->price }}</strong>
-                    </small>
-                    <p>Please select a mark on the map to view the donor's profile</p>
+                    <h4 class="card-title">Step 3: Upload prescription images</h4>
+                    <small>Total cost {{ 'GHC ' . $serviceRequest->cost }}</small>
                 </div>
                 <div class="card-body">
-                    <donor-proximity-map :all-donors="{{ $donors }}" :service-request="{{ $serviceRequest }}">
-                    </donor-proximity-map>
+                    <form method="post" action="{{ route('files.store', ['serviceRequest' => $serviceRequest->id]) }}"
+                        enctype="multipart/form-data" class="dropzone" id="dropzone">
+                        @csrf
+                    </form>
 
                     <a class="btn btn-primary btn-round mb-3"
-                        href="{{ route('payment.index', ['serviceRequest' => $serviceRequest->id]) }}">
-                        Move to payment
+                        href="{{ route('service-requests.create.step-four', ['serviceRequest' => $serviceRequest->id]) }}">
+                        Save and continue
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
+    @push('styles')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css"
+            integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA=="
+            crossorigin="anonymous" />
+    @endpush
+
+
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"
+            integrity="sha512-8l10HpXwk93V4i9Sm38Y1F3H4KJlarwdLndY9S5v+hSAODWMx3QcAVECA23NTMKPtDOi53VFfhIuSsBjjfNGnA=="
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            Dropzone.options.dropzone = {
+                maxFilesize: 10,
+                renameFile: function(file) {
+                    var dt = new Date();
+                    var time = dt.getTime();
+                    return time + file.name;
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                addRemoveLinks: true,
+                timeout: 60000,
+                success: function(file, response) {
+                    console.log(response);
+                },
+                error: function(file, response) {
+                    return false;
+                }
+            };
+
+        </script>
+    @endpush
+
 @endsection

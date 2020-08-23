@@ -24,7 +24,7 @@ class CreateServiceRequestsTable extends Migration
 
             $table->text('description');
             $table->text('value');
-            $table->double('cost', 10, 2);
+            $table->double('cost', 10, 2)->nullable();
             $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('incomplete');
             $table->string('hospital_name', 255)->nullable();
             $table->string('hospital_contact', 255)->nullable();

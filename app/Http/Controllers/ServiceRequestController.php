@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreServiceRequestStepOne;
+use App\Http\Requests\StoreServiceRequestStepTwo;
 use App\Service;
 use App\ServiceRequest;
 use App\User;
@@ -71,23 +72,56 @@ class ServiceRequestController extends Controller
     {
         $validated = $request->validated();
         $validated['patient_id'] = Auth::id();
+        $validated['service_price'] = Service::find($validated['service_id'])->price;
 
-        $serviceRequest = ServiceRequest::create($validated);
+        $request->session()->put('step_one', $validated);
 
-        return redirect()->route('service-requests.create.step-two', [
+        return redirect()->route('service-requests.create.step-two');
+    }
+
+    /**
+     * Show the form for creating a new resource: step two
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function createStepTwo(Request $request)
+    {
+        return view('service_requests.create_step_two', [
+            'step_one' => $request->session()->get('step_one')
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage: step two
+     *
+     * @param  StoreServiceRequestStepTwo  $request
+     * @return Response
+     */
+    public function storeStepTwo(StoreServiceRequestStepTwo $request)
+    {
+        $validated = $request->validated();
+        $stepOne = $request->session()->get('step_one');
+        $serviceRequestData = collect($validated)->merge($stepOne)->all();
+
+        $serviceRequest = ServiceRequest::create($serviceRequestData);
+
+        $request->session()->forget('step_one');
+
+        return redirect()->route('service-requests.create.step-three', [
             'serviceRequest' => $serviceRequest->id
         ]);
     }
 
     /**
-     * Show the form for creating a new resource: step one
+     * Show the form for creating a new resource: step three
      *
      * @param  ServiceRequest  $serviceRequest
      * @return Response
      */
-    public function createStepTwo(ServiceRequest $serviceRequest)
+    public function createStepThree(ServiceRequest $serviceRequest)
     {
-        return view('service_requests.create_step_two', [
+        return view('service_requests.create_step_three', [
             'serviceRequest' => $serviceRequest
         ]);
     }
@@ -98,11 +132,11 @@ class ServiceRequestController extends Controller
      * @param  ServiceRequest  $serviceRequest
      * @return Response
      */
-    public function createStepThree(ServiceRequest $serviceRequest)
+    public function createStepFour(ServiceRequest $serviceRequest)
     {
         $donors = User::ofRole('donor')->get();
 
-        return view('service_requests.create_step_three', [
+        return view('service_requests.create_step_four', [
             'serviceRequest' => $serviceRequest,
             'donors' => $donors
         ]);
@@ -166,7 +200,10 @@ class ServiceRequestController extends Controller
             'donor_id' => 'required|integer|exists:users,id',
         ])->validate();
 
-        $serviceRequest->update($request->all());
+        $serviceRequestData = $request->all();
+        $serviceRequestData['status'] = 'assigned';
+
+        $serviceRequest->update($serviceRequestData);
 
         return $serviceRequest;
     }
