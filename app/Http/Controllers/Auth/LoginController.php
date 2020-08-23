@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Stevebauman\Location\Facades\Location;
 
 class LoginController extends Controller
 {
@@ -49,12 +48,6 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($user->role !== 'admin') {
-            $user_location = Location::get();
-
-            $request->session()->put('user_location', $user_location);
-        }
-
         return redirect()->route('home');
     }
 

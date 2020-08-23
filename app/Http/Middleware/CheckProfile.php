@@ -20,11 +20,11 @@ class CheckProfile
             if ($request->expectsJson()) {
                 return response([
                     'error' => true,
-                    'payload'=> ['message' => 'There is no profile for the user']
+                    'payload' => ['message' => 'There is no profile for the user']
                 ], 422);
             }
 
-            return redirect()->route('profiles.create');
+            return redirect()->route('profiles.create-step-one');
         }
 
         return $next($request);

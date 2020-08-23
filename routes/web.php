@@ -30,7 +30,10 @@ Route::get('users', 'UserController@index')->name('users.index');
 Route::get('users/{user}', 'UserController@show')->name('users.show');
 
 // Profile
-Route::get('profiles/create', 'ProfileController@create')->name('profiles.create');
+Route::get('profiles/step-one', 'ProfileController@createStepOne')->name('profiles.create-step-one');
+Route::post('profiles/step-one', 'ProfileController@storeStepOne')->name('profiles.store-step-one');
+Route::get('profiles/step-two', 'ProfileController@createStepTwo')->name('profiles.create-step-two');
+Route::post('profiles/step-two', 'ProfileController@storeStepTwo')->name('profiles.store-step-two');
 Route::post('profiles', 'ProfileController@store')->name('profiles.store');
 Route::get('profiles/{profile}/jurisdiction', 'ProfileController@editJurisdiction')->name('profiles.jurisdiction');
 

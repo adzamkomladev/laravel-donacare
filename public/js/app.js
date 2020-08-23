@@ -2598,6 +2598,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     isPatient: function isPatient() {
+      console.log(this.currentUser);
       return this.currentUser.role === "patient";
     },
     isDonor: function isDonor() {
