@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
+use App\Http\Requests\StepOneStoreProfile;
+use App\Http\Requests\StepTwoStoreProfile;
 use App\Http\Requests\StoreProfile;
 use App\Profile;
 use Illuminate\Contracts\Foundation\Application;
@@ -25,10 +27,17 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['update', 'updateJurisdiction']);
-        $this->middleware(CheckOTP::class)->except(['update', 'updateJurisdiction']);
+        $this->middleware('auth')->except([
+            'update', 'updateJurisdiction', 'createStepOne',
+            'storeStepOne', 'createStepTwo', 'storeStepTwo'
+        ]);
+        $this->middleware(CheckOTP::class)->except([
+            'update', 'updateJurisdiction', 'createStepOne',
+            'storeStepOne', 'createStepTwo', 'storeStepTwo'
+        ]);
         $this->middleware(CheckProfile::class)->except([
-            'create', 'store', 'update', 'updateJurisdiction'
+            'createStepOne', 'storeStepOne', 'createStepTwo', 'storeStepTwo',
+            'store', 'update', 'updateJurisdiction'
         ]);
     }
 
@@ -47,9 +56,57 @@ class ProfileController extends Controller
      *
      * @return Application|Factory|Response|View
      */
-    public function create()
+    public function createStepOne()
     {
-        return view('profiles.create');
+        return view('profiles.step_one');
+    }
+
+    /**
+     * Step one of profile form
+     *
+     * @param StepOneStoreProfile $request
+     * @return RedirectResponse
+     */
+    public function storeStepOne(StepOneStoreProfile $request)
+    {
+        $validated = $request->validated();
+        $validated['user_id'] = Auth::id();
+
+        $request->session()->put('step_one', $validated);
+
+        return redirect()->route('profiles.create-step-two');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|Response|View
+     */
+    public function createStepTwo()
+    {
+        return view('profiles.step_two');
+    }
+
+    /**
+     * Step two of profile form
+     *
+     * @param StepTwoStoreProfile $request
+     * @return RedirectResponse
+     */
+    public function storeStepTwo(StepTwoStoreProfile $request)
+    {
+        $validated = $request->validated();
+        $stepOne = $request->session()->get('step_one');
+        $profileData = collect($validated)->merge($stepOne)->all();
+
+        $profile = Profile::create($profileData);
+
+        $profile->user->role = $profileData['role'];
+        $profile->user->save();
+
+        $request->session()->forget('step_one');
+
+        return redirect()->route('home');
     }
 
     /**

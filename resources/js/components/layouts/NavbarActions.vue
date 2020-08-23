@@ -45,6 +45,7 @@ export default {
     },
     computed: {
         isPatient() {
+            console.log(this.currentUser);
             return this.currentUser.role === "patient";
         },
         isDonor() {

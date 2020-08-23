@@ -19,7 +19,7 @@
                                     </div>
                                     <input type="tel" class="form-control @error('telephone') form-control-danger @enderror"
                                         name="telephone" value="{{ old('telephone') }}" required autocomplete="tel"
-                                        autofocus placeholder="Phone number">
+                                        autofocus placeholder="Eg. +233553884561">
                                 </div>
                                 @error('telephone')
                                 <small class="form-text text-muted text-danger">
