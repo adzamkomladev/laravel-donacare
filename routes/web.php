@@ -50,8 +50,10 @@ Route::post('complaints', 'ComplaintController@store')->name('complaints.store')
 // Service request
 Route::get('service-requests/create/step-one', 'ServiceRequestController@createStepOne')->name('service-requests.create.step-one');
 Route::post('service-requests/step-one', 'ServiceRequestController@storeStepOne')->name('service-requests.store.step-one');
-Route::get('service-requests/create/step-two/{serviceRequest}', 'ServiceRequestController@createStepTwo')->name('service-requests.create.step-two');
+Route::get('service-requests/create/step-two', 'ServiceRequestController@createStepTwo')->name('service-requests.create.step-two');
+Route::post('service-requests/create/step-two', 'ServiceRequestController@storeStepTwo')->name('service-requests.store.step-two');
 Route::get('service-requests/create/step-three/{serviceRequest}', 'ServiceRequestController@createStepThree')->name('service-requests.create.step-three');
+Route::get('service-requests/create/step-four/{serviceRequest}', 'ServiceRequestController@createStepFour')->name('service-requests.create.step-four');
 Route::get('service-requests', 'ServiceRequestController@index')->name('service-requests.index');
 Route::get('service-requests/{serviceRequest}', 'ServiceRequestController@show')->name('service-requests.show');
 

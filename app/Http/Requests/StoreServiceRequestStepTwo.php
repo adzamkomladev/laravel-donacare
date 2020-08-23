@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreServiceRequestStepOne extends FormRequest
+class StoreServiceRequestStepTwo extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreServiceRequestStepOne extends FormRequest
     public function rules()
     {
         return [
-            'service_id' => 'required|integer|exists:services,id',
-            'value' => 'required|string',
-            'hospital_name' => 'nullable|string|max:255',
-            'hospital_location' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'cost' => 'required|numeric',
+            'doctor_name' => 'nullable|string|max:255',
+            'doctor_contact' => 'nullable|string|max:255',
         ];
     }
 }
