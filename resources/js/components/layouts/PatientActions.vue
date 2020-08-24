@@ -25,13 +25,13 @@
                         <span> Make request</span>
                     </strong>
                     <button class="dropdown-item" id="ord">
-                        <a class="btn btn-round btn-primary col-lg-4">
+                        <a class="btn btn-round btn-primary col-md-4">
                             Blood
                         </a>
-                        <a class="btn btn-round btn-primary col-lg-4">
+                        <a class="btn btn-round btn-primary col-md-4">
                             Organ
                         </a>
-                        <a class="btn btn-round btn-primary col-lg-4">
+                        <a class="btn btn-round btn-primary col-md-4">
                             Funds
                         </a>
                     </button>
@@ -61,16 +61,14 @@
                     <template v-else>
                         <strong class="dropdown-item">
                             <i class="now-ui-icons business_bulb-63"></i>
-                            <span>{{
-                                activeServiceRequest | activeServiceText
-                            }}</span>
+                            <span class="text-danger">Active requests</span>
                         </strong>
                         <a
                             class="dropdown-item"
                             href="#"
                             v-for="serviceRequest in topFourServiceRequests"
                         >
-                            <span>
+                            <span class="text-success">
                                 {{ serviceRequest | activeServiceText }}
                             </span>
                         </a>
@@ -96,13 +94,13 @@
                     <template v-if="!isEmpty && activeServiceRequest">
                         <strong class="dropdown-item">
                             <i class="now-ui-icons location_map-big"></i>
-                            <span>{{
-                                activeServiceRequest | serviceRequestText
-                            }}</span>
+                            <span class="text-danger">ETA</span>
                         </strong>
                         <a class="dropdown-item" href="#">
                             <i class="now-ui-icons location_pin"></i>
-                            help for Blood arrives in 30 minutes
+                            help for
+                            <span class="text-success">Blood</span> arrives in
+                            <span class="text-danger"> 30 minutes</span>
                         </a>
                     </template>
                     <div class="dropdown-item" v-else>
@@ -168,4 +166,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@media only screen and (max-width: 768px) {
+    #ord {
+        display: flex;
+        flex-direction: column;
+    }
+}
+</style>
