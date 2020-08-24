@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-6">
             <div class="card  card-tasks">
                 <div class="card-header ">
@@ -91,6 +91,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <obtain-current-location></obtain-current-location>
 @endsection
