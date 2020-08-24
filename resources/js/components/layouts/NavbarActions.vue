@@ -1,7 +1,7 @@
 <template>
     <div>
         <PatientActions
-            :service-requests="userServiceRequests"
+            :user-service-requests="userServiceRequests"
             v-if="isPatient"
         />
         <DonorActions
@@ -21,13 +21,17 @@ import ServiceRequest from "../../services/service-request";
 export default {
     name: "NavbarActions",
     components: { PatientActions, DonorActions },
-    async mounted() {
-        await this.getUserServiceRequests();
+    async created() {
+        await this.pollData();
+    },
+    beforeDestroy() {
+        clearInterval(this.polling);
     },
     data() {
         return {
             currentUser: Auth.currentUser(),
-            userServiceRequests: []
+            userServiceRequests: [],
+            polling: null
         };
     },
     methods: {
@@ -41,8 +45,16 @@ export default {
             } catch (error) {
                 console.log({ error });
             }
+        },
+        async pollData() {
+            await this.getUserServiceRequests();
+
+            this.polling = setInterval(async () => {
+                await this.getUserServiceRequests();
+            }, 60000);
         }
     },
+
     computed: {
         isPatient() {
             console.log(this.currentUser);

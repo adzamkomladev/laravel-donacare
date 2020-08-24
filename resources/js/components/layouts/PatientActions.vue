@@ -61,7 +61,9 @@
                     <template v-else>
                         <strong class="dropdown-item">
                             <i class="now-ui-icons business_bulb-63"></i>
-                            <span>{{ activeServiceRequest.service.name }}</span>
+                            <span>{{
+                                activeServiceRequest | activeServiceText
+                            }}</span>
                         </strong>
                         <a
                             class="dropdown-item"
@@ -69,7 +71,7 @@
                             v-for="serviceRequest in topFourServiceRequests"
                         >
                             <span>
-                                {{ serviceRequest.service.name }}
+                                {{ serviceRequest | activeServiceText }}
                             </span>
                         </a>
                     </template>
@@ -94,7 +96,9 @@
                     <template v-if="!isEmpty && activeServiceRequest">
                         <strong class="dropdown-item">
                             <i class="now-ui-icons location_map-big"></i>
-                            <span>{{ activeServiceRequest.service.name }}</span>
+                            <span>{{
+                                activeServiceRequest | serviceRequestText
+                            }}</span>
                         </strong>
                         <a class="dropdown-item" href="#">
                             <i class="now-ui-icons location_pin"></i>
@@ -141,6 +145,7 @@ export default {
     props: ["userServiceRequests"],
     computed: {
         isEmpty() {
+            console.log(this.userServiceRequests, "fuck you");
             return (
                 !this.userServiceRequests || !this.userServiceRequests.length
             );
@@ -153,6 +158,11 @@ export default {
                 serviceRequest => serviceRequest.status === "assigned"
             );
             return serviceRequest;
+        }
+    },
+    filters: {
+        activeServiceText(serviceRequest) {
+            return `${serviceRequest.service.name} - ${serviceRequest.value}`;
         }
     }
 };
