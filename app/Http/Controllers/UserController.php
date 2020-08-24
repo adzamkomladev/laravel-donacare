@@ -45,14 +45,14 @@ class UserController extends Controller
     public function serviceRequests(User $user)
     {
         if ($user->role === 'patient') {
-            return ServiceRequest::where('patient_id', $user->id)->get();
+            return ServiceRequest::with(['donor', 'patient', 'service'])->where('patient_id', $user->id)->get();
         }
 
         if ($user->role === 'donor') {
-            return ServiceRequest::where('donor_id', $user->id)->get();
+            return ServiceRequest::with(['donor', 'patient', 'service'])->where('donor_id', $user->id)->get();
         }
 
-        return ServiceRequest::all();
+        return ServiceRequest::with(['donor', 'patient', 'service'])->get();
     }
 
     /**
