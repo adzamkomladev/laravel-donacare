@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +11,15 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
+mix.js("resources/js/app.js", "public/js")
+    .js("resources/js/vendor/custom.js", "public/js/custom.js")
+    .sass("resources/sass/app.scss", "public/css")
+    .styles(
+        [
+            "resources/css/themify-icons.css",
+            "resources/css/flaticon.css",
+            "resources/css/style.css"
+        ],
+        "public/css/landing.css"
+    )
     .copyDirectory("resources/img", "public/img");
