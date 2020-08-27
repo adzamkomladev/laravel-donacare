@@ -39,8 +39,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response([
                 'error' => true,
-                'payload' => $validator->errors()->all()
-            ], 422);
+                'payload' => ['errors' => $validator->errors()->all()]
+            ], 400);
         }
 
         $user = User::create([
@@ -97,8 +97,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response([
                 'error' => true,
-                'payload' => $validator->errors()->all()
-            ], 422);
+                'payload' => ['errors' => $validator->errors()->all()]
+            ], 400);
         }
 
         if ($token = JWTAuth::attempt(['telephone' => $request['telephone'], 'password' => $request['password']])) {
