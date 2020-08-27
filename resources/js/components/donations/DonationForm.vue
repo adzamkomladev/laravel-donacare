@@ -193,7 +193,7 @@
 
 <script>
 export default {
-    name: "ServiceRequestForm",
+    name: "DonationForm",
     props: ["donationType"],
     data() {
         return {

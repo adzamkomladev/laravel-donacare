@@ -8,7 +8,7 @@
                     <h4 class="card-title">Step 2</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('service-requests.store.step-two') }}">
+                    <form method="POST" action="{{ route('donations.store.step-two') }}">
                         @csrf
 
                         <div class="row mb-2">

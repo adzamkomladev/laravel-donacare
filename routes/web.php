@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('service_requests.create');
+    return view('donations.create');
 });
 
 Auth::routes();
@@ -47,19 +47,19 @@ Route::get('complaints', 'ComplaintController@index')->name('complaints.index');
 Route::get('complaints/create', 'ComplaintController@create')->name('complaints.create');
 Route::post('complaints', 'ComplaintController@store')->name('complaints.store');
 
-// Service request
-Route::get('service-requests/create/step-one', 'ServiceRequestController@createStepOne')->name('service-requests.create.step-one');
-Route::post('service-requests/step-one', 'ServiceRequestController@storeStepOne')->name('service-requests.store.step-one');
-Route::get('service-requests/create/step-two', 'ServiceRequestController@createStepTwo')->name('service-requests.create.step-two');
-Route::post('service-requests/create/step-two', 'ServiceRequestController@storeStepTwo')->name('service-requests.store.step-two');
-Route::get('service-requests/create/step-three/{serviceRequest}', 'ServiceRequestController@createStepThree')->name('service-requests.create.step-three');
-Route::get('service-requests/create/step-four/{serviceRequest}', 'ServiceRequestController@createStepFour')->name('service-requests.create.step-four');
-Route::get('service-requests', 'ServiceRequestController@index')->name('service-requests.index');
-Route::get('service-requests/{serviceRequest}', 'ServiceRequestController@show')->name('service-requests.show');
+// Donation
+Route::get('donations/create/step-one', 'DonationController@createStepOne')->name('donations.create.step-one');
+Route::post('donations/step-one', 'DonationController@storeStepOne')->name('donations.store.step-one');
+Route::get('donations/create/step-two', 'DonationController@createStepTwo')->name('donations.create.step-two');
+Route::post('donations/create/step-two', 'DonationController@storeStepTwo')->name('donations.store.step-two');
+Route::get('donations/create/step-three/{donation}', 'DonationController@createStepThree')->name('donations.create.step-three');
+Route::get('donations/create/step-four/{donation}', 'DonationController@createStepFour')->name('donations.create.step-four');
+Route::get('donations', 'DonationController@index')->name('donations.index');
+Route::get('donations/{donation}', 'DonationController@show')->name('donations.show');
 
-// File upload for service request
-Route::post('files/{serviceRequest}', 'FileController@store')->name('files.store');
+// File upload for donation
+Route::post('files/{donation}', 'FileController@store')->name('files.store');
 
 // Paystack
-Route::get('/pay/{serviceRequest}', 'PaymentController@index')->name('payment.index');
+Route::get('/pay/{donation}', 'PaymentController@index')->name('payment.index');
 Route::post('/pay', 'PaymentController@redirectToGateway')->name('payment.pay');

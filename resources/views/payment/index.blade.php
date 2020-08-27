@@ -13,7 +13,7 @@
                         @csrf
                         <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
                         <input type="hidden" name="currency" value="GHS">
-                        <input type="hidden" name="orderID" value="{{ $serviceRequest->id }}">
+                        <input type="hidden" name="orderID" value="{{ $donation->id }}">
                         <input type="hidden" name="quantity" value="1">
                         <div class="row">
                             <div class="col-md-6 pr-1">
@@ -48,10 +48,10 @@
             <div class="card card-user">
                 <div class="card-body">
                     <h4>Bill summary</h4>
-                    <p><strong>Service:</strong> {{ $serviceRequest->service->name }}</p>
-                    <p><strong>Donor:</strong> {{ $serviceRequest->donor->profile->full_name }}</p>
-                    <p><strong>Address:</strong> {{ $serviceRequest->service->user->location->address ?? 'Close by' }}</p>
-                    <p class="text-right">Total: <strong> (GHc) {{ $serviceRequest->service->price }}<strong></p>
+                    <p><strong>Service:</strong> {{ $donation->service->name }}</p>
+                    <p><strong>Donor:</strong> {{ $donation->donor->profile->full_name }}</p>
+                    <p><strong>Address:</strong> {{ $donation->service->user->location->address ?? 'Close by' }}</p>
+                    <p class="text-right">Total: <strong> (GHc) {{ $donation->service->price }}<strong></p>
                 </div>
             </div>
         </div>

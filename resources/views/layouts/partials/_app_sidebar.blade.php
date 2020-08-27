@@ -38,8 +38,8 @@
                     <p>Complaints</p>
                 </a>
             </li>
-            <li class="@if('service-requests.index' === Route::currentRouteName()) active @endif">
-                <a href="{{ route('service-requests.index') }}">
+            <li class="@if('donations.index' === Route::currentRouteName()) active @endif">
+                <a href="{{ route('donations.index') }}">
                     <x-nav-icon/>
                     <p>Service requests</p>
                 </a>
@@ -57,8 +57,8 @@
                 </a>
             </li> --}}
             @if (Auth::user()->role === 'patient')
-                <li class="@if('service-requests.create.step-one' === Route::currentRouteName()) active @endif">
-                    <a href="{{ route('service-requests.create.step-one') }}">
+                <li class="@if('donations.create.step-one' === Route::currentRouteName()) active @endif">
+                    <a href="{{ route('donations.create.step-one') }}">
                         <x-nav-icon/>
                         <p>Make a request</p>
                     </a>

@@ -62,16 +62,16 @@
                         <strong class="dropdown-item">
                             <i class="now-ui-icons business_bulb-63"></i>
                             <span>{{
-                                activeServiceRequest | activeRequestText
+                                activeDonation | activeRequestText
                             }}</span>
                         </strong>
                         <a
                             class="dropdown-item"
                             href="#"
-                            v-for="serviceRequest in topFourServiceRequests"
+                            v-for="donation in topFourDonations"
                         >
                             <span>
-                                {{ serviceRequest | activeRequestText }}
+                                {{ donation | activeRequestText }}
                             </span>
                         </a>
                     </template>
@@ -93,11 +93,11 @@
                     aria-labelledby="navbarDropdownMenuLink"
                     class="dropdown-menu dropdown-menu-right"
                 >
-                    <template v-if="!isEmpty && activeServiceRequest">
+                    <template v-if="!isEmpty && activeDonation">
                         <strong class="dropdown-item">
                             <i class="now-ui-icons location_map-big"></i>
                             <span>{{
-                                activeServiceRequest | activeRequestText
+                                activeDonation | activeRequestText
                             }}</span>
                         </strong>
                         <a class="dropdown-item" href="#">
@@ -142,26 +142,24 @@
 <script>
 export default {
     name: "PatientActions",
-    props: ["userServiceRequests"],
+    props: ["userDonations"],
     computed: {
         isEmpty() {
-            return (
-                !this.userServiceRequests || !this.userServiceRequests.length
-            );
+            return !this.userDonations || !this.userDonations.length;
         },
-        topFourServiceRequests() {
-            return this.userServiceRequests.slice(0, 4);
+        topFourDonations() {
+            return this.userDonations.slice(0, 4);
         },
-        activeServiceRequest() {
-            const [serviceRequest] = this.topFourServiceRequests.filter(
-                serviceRequest => serviceRequest.status === "assigned"
+        activeDonation() {
+            const [donation] = this.topFourDonations.filter(
+                donation => donation.status === "assigned"
             );
-            return serviceRequest;
+            return donation;
         }
     },
     filters: {
-        activeRequestText(serviceRequest) {
-            return `${serviceRequest.service.name} - ${serviceRequest.value}`;
+        activeRequestText(donation) {
+            return `${donation.service.name} - ${donation.value}`;
         }
     }
 };

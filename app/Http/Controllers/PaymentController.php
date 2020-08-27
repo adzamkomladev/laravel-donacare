@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
-use App\ServiceRequest;
+use App\Donation;
 use Illuminate\Http\Request;
 use Paystack;
 
@@ -23,9 +23,9 @@ class PaymentController extends Controller
         $this->middleware(CheckProfile::class);
     }
 
-    public function index(ServiceRequest $serviceRequest)
+    public function index(Donation $donation)
     {
-        return view('payment.index', ['serviceRequest' => $serviceRequest]);
+        return view('payment.index', ['donation' => $donation]);
     }
     /**
      * Redirect the User to Paystack Payment Page
@@ -33,7 +33,7 @@ class PaymentController extends Controller
      */
     public function redirectToGateway(Request $request)
     {
-        return redirect()->route('service-requests.index');
+        return redirect()->route('donations.index');
 
         //dd($request);
         return Paystack::getAuthorizationUrl()->redirectNow();

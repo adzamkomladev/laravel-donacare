@@ -15,8 +15,8 @@ class Service extends Model
         'name', 'description', 'price', 'available'
     ];
 
-    public function serviceRequests()
+    public function donations()
     {
-        return $this->hasMany(ServiceRequest::class);
+        return $this->hasMany(Donation::class);
     }
 }

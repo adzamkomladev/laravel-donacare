@@ -1,13 +1,7 @@
 <template>
     <div>
-        <PatientActions
-            :user-service-requests="userServiceRequests"
-            v-if="isPatient"
-        />
-        <DonorActions
-            :user-service-requests="userServiceRequests"
-            v-if="isDonor"
-        />
+        <PatientActions :user-donations="userDonations" v-if="isPatient" />
+        <DonorActions :user-donations="userDonations" v-if="isDonor" />
     </div>
 </template>
 
@@ -16,7 +10,7 @@ import PatientActions from "./PatientActions";
 import DonorActions from "./DonorActions";
 
 import Auth from "../../services/auth";
-import ServiceRequest from "../../services/service-request";
+import Donation from "../../services/donation";
 
 export default {
     name: "NavbarActions",
@@ -30,26 +24,26 @@ export default {
     data() {
         return {
             currentUser: Auth.currentUser(),
-            userServiceRequests: [],
+            userDonations: [],
             polling: null
         };
     },
     methods: {
-        async getUserServiceRequests() {
+        async getUserDonations() {
             try {
-                const { data } = await ServiceRequest.userServiceRequests(
+                const { data } = await Donation.userDonations(
                     this.currentUser.id
                 );
-                this.userServiceRequests = data;
+                this.userDonations = data;
             } catch (error) {
                 console.log({ error });
             }
         },
         async pollData() {
-            await this.getUserServiceRequests();
+            await this.getUserDonations();
 
             this.polling = setInterval(async () => {
-                await this.getUserServiceRequests();
+                await this.getUserDonations();
             }, 60000);
         }
     },

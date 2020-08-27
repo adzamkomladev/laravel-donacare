@@ -53,14 +53,14 @@
                     aria-labelledby="navbarDropdownMenuLink"
                 >
                     <strong
-                        v-for="serviceRequest in serviceRequestsToDisplay"
+                        v-for="donation in donationsToDisplay"
                         class="dropdown-item"
                     >
                         <button
                             id="ad"
                             class="now-ui-icons ui-1_simple-add"
                         ></button>
-                        <span>{{ serviceRequest | serviceRequestText }}</span>
+                        <span>{{ donation | donationText }}</span>
                     </strong>
                 </div>
             </li>
@@ -82,7 +82,7 @@
                     aria-labelledby="navbarDropdownMenuLink"
                 >
                     <strong
-                        v-for="serviceRequest in serviceRequestsToDisplay"
+                        v-for="donation in donationsToDisplay"
                         class="dropdown-item"
                         id=""
                     >
@@ -90,7 +90,7 @@
                             id="rm"
                             class="now-ui-icons ui-1_simple-delete"
                         ></button>
-                        <span>{{ serviceRequest | serviceRequestText }}</span>
+                        <span>{{ donation | donationText }}</span>
                         <br />
                         <button class="dropdown-item" id="ord">
                             <a
@@ -118,37 +118,37 @@
 </template>
 
 <script>
-import ServiceRequest from "../../services/service-request";
+import Donation from "../../services/donation";
 
 export default {
     name: "DonorActions",
-    props: ["userServiceRequests"],
+    props: ["userDonations"],
     async onMounted() {
-        await this.initializeServiceRequests();
+        await this.initializeDonations();
     },
     data() {
         return {
-            myServiceRequests: this.userServiceRequests,
-            serviceRequests: []
+            myDonations: this.userDonations,
+            donations: []
         };
     },
     method: {
-        async initializeServiceRequests() {
-            const { data } = await ServiceRequest.all();
+        async initializeDonations() {
+            const { data } = await Donation.all();
 
-            this.serviceRequests = data;
+            this.donations = data;
         },
-        onAddToDonorServiceRequests(serviceRequest) {
-            console.log(serviceRequest, "addtodonorrequest");
+        onAddToDonorDonations(donation) {
+            console.log(donation, "addtodonorrequest");
         },
-        onRemoveFromDonorServiceRequests(serviceRequest) {
-            console.log(serviceRequest, "removefromdonorrequest");
+        onRemoveFromDonorDonations(donation) {
+            console.log(donation, "removefromdonorrequest");
         }
     },
     computed: {
-        myServiceRequestsToDisplay() {
-            return this.myServiceRequests
-                .filter(serviceRequest => serviceRequest.status === "assigned")
+        myDonationsToDisplay() {
+            return this.myDonations
+                .filter(donation => donation.status === "assigned")
                 .sort((a, b) => {
                     const dateA = new Date(a.updated_at);
                     const dateB = new Date(b.updated_at);
@@ -160,9 +160,9 @@ export default {
                     return 0;
                 });
         },
-        serviceRequestsToDisplay() {
-            return this.serviceRequests
-                .filter(serviceRequest => serviceRequest.status === "requested")
+        donationsToDisplay() {
+            return this.donations
+                .filter(donation => donation.status === "requested")
                 .sort((a, b) => {
                     const dateA = new Date(a.updated_at);
                     const dateB = new Date(b.updated_at);
@@ -176,12 +176,12 @@ export default {
         }
     },
     filters: {
-        serviceRequestText(serviceRequest) {
-            const patientName = serviceRequest.patient.profile.first_name;
-            const serviceType = serviceRequest.service.name;
-            const hospitalName = serviceRequest.hospital_name;
-            const value = serviceRequest.value;
-            const patientBloodType = serviceRequest.patient.profile.bloodType;
+        donationText(donation) {
+            const patientName = donation.patient.profile.first_name;
+            const serviceType = donation.service.name;
+            const hospitalName = donation.hospital_name;
+            const value = donation.value;
+            const patientBloodType = donation.patient.profile.bloodType;
 
             return `${patientName} needs ${serviceType} (${value}) ${patientBloodType} @${hospitalName}`;
         }

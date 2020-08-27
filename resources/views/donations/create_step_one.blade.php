@@ -8,7 +8,7 @@
                     <h4 class="card-title">Start request process</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('service-requests.store.step-one') }}">
+                    <form method="POST" action="{{ route('donations.store.step-one') }}">
                         @csrf
 
                         <div class="row mb-2">

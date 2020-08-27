@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreServiceRequestStepOne extends FormRequest
+class StoreDonationStepOne extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

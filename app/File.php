@@ -12,6 +12,6 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'service_request_id', 'name', 'path',
+        'donation_id', 'name', 'path',
     ];
 }

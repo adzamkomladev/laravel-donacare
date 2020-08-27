@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
-use App\ServiceRequest;
+use App\Donation;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -19,9 +19,9 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['toggleActivation', 'serviceRequests']);
-        $this->middleware(CheckOTP::class)->except(['toggleActivation', 'serviceRequests']);
-        $this->middleware(CheckProfile::class)->except(['toggleActivation', 'serviceRequests']);
+        $this->middleware('auth')->except(['toggleActivation', 'donations']);
+        $this->middleware(CheckOTP::class)->except(['toggleActivation', 'donations']);
+        $this->middleware(CheckProfile::class)->except(['toggleActivation', 'donations']);
     }
 
     /**
@@ -37,22 +37,22 @@ class UserController extends Controller
     }
 
     /**
-     * All service requests of user.
+     * All donations of user.
      *
      * @param User $user
-     * @return ServiceRequest[]|Collection|Response
+     * @return Donation[]|Collection|Response
      */
-    public function serviceRequests(User $user)
+    public function donations(User $user)
     {
         if ($user->role === 'patient') {
-            return ServiceRequest::with(['donor', 'patient', 'service'])->where('patient_id', $user->id)->get();
+            return Donation::with(['donor', 'patient', 'service'])->where('patient_id', $user->id)->get();
         }
 
         if ($user->role === 'donor') {
-            return ServiceRequest::with(['donor', 'patient', 'service'])->where('donor_id', $user->id)->get();
+            return Donation::with(['donor', 'patient', 'service'])->where('donor_id', $user->id)->get();
         }
 
-        return ServiceRequest::with(['donor', 'patient', 'service'])->get();
+        return Donation::with(['donor', 'patient', 'service'])->get();
     }
 
     /**

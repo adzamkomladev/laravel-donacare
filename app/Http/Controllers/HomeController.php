@@ -31,7 +31,7 @@ class HomeController extends Controller
     {
         $latestUsers = User::latest()->paginate(6);
         $topServices =  Service::all()->sortBy(function ($service) {
-            return count($service->serviceRequests);
+            return count($service->donations);
         })->slice(0, 6);
 
         return view('home', ['users' => $latestUsers, 'services' => $topServices]);

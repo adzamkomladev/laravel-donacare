@@ -6,16 +6,16 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Step 3: Upload prescription images</h4>
-                    <small>Total cost {{ 'GHC ' . $serviceRequest->cost }}</small>
+                    <small>Total cost {{ 'GHC ' . $donation->cost }}</small>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ route('files.store', ['serviceRequest' => $serviceRequest->id]) }}"
+                    <form method="post" action="{{ route('files.store', ['donation' => $donation->id]) }}"
                         enctype="multipart/form-data" class="dropzone" id="dropzone">
                         @csrf
                     </form>
 
                     <a class="btn btn-primary btn-round mb-3"
-                        href="{{ route('service-requests.create.step-four', ['serviceRequest' => $serviceRequest->id]) }}">
+                        href="{{ route('donations.create.step-four', ['donation' => $donation->id]) }}">
                         Save and continue
                     </a>
                 </div>

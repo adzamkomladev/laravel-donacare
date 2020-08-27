@@ -20,13 +20,13 @@
                                 <th>Actions</th>
                             </thead>
                             <tbody>
-                                @foreach ($serviceRequests as $serviceRequest)
-                                    <tr is="service-request-row" :row-service-request="{{ $serviceRequest }}"></tr>
+                                @foreach ($donations as $donation)
+                                    <tr is="donation-row" :row-donation="{{ $donation }}"></tr>
                                 @endforeach
                             </tbody>
                         </table>
 
-                        {{ $serviceRequests->links() }}
+                        {{ $donations->links() }}
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@
                     <h5 class="title">Blood Request Form</h5>
                 </div>
                 <div class="card-body">
-                    <service-request-form></service-request-form>
+                    <donation-form></donation-form>
                 </div>
             </div>
         </div>
