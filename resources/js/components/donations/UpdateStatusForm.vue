@@ -51,20 +51,20 @@
 
 <script>
 import Auth from "../../services/auth";
-import ServiceRequest from "../../services/service-request";
+import Donation from "../../services/donation";
 
 export default {
     name: "UpdateStatusForm",
-    props: ["serviceRequest"],
+    props: ["donation"],
     data() {
         return {
-            selectedStatus: this.serviceRequest.status
+            selectedStatus: this.donation.status
         };
     },
     methods: {
         async onUpdateStatus() {
             try {
-                await ServiceRequest.updateStatus(this.serviceRequest.id, {
+                await Donation.updateStatus(this.donation.id, {
                     status: this.selectedStatus
                 });
                 this.showNotification(

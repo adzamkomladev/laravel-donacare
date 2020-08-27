@@ -32,12 +32,12 @@
 import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
 
 import Auth from "../../services/auth";
-import ServiceRequest from "../../services/service-request";
+import Donation from "../../services/donation";
 
 export default {
     name: "GoogleMap",
     components: { UserDetailsCard },
-    props: ["allDonors", "serviceRequest"],
+    props: ["allDonors", "donation"],
     data() {
         return {
             center: { lat: 0.18702, lng: 5.55602 },
@@ -70,7 +70,7 @@ export default {
         },
         async onSelectDonor() {
             try {
-                await ServiceRequest.selectDonor(this.serviceRequest.id, {
+                await Donation.selectDonor(this.donation.id, {
                     donor_id: this.selectedDonor.id
                 });
 

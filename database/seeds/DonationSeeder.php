@@ -2,10 +2,10 @@
 
 use App\User;
 use App\Service;
-use App\ServiceRequest;
+use App\Donation;
 use Illuminate\Database\Seeder;
 
-class ServiceRequestSeeder extends Seeder
+class DonationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,14 +18,14 @@ class ServiceRequestSeeder extends Seeder
 
         $services = Service::all();
 
-        factory(ServiceRequest::class, 6)->create()->each(function ($serviceRequest) use ($patients, $services) {
+        factory(Donation::class, 6)->create()->each(function ($donation) use ($patients, $services) {
             [$service] = $services->random(1)->all();
-            $serviceRequest->service()->associate($service);
-            $serviceRequest->save();
+            $donation->service()->associate($service);
+            $donation->save();
 
             [$patient] = $patients->random(1)->all();
-            $serviceRequest->patient()->associate($patient);
-            $serviceRequest->save();
+            $donation->patient()->associate($patient);
+            $donation->save();
         });
     }
 }

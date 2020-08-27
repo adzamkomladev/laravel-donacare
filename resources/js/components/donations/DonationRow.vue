@@ -1,25 +1,22 @@
 <template>
     <transition name="fade">
         <tr v-if="canShow">
-            <td class="text-left">{{ serviceRequest.service.name }}</td>
-            <td class="text-left">{{ serviceRequest.service.price }}</td>
+            <td class="text-left">{{ donation.service.name }}</td>
+            <td class="text-left">{{ donation.service.price }}</td>
             <td class="text-left">{{ displayName }}</td>
             <td class="text-left">
                 <span v-if="isLow" class="badge badge-pill badge-danger">
-                    {{ serviceRequest.status }}
+                    {{ donation.status }}
                 </span>
                 <span v-if="isMedium" class="badge badge-pill badge-info">
-                    {{ serviceRequest.status }}
+                    {{ donation.status }}
                 </span>
                 <span v-if="isHigh" class="badge badge-pill badge-success">
-                    {{ serviceRequest.status }}
+                    {{ donation.status }}
                 </span>
             </td>
             <td class="td-actions text-left">
-                <a
-                    :href="showServiceRequestUrl"
-                    class="btn btn-primary btn-round"
-                >
+                <a :href="showDonationUrl" class="btn btn-primary btn-round">
                     View
                 </a>
             </td>
@@ -31,41 +28,41 @@
 import Auth from "../../services/auth";
 
 export default {
-    name: "ServiceRequestRow",
-    props: ["rowServiceRequest"],
+    name: "DonationRow",
+    props: ["rowDonation"],
     data() {
         return {
             canShow: true,
-            serviceRequest: this.rowServiceRequest
+            donation: this.rowDonation
         };
     },
     computed: {
-        showServiceRequestUrl() {
-            return `/service-requests/${this.serviceRequest.id}`;
+        showDonationUrl() {
+            return `/donations/${this.donation.id}`;
         },
         displayName() {
             const isDonor = Auth.currentUser().role === "donor";
 
             return isDonor
-                ? this.serviceRequest.patient.profile.full_name
-                : this.serviceRequest.donor.profile.full_name;
+                ? this.donation.patient.profile.full_name
+                : this.donation.donor.profile.full_name;
         },
         isLow() {
             return (
-                this.serviceRequest.status === "incomplete" ||
-                this.serviceRequest.status === "pending"
+                this.donation.status === "incomplete" ||
+                this.donation.status === "pending"
             );
         },
         isMedium() {
             return (
-                this.serviceRequest.status === "assigned" ||
-                this.serviceRequest.status === "initiated"
+                this.donation.status === "assigned" ||
+                this.donation.status === "initiated"
             );
         },
         isHigh() {
             return (
-                this.serviceRequest.status === "done" ||
-                this.serviceRequest.status === "completed"
+                this.donation.status === "done" ||
+                this.donation.status === "completed"
             );
         }
     }

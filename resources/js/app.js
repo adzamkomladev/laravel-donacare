@@ -55,19 +55,19 @@ Vue.component(
 );
 Vue.component(
     "donor-proximity-map",
-    require("./components/service-requests/DonorProximityMap.vue").default
+    require("./components/donations/DonorProximityMap.vue").default
 );
 Vue.component(
     "obtain-current-location",
     require("./components/auth/ObtainCurrentLocation.vue").default
 );
 Vue.component(
-    "service-request-row",
-    require("./components/service-requests/ServiceRequestRow.vue").default
+    "donation-row",
+    require("./components/donations/DonationRow.vue").default
 );
 Vue.component(
     "update-status-form",
-    require("./components/service-requests/UpdateStatusForm.vue").default
+    require("./components/donations/UpdateStatusForm.vue").default
 );
 Vue.component(
     "navbar-actions",
@@ -76,6 +76,10 @@ Vue.component(
 Vue.component(
     "update-jurisdiction",
     require("./pages/users/UpdateJurisdiction.vue").default
+);
+Vue.component(
+    "donation-form",
+    require("./components/donations/DonationForm.vue").default
 );
 
 /**

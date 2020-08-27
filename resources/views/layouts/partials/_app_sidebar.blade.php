@@ -96,8 +96,8 @@
                     </a>
                 </li>
                 {{-- <li
-                    class="{{ 'service-requests.index' === Route::currentRouteName() ? 'active' : '' }}">
-                    <a href="{{ route('service-requests.index') }}">
+                    class="{{ 'donations.index' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('donations.index') }}">
                         <x-nav-icon />
                         <p>Service requests</p>
                     </a>
@@ -117,8 +117,8 @@
             @endif
 
             @if (Auth::user()->role === 'patient')
-                <li class="{{ 'service-requests.create.step-one' === Route::currentRouteName() ? 'active' : '' }}">
-                    <a href="{{ route('service-requests.create.step-one') }}">
+                <li class="{{ 'donations.create.step-one' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('donations.create.step-one') }}">
                         <x-nav-icon />
                         <p>Make a request</p>
                     </a>
