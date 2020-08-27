@@ -77,6 +77,10 @@ Vue.component(
     "update-jurisdiction",
     require("./pages/users/UpdateJurisdiction.vue").default
 );
+Vue.component(
+    "service-request-form",
+    require("./components/service-requests/ServiceRequestForm.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

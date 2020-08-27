@@ -62,7 +62,7 @@
                         <strong class="dropdown-item">
                             <i class="now-ui-icons business_bulb-63"></i>
                             <span>{{
-                                activeServiceRequest | activeServiceText
+                                activeServiceRequest | activeRequestText
                             }}</span>
                         </strong>
                         <a
@@ -71,7 +71,7 @@
                             v-for="serviceRequest in topFourServiceRequests"
                         >
                             <span>
-                                {{ serviceRequest | activeServiceText }}
+                                {{ serviceRequest | activeRequestText }}
                             </span>
                         </a>
                     </template>
@@ -97,7 +97,7 @@
                         <strong class="dropdown-item">
                             <i class="now-ui-icons location_map-big"></i>
                             <span>{{
-                                activeServiceRequest | serviceRequestText
+                                activeServiceRequest | activeRequestText
                             }}</span>
                         </strong>
                         <a class="dropdown-item" href="#">
@@ -145,7 +145,6 @@ export default {
     props: ["userServiceRequests"],
     computed: {
         isEmpty() {
-            console.log(this.userServiceRequests, "fuck you");
             return (
                 !this.userServiceRequests || !this.userServiceRequests.length
             );
@@ -161,7 +160,7 @@ export default {
         }
     },
     filters: {
-        activeServiceText(serviceRequest) {
+        activeRequestText(serviceRequest) {
             return `${serviceRequest.service.name} - ${serviceRequest.value}`;
         }
     }

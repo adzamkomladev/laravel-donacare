@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('service_requests.create');
 });
 
 Auth::routes();
