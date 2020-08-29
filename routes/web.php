@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('donations.create');
+    return view('welcome');
 });
 
 Auth::routes();

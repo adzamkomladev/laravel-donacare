@@ -39,7 +39,6 @@ class ProfileController extends Controller
             'mobile_money_number' => 'required|string|max:15',
             'blood_group' => 'required|string|max:100',
             'gender' => ['required', Rule::in(['male', 'female'])],
-            'role' => ['required', Rule::in(['patient', 'donor'])],
         ]);
 
         if ($validator->fails()) {
