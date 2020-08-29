@@ -25,13 +25,13 @@
                         <span> Make request</span>
                     </strong>
                     <button class="dropdown-item" id="ord">
-                        <a class="btn btn-round btn-primary col-md-4">
+                        <a href="/donations/create?type=blood" class="btn btn-round btn-primary col-md-4">
                             Blood
                         </a>
-                        <a class="btn btn-round btn-primary col-md-4">
+                        <a href="/donations/create?type=organ" class="btn btn-round btn-primary col-md-4">
                             Organ
                         </a>
-                        <a class="btn btn-round btn-primary col-md-4">
+                        <a href="/donations/create?type=funds" class="btn btn-round btn-primary col-md-4">
                             Funds
                         </a>
                     </button>
@@ -152,14 +152,14 @@ export default {
         },
         activeDonation() {
             const [donation] = this.topFourDonations.filter(
-                donation => donation.status === "assigned"
+                donation => donation?.status === "assigned"
             );
             return donation;
         }
     },
     filters: {
         activeRequestText(donation) {
-            return `${donation.service.name} - ${donation.value}`;
+            return `${donation?.service.name} - ${donation?.value}`;
         }
     }
 };

@@ -51,6 +51,19 @@ class DonationController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function create(Request $request)
+    {
+        $services = Service::all();
+
+        return view('donations.create', ['services' => $services, 'type' => $request->query('type')]);
+    }
+
+    /**
      * Show the form for creating a new resource: step one
      *
      * @return Response

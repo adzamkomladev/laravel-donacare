@@ -21,11 +21,20 @@
                     <label>Hospital</label>
                     <input
                         type="text"
+                        list="hospitals"
                         class="form-control"
                         placeholder="Hospital"
                         required
                         v-model="hospital_name"
                     />
+                    <datalist id="hospitals">
+                        <option value="Kaneshie Polyclinic"> </option>
+                        <option value="Korle Bu Hospital"> </option>
+                        <option value="Ridge Hospital"> </option>
+                        <option value="Amasaman Gen. Hospital"> </option>
+                        <option value="Komfo Anokye Hospital"> </option>
+                        <option value="Holy Trinity Hospital"> </option>
+                    </datalist>
                 </div>
             </div>
             <div class="col-md-4 pl-1">
@@ -91,8 +100,12 @@
         <div class="row">
             <div class="col-md-6 pl-1">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Share Location</label>
-                    <select class="form-control" id="" v-model="share_location">
+                    <label for="share-location">Share Location</label>
+                    <select
+                        id="share-location"
+                        class="form-control"
+                        v-model="share_location"
+                    >
                         <option id="jui" value="">-- share location --</option>
                         <option id="jui" value="yes">yes</option>
                         <option id="jui" value="no">no</option>
@@ -118,7 +131,7 @@
             </div>
             <div class="col-md-3 px-1">
                 <div class="form-group">
-                    <label>Dotors Name</label>
+                    <label>Doctors Name</label>
                     <input
                         type="text"
                         class="form-control"
@@ -151,37 +164,45 @@
                 </div>
             </div>
         </div>
-        <template>
-            <div class="card-header">
-                <h6 class="title">{{ valueHeader }}</h6>
-            </div>
-            <div class="row">
-                <div class="col-md-12 pr-1">
-                    <div class="form-group">
-                        <label> {{ valueLabel }} </label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Donation item"
-                            v-model="value"
-                        />
-                    </div>
+        <div class="card-header">
+            <h6 class="title">{{ valueHeader }}</h6>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pr-1">
+                <div class="form-group">
+                    <label> {{ valueLabel }} </label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Donation item"
+                        v-model="value"
+                    />
                 </div>
             </div>
-        </template>
+        </div>
         <div v-if="willPay" class="card-header">
             <h6 class="title">Payment details</h6>
         </div>
         <div v-if="willPay" class="row">
             <div class="col-md-6 pr-1">
                 <div class="form-group">
-                    <label>Payment method(if selected Charged as status)</label>
-                    <input
-                        type="text"
+                    <label id="payment-method"
+                        >Payment method(if selected Charged as status)</label
+                    >
+                    <select
+                        id="payment-method"
                         class="form-control"
-                        disabled=""
-                        placeholder="momo NO, bank account etc"
-                    />
+                        v-model="payment_method"
+                    >
+                        <option id="jui" value="">-- select method --</option>
+                        <option id="jui" value="Mobile money"
+                            >Mobile money</option
+                        >
+                        <option id="jui" value="Debit/Credit card"
+                            >Debit/Credit card</option
+                        >
+                        <option id="jui" value="Cash">Cash</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -192,12 +213,18 @@
 </template>
 
 <script>
+import Auth from "../../services/auth";
+
 export default {
     name: "DonationForm",
-    props: ["donationType"],
+    props: ["type"],
+    mounted() {
+        this.value = this.initialValue;
+    },
     data() {
         return {
-            full_name: "",
+            user: Auth.currentUser(),
+            full_name: Auth.currentUser().profile.full_name,
             hospital_name: "",
             hospital_location: "",
             share_location: "",
@@ -207,12 +234,28 @@ export default {
             doctor_staff_id: "",
             doctor_phone: "",
             value: "",
+            payment_method: "",
             images: []
         };
     },
     methods: {
         onSubmit() {
-            console.log(this.status);
+            console.log(this.images);
+            const donationData = new FormData();
+            donationData.append("patient_id", this.user_id);
+            donationData.append("hospital_name", this.hospital_name);
+            donationData.append("hospital_location", this.hospital_location);
+            donationData.append("status", this.status);
+            donationData.append("date_needed", this.date_needed);
+            donationData.append("doctor_name", this.doctor_name);
+            donationData.append("doctor_staff_id", this.doctor_staff_id);
+            donationData.append("doctor_phone", this.doctor_phone);
+            donationData.append("value", this.value);
+            donationData.append("type", this.type);
+            donationData.append("payment_method", this.payment_method);
+            this.images.forEach(image => donationData.append("images", image));
+
+            console.log({ donationData });
         },
         onUpload(event) {
             this.images = event.target.files;
@@ -223,27 +266,30 @@ export default {
             return this.status === "charged";
         },
         isBlood() {
-            return this.donationType === "blood";
+            return this.type === "blood";
         },
         isOrgan() {
-            return this.donationType === "organ";
+            return this.type === "organ";
         },
         isFunds() {
-            return this.donationType === "funds";
+            return this.type === "funds";
         },
         valueHeader() {
-            this.isBlood
+            return this.isBlood
                 ? "Blood group"
                 : this.isOrgan
                 ? "Specify Organ"
                 : "Purpose";
         },
         valueLabel() {
-            this.isBlood
+            return this.isBlood
                 ? "Blood group"
                 : this.isOrgan
                 ? "Organ"
                 : "Enter Purpose for fund";
+        },
+        initialValue() {
+            return this.isBlood ? this.user?.profile.blood_group : "";
         }
     },
     filters: {
