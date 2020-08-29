@@ -48,6 +48,7 @@ Route::get('complaints/create', 'ComplaintController@create')->name('complaints.
 Route::post('complaints', 'ComplaintController@store')->name('complaints.store');
 
 // Donation
+Route::get('donations/create', 'DonationController@create')->name('donations.create');
 Route::get('donations/create/step-one', 'DonationController@createStepOne')->name('donations.create.step-one');
 Route::post('donations/step-one', 'DonationController@storeStepOne')->name('donations.store.step-one');
 Route::get('donations/create/step-two', 'DonationController@createStepTwo')->name('donations.create.step-two');
