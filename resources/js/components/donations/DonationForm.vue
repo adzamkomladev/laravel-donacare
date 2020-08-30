@@ -284,9 +284,9 @@ export default {
 
                 console.log({ data });
 
-                setTimeout(() => {
-                    window.location.pathname = "/prescriptions";
-                }, 2000);
+                // setTimeout(() => {
+                //     window.location.pathname = "/prescriptions";
+                // }, 3000);
             } catch (error) {
                 console.log({ error });
 
@@ -302,7 +302,7 @@ export default {
             }
         },
         showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
+            $.notify({ icon, message }, { type, timer: 2500 });
         },
         onUpload(event) {
             this.images = event.target.files;

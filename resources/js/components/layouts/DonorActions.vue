@@ -55,6 +55,7 @@
                     <strong
                         v-for="donation in donationsToDisplay"
                         class="dropdown-item"
+                        :key="donation.id"
                     >
                         <button
                             id="ad"
@@ -84,7 +85,7 @@
                     <strong
                         v-for="donation in donationsToDisplay"
                         class="dropdown-item"
-                        id=""
+                        :key="donation.id"
                     >
                         <button
                             id="rm"
@@ -119,25 +120,31 @@
 
 <script>
 import Donation from "../../services/donation";
+import Notification from "../../services/notification";
+import Auth from "../../services/auth";
 
 export default {
     name: "DonorActions",
     props: ["userDonations"],
-    async onMounted() {
-        await this.initializeDonations();
+    async mounted() {
+        const user_id = Auth.currentUser().id;
+
+        const { data } = await Notification.newDonations(user_id);
+
+        this.notifications = data || [];
+
+        this.donations = this.notifications.map(
+            notification => notification.data.donation
+        );
     },
     data() {
         return {
             myDonations: this.userDonations,
-            donations: []
+            donations: [],
+            notifications: []
         };
     },
-    method: {
-        async initializeDonations() {
-            const { data } = await Donation.all();
-
-            this.donations = data;
-        },
+    methods: {
         onAddToDonorDonations(donation) {
             console.log(donation, "addtodonorrequest");
         },
@@ -161,27 +168,16 @@ export default {
                 });
         },
         donationsToDisplay() {
-            return this.donations
-                .filter(donation => donation.status === "requested")
-                .sort((a, b) => {
-                    const dateA = new Date(a.updated_at);
-                    const dateB = new Date(b.updated_at);
-
-                    if (a < b) return -1;
-
-                    if (a > b) return 1;
-
-                    return 0;
-                });
+            return this.donations || [];
         }
     },
     filters: {
         donationText(donation) {
-            const patientName = donation.patient.profile.first_name;
-            const serviceType = donation.service.name;
+            const patientName = donation.patient?.profile?.first_name;
+            const serviceType = donation.type;
             const hospitalName = donation.hospital_name;
             const value = donation.value;
-            const patientBloodType = donation.patient.profile.bloodType;
+            const patientBloodType = donation.patient?.profile?.blood_group;
 
             return `${patientName} needs ${serviceType} (${value}) ${patientBloodType} @${hospitalName}`;
         }
