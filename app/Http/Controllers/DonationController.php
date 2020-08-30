@@ -6,11 +6,14 @@ use App\Service;
 use App\Donation;
 use App\File;
 use App\Http\Requests\StoreDonation;
+use App\Notifications\DonationRequested;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -80,14 +83,17 @@ class DonationController extends Controller
 
         $donation = Donation::create($validated);
 
-        collect(json_decode($request->all()['images']))->each(function ($image) use ($donation) {
-            return File::create([
-                'path' => $image,
-                'donation_id' => $donation->id
-            ]);
-        });
+        $images = collect(json_decode($request->all()['images']))->map(function ($image) {
+            return ['path' => $image];
+        })->toArray();
 
-        $donation->refresh();
+        $donation->files()->createMany($images);
+
+        $donation->load('patient');
+
+        $donors = User::ofRole('donor')->get();
+
+        Notification::send($donors, new DonationRequested($donation));
 
         return $donation;
     }
