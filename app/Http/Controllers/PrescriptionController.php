@@ -21,7 +21,7 @@ class PrescriptionController extends Controller
     {
         $id = Auth::id();
 
-        $prescriptions = File::with('donation')->get()->reject(function ($file) use ($id) {
+        $prescriptions = File::with('donation')->latest()->get()->reject(function ($file) use ($id) {
             return $file->donation->patient_id !== $id;
         });
 
@@ -55,9 +55,9 @@ class PrescriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(File $prescription)
     {
-        //
+        return view('prescriptions.show', ['prescription' => $prescription]);
     }
 
     /**

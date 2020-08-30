@@ -31,8 +31,9 @@
                         <p>Search Donors</p>
                     </a>
                 </li>
-                <li>
-                    <a href="./presc.html">
+                <li
+                    class="{{ 'prescriptions.index' === Route::currentRouteName() || 'prescriptions.show' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('prescriptions.index') }}">
                         <x-nav-icon />
                         <p>Prescriptions</p>
                     </a>

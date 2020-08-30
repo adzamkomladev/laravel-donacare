@@ -283,6 +283,10 @@ export default {
                 );
 
                 console.log({ data });
+
+                setTimeout(() => {
+                    window.location.pathname = "/prescriptions";
+                }, 2000);
             } catch (error) {
                 console.log({ error });
 
