@@ -13,9 +13,17 @@ class Donation extends Model
      */
     protected $fillable = [
         'patient_id', 'donor_id', 'service_id', 'location_id', 'description',
-        'hospital_name', 'hospital_contact', 'hospital_location', 'doctor_name',
-        'doctor_contact', 'status', 'value', 'cost'
+        'hospital_name', 'date_needed', 'payment_status', 'payment_method',
+        'hospital_location', 'doctor_name', 'doctor_phone', 'doctor_staff_id',
+        'share_location', 'type', 'status', 'value', 'cost'
     ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['files'];
 
     public function patient()
     {
@@ -30,5 +38,10 @@ class Donation extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
     }
 }

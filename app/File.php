@@ -14,4 +14,9 @@ class File extends Model
     protected $fillable = [
         'donation_id', 'name', 'path',
     ];
+
+    public function donation()
+    {
+        return $this->belongsTo(Donation::class);
+    }
 }

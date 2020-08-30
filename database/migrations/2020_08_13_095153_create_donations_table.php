@@ -22,15 +22,20 @@ class CreateDonationsTable extends Migration
             $table->foreignId('service_id')->nullable()->constrained();
             $table->foreignId('location_id')->nullable()->constrained();
 
-            $table->text('description');
-            $table->text('value');
-            $table->double('cost', 10, 2)->nullable();
             $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('incomplete');
-            $table->string('hospital_name', 255)->nullable();
-            $table->string('hospital_contact', 255)->nullable();
-            $table->string('hospital_location', 255)->nullable();
-            $table->string('doctor_name', 255)->nullable();
-            $table->string('doctor_contact', 255)->nullable();
+            $table->enum('type', ['blood', 'organ', 'funds']);
+            $table->text('value');
+            $table->text('description')->nullable();
+            $table->date('date_needed');
+            $table->double('cost', 10, 2)->nullable();
+            $table->enum('payment_status', ['free', 'charged']);
+            $table->string('payment_method', 100)->nullable();
+            $table->string('hospital_name', 255);
+            $table->string('hospital_location', 255);
+            $table->boolean('share_location')->nullable()->default(false);
+            $table->string('doctor_name', 255);
+            $table->string('doctor_phone', 15);
+            $table->string('doctor_staff_id', 40);
 
             $table->timestamps();
         });

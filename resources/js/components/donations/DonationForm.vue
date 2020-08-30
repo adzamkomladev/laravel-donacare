@@ -76,9 +76,13 @@
             </div>
             <div class="col-md-4 px-1">
                 <div class="form-group">
-                    <label for="status">Status</label>
-                    <select class="form-control" id="status" v-model="status">
-                        <option id="jui" value="">-- status --</option>
+                    <label for="payment-status">Status</label>
+                    <select
+                        class="form-control"
+                        id="payment-status"
+                        v-model="payment_status"
+                    >
+                        <option id="jui" value="">-- payment_status --</option>
                         <option id="jui" value="free">Free</option>
                         <option id="jui" value="charged">Charged</option>
                     </select>
@@ -89,6 +93,7 @@
                     <label for="date-needed">Date Needed</label>
                     <input
                         id="date-needed"
+                        :min="currentDate"
                         type="date"
                         class="form-control"
                         placeholder="content"
@@ -107,8 +112,8 @@
                         v-model="share_location"
                     >
                         <option id="jui" value="">-- share location --</option>
-                        <option id="jui" value="yes">yes</option>
-                        <option id="jui" value="no">no</option>
+                        <option id="jui" value="1">yes</option>
+                        <option id="jui" value="0">no</option>
                     </select>
                 </div>
             </div>
@@ -207,6 +212,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary btn-round">
+            <i v-if="isLoading" class="now-ui-icons loader_refresh spin"></i>
             Make request
         </button>
     </form>
@@ -214,6 +220,7 @@
 
 <script>
 import Auth from "../../services/auth";
+import Donation from "../../services/donation";
 
 export default {
     name: "DonationForm",
@@ -227,43 +234,89 @@ export default {
             full_name: Auth.currentUser().profile.full_name,
             hospital_name: "",
             hospital_location: "",
-            share_location: "",
-            status: "",
+            share_location: 0,
+            payment_status: "",
             date_needed: "",
             doctor_name: "",
             doctor_staff_id: "",
             doctor_phone: "",
             value: "",
             payment_method: "",
-            images: []
+            images: [],
+            isLoading: false,
+            currentDate: new Date()
+                .toISOString()
+                .replace(/T.*/, "")
+                .split("-")
+                .join("-")
         };
     },
     methods: {
-        onSubmit() {
-            console.log(this.images);
+        async onSubmit() {
+            this.isLoading = true;
+
             const donationData = new FormData();
-            donationData.append("patient_id", this.user_id);
+            donationData.append("patient_id", this.user.id);
             donationData.append("hospital_name", this.hospital_name);
             donationData.append("hospital_location", this.hospital_location);
-            donationData.append("status", this.status);
+            donationData.append("share_location", this.share_location);
+            donationData.append("payment_status", this.payment_status);
             donationData.append("date_needed", this.date_needed);
             donationData.append("doctor_name", this.doctor_name);
             donationData.append("doctor_staff_id", this.doctor_staff_id);
             donationData.append("doctor_phone", this.doctor_phone);
             donationData.append("value", this.value);
             donationData.append("type", this.type);
-            donationData.append("payment_method", this.payment_method);
-            this.images.forEach(image => donationData.append("images", image));
+            if (this.willPay) {
+                donationData.append("payment_method", this.payment_method);
+            }
+            const urls = await this.getFileUrls();
+            donationData.append("images", JSON.stringify(urls));
 
-            console.log({ donationData });
+            try {
+                const { data } = await Donation.save(donationData);
+
+                this.showNotification(
+                    "fas fa-check",
+                    `Donation request has been made!`,
+                    "primary"
+                );
+
+                console.log({ data });
+            } catch (error) {
+                console.log({ error });
+
+                const errors = error?.response?.data?.errors;
+
+                const [errorMessage] = Object.values(errors || {})[0] || [
+                    "Failed to make donation request!"
+                ];
+
+                this.showNotification("fas fa-times", errorMessage, "danger");
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 3000 });
         },
         onUpload(event) {
             this.images = event.target.files;
+        },
+        async getFileUrls() {
+            const apikey = "AWGiGTsD9SnDckR6H8erIz";
+            const client = filestack.init(apikey);
+
+            const files = await Promise.all(
+                Array.from(this.images).map(image => client.upload(image))
+            );
+
+            return files.map(file => file.url);
         }
     },
     computed: {
         willPay() {
-            return this.status === "charged";
+            return this.payment_status === "charged";
         },
         isBlood() {
             return this.type === "blood";

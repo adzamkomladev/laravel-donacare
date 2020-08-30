@@ -115,15 +115,6 @@
                     </a>
                 </li>
             @endif
-
-            @if (Auth::user()->role === 'patient')
-                <li class="{{ 'donations.create.step-one' === Route::currentRouteName() ? 'active' : '' }}">
-                    <a href="{{ route('donations.create.step-one') }}">
-                        <x-nav-icon />
-                        <p>Make a request</p>
-                    </a>
-                </li>
-            @endif
         </ul>
     </div>
 </div>

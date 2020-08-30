@@ -16,4 +16,8 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>
+    @endpush
 @endsection

@@ -24,4 +24,10 @@ export default class Donation {
     static userDonations(userId) {
         return axios.get(`/api/v1/users/${userId}/donations`);
     }
+
+    static save(data) {
+        return axios.post("/api/v1/donations", data, {
+            headers: { "content-type": "multipart/form-data" }
+        });
+    }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDonationStepOne;
-use App\Http\Requests\StoreDonationStepTwo;
 use App\Service;
 use App\Donation;
-use App\User;
+use App\File;
+use App\Http\Requests\StoreDonation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -60,99 +60,36 @@ class DonationController extends Controller
     {
         $services = Service::all();
 
-        return view('donations.create', ['services' => $services, 'type' => $request->query('type')]);
+        return view('donations.create', [
+            'services' => $services,
+            'type' => $request->query('type')
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource: step one
+     * Store a newly created resource in storage
      *
+     * @param  StoreDonation  $request
      * @return Response
      */
-    public function createStepOne()
-    {
-        $services = Service::all();
-
-        return view('donations.create_step_one', ['services' => $services]);
-    }
-
-    /**
-     * Store a newly created resource in storage: step one
-     *
-     * @param  StoreDonationStepOne  $request
-     * @return Response
-     */
-    public function storeStepOne(StoreDonationStepOne $request)
+    public function store(StoreDonation $request)
     {
         $validated = $request->validated();
-        $validated['patient_id'] = Auth::id();
-        $validated['service_price'] = Service::find($validated['service_id'])->price;
 
-        $request->session()->put('step_one', $validated);
+        $validated['date_needed'] = Carbon::parse($validated['date_needed']);
 
-        return redirect()->route('donations.create.step-two');
-    }
+        $donation = Donation::create($validated);
 
-    /**
-     * Show the form for creating a new resource: step two
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function createStepTwo(Request $request)
-    {
-        return view('donations.create_step_two', [
-            'step_one' => $request->session()->get('step_one')
-        ]);
-    }
+        collect(json_decode($request->all()['images']))->each(function ($image) use ($donation) {
+            return File::create([
+                'path' => $image,
+                'donation_id' => $donation->id
+            ]);
+        });
 
-    /**
-     * Store a newly created resource in storage: step two
-     *
-     * @param  StoreDonationStepTwo  $request
-     * @return Response
-     */
-    public function storeStepTwo(StoreDonationStepTwo $request)
-    {
-        $validated = $request->validated();
-        $stepOne = $request->session()->get('step_one');
-        $donationData = collect($validated)->merge($stepOne)->all();
+        $donation->refresh();
 
-        $donation = Donation::create($donationData);
-
-        $request->session()->forget('step_one');
-
-        return redirect()->route('donations.create.step-three', [
-            'donation' => $donation->id
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource: step three
-     *
-     * @param  Donation  $donation
-     * @return Response
-     */
-    public function createStepThree(Donation $donation)
-    {
-        return view('donations.create_step_three', [
-            'donation' => $donation
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource: step one
-     *
-     * @param  Donation  $donation
-     * @return Response
-     */
-    public function createStepFour(Donation $donation)
-    {
-        $donors = User::ofRole('donor')->get();
-
-        return view('donations.create_step_four', [
-            'donation' => $donation,
-            'donors' => $donors
-        ]);
+        return $donation;
     }
 
     /**
