@@ -7,14 +7,19 @@ use Faker\Generator as Faker;
 
 $factory->define(Donation::class, function (Faker $faker) {
     return [
-        'description' => $faker->paragraph(4),
         'status' => 'initiated',
+        'type' => $faker->randomElement(['blood', 'organ', 'funds']),
         'value' => 'Liver',
+        'description' => $faker->paragraph(4),
+        'date_needed' => now(),
         'cost' => $faker->randomFloat(2, 10, 999.99),
+        'payment_status' => $faker->randomElement(['free', 'charged']),
+        'payment_method' => $faker->randomElement(['Mobile money', 'Cash', 'Credit/Debit card']),
         'hospital_name' => $faker->company,
-        'hospital_contact' => $faker->e164PhoneNumber,
         'hospital_location' => $faker->city,
+        'share_location' => $faker->boolean,
         'doctor_name' => $faker->name(),
-        'doctor_contact' => $faker->e164PhoneNumber,
+        'doctor_phone' => $faker->e164PhoneNumber,
+        'doctor_staff_id' => $faker->e164PhoneNumber,
     ];
 });
