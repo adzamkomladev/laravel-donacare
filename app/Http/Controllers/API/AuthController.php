@@ -47,6 +47,7 @@ class AuthController extends Controller
         $user = User::create([
             'telephone' => $request['telephone'],
             'password' => Hash::make($request['password']),
+            'role' => $request['role'],
             'otp' => rand(123456, 987654)
         ]);
 
