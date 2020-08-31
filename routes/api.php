@@ -35,6 +35,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::get('/donations', 'DonationController@allDonations');
     Route::patch('/donations/{donation}/select-donor', 'DonationController@selectDonor');
+    Route::patch('/donations/{donation}/deselect-donor', 'DonationController@deselectDonor');
     Route::patch('/donations/{donation}/update-status', 'DonationController@updateStatus');
     Route::post('/donations', 'DonationController@store');
 

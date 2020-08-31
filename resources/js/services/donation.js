@@ -5,12 +5,21 @@ export default class Donation {
             data
         );
     }
+
+    static deselectDonor(donationId, data) {
+        return axios.patch(
+            `/api/v1/donations/${donationId}/deselect-donor`,
+            data
+        );
+    }
+
     static updateStatus(donationId, data) {
         return axios.patch(
             `/api/v1/donations/${donationId}/update-status`,
             data
         );
     }
+
     static donationWithinJurisdiction(jurisdiction = null) {
         let url = "/api/v1/donations";
 
