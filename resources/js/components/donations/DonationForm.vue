@@ -26,6 +26,7 @@
                         placeholder="Hospital"
                         required
                         v-model="hospital_name"
+                        @change="onSelectHospital()"
                     />
                     <datalist id="hospitals">
                         <option value="Kaneshie Polyclinic"> </option>
@@ -98,6 +99,7 @@
                         class="form-control"
                         placeholder="content"
                         v-model="date_needed"
+                        required
                     />
                 </div>
             </div>
@@ -110,6 +112,7 @@
                         id="share-location"
                         class="form-control"
                         v-model="share_location"
+                        readonly
                     >
                         <option id="jui" value="">-- share location --</option>
                         <option id="jui" value="1">yes</option>
@@ -198,14 +201,15 @@
                         id="payment-method"
                         class="form-control"
                         v-model="payment_method"
+                        required
                     >
                         <option id="jui" value="">-- select method --</option>
-                        <option id="jui" value="Mobile money"
+                        <!-- <option id="jui" value="Mobile money"
                             >Mobile money</option
                         >
                         <option id="jui" value="Debit/Credit card"
                             >Debit/Credit card</option
-                        >
+                        > -->
                         <option id="jui" value="Cash">Cash</option>
                     </select>
                 </div>
@@ -234,7 +238,7 @@ export default {
             full_name: Auth.currentUser().profile.full_name,
             hospital_name: "",
             hospital_location: "",
-            share_location: 0,
+            share_location: 1,
             payment_status: "",
             date_needed: "",
             doctor_name: "",
@@ -248,10 +252,21 @@ export default {
                 .toISOString()
                 .replace(/T.*/, "")
                 .split("-")
-                .join("-")
+                .join("-"),
+            locations: {
+                "Kaneshie Polyclinic": "Palace St, Accra",
+                "Korle Bu Hospital": "Guggisberg Ave, Korlebu",
+                "Amasaman Gen. Hospital": " Hospital Road, Amasaman, Amasaman",
+                "Komfo Anokye Hospital": "Okomfo Anokye Road, Kumasi",
+                "Holy Trinity Hospital": "Amar Koranten St, Accra",
+                "Ridge Hospital": "Castle Rd, Accra"
+            }
         };
     },
     methods: {
+        onSelectHospital() {
+            this.hospital_location = this.locations[this.hospital_name];
+        },
         async onSubmit() {
             this.isLoading = true;
 
@@ -284,9 +299,9 @@ export default {
 
                 console.log({ data });
 
-                // setTimeout(() => {
-                //     window.location.pathname = "/prescriptions";
-                // }, 3000);
+                setTimeout(() => {
+                    window.location.pathname = "/prescriptions";
+                }, 3000);
             } catch (error) {
                 console.log({ error });
 

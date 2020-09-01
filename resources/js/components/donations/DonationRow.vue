@@ -1,8 +1,7 @@
 <template>
     <transition name="fade">
         <tr v-if="canShow">
-            <td class="text-left">{{ donation.service.name }}</td>
-            <td class="text-left">{{ donation.service.price }}</td>
+            <td class="text-left">{{ donation.value }}</td>
             <td class="text-left">{{ displayName }}</td>
             <td class="text-left">
                 <span v-if="isLow" class="badge badge-pill badge-danger">
@@ -14,6 +13,9 @@
                 <span v-if="isHigh" class="badge badge-pill badge-success">
                     {{ donation.status }}
                 </span>
+            </td>
+            <td>
+                {{ donation.created_at | formatDate }}
             </td>
             <td class="td-actions text-left">
                 <a :href="showDonationUrl" class="btn btn-primary btn-round">
@@ -44,8 +46,8 @@ export default {
             const isDonor = Auth.currentUser().role === "donor";
 
             return isDonor
-                ? this.donation.patient.profile.full_name
-                : this.donation.donor.profile.full_name;
+                ? this.donation.patient?.profile?.full_name
+                : this.donation.donor?.profile?.full_name;
         },
         isLow() {
             return (
@@ -64,6 +66,20 @@ export default {
                 this.donation.status === "done" ||
                 this.donation.status === "completed"
             );
+        },
+        donationCost() {
+            return this.donation.payment_status === "free"
+                ? 0.0
+                : this.donation.cost || "N/A";
+        }
+    },
+    filters: {
+        formatDate(date) {
+            return new Date(date)
+                .toISOString()
+                .replace(/T.*/, "")
+                .split("-")
+                .join("-");
         }
     }
 };

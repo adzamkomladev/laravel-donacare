@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="./donors.html">
+                    <a href="#">
                         <x-nav-icon />
                         <p>Search Donors</p>
                     </a>
@@ -39,38 +39,38 @@
                     </a>
                 </li>
                 <li>
-                    <a href="./confirm.html">
+                    <a href="{{ route('donations.index') }}">
                         <x-nav-icon />
                         <p>Confirmations</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./history.html">
+                    <a href="#">
                         <x-nav-icon />
                         <p>History</p>
                     </a>
                 </li>
             @elseif(Auth::user()->role === 'donor')
-                <li>
-                    <a href="./juri.html">
+                <li class="{{ 'profiles.jurisdiction' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('profiles.jurisdiction', ['profile' => Auth::user()->profile->id]) }}">
                         <x-nav-icon />
                         <p>Working Jurisdiction</p>
                     </a>
                 </li>
-                <li>
-                    <a href="./orders.html">
+                <li class="{{ 'donations.index' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('donations.index') }}">
                         <x-nav-icon />
                         <p>Orders</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./payments.html">
+                    <a href="#">
                         <x-nav-icon />
                         <p>Payments</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./ratings.html">
+                    <a href="#">
                         <x-nav-icon />
                         <p>Ratings</p>
                     </a>
@@ -104,13 +104,13 @@
                     </a>
                 </li> --}}
                 <li>
-                    <a href="./reports.html">
+                    <a href="#">
                         <x-nav-icon />
                         <p>Reports</p>
                     </a>
                 </li>
                 <li>
-                    <a href="./logs.html">
+                    <a href="#">
                         <x-nav-icon />
                         <p>Logs</p>
                     </a>

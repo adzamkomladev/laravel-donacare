@@ -62,6 +62,7 @@
                         class="form-control"
                         placeholder="Your home address"
                         :readonly="!canUpdate"
+                        :value="profile.home_address"
                     />
                 </div>
             </div>
@@ -69,13 +70,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>About Me</label>
+                    <label>Medical details</label>
                     <textarea
                         rows="4"
                         cols="80"
                         class="form-control"
                         placeholder="Here can be your description"
                         :readonly="!canUpdate"
+                        :value="profile.medical_details"
                     >
                     </textarea>
                 </div>

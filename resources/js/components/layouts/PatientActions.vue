@@ -25,13 +25,22 @@
                         <span> Make request</span>
                     </strong>
                     <button class="dropdown-item" id="ord">
-                        <a href="/donations/create?type=blood" class="btn btn-round btn-primary col-md-4">
+                        <a
+                            href="/donations/create?type=blood"
+                            class="btn btn-round btn-primary col-md-4"
+                        >
                             Blood
                         </a>
-                        <a href="/donations/create?type=organ" class="btn btn-round btn-primary col-md-4">
+                        <a
+                            href="/donations/create?type=organ"
+                            class="btn btn-round btn-primary col-md-4"
+                        >
                             Organ
                         </a>
-                        <a href="/donations/create?type=funds" class="btn btn-round btn-primary col-md-4">
+                        <a
+                            href="/donations/create?type=funds"
+                            class="btn btn-round btn-primary col-md-4"
+                        >
                             Funds
                         </a>
                     </button>
@@ -69,6 +78,7 @@
                             class="dropdown-item"
                             href="#"
                             v-for="donation in topFourDonations"
+                            :key="donation.id"
                         >
                             <span>
                                 {{ donation | activeRequestText }}
@@ -159,7 +169,7 @@ export default {
     },
     filters: {
         activeRequestText(donation) {
-            return `${donation?.service.name} - ${donation?.value}`;
+            return `${donation?.value} - ${donation?.donor.profile.full_name}`;
         }
     }
 };
