@@ -166,7 +166,7 @@
                         id="doctor-phone"
                         type="tel"
                         class="form-control"
-                        placeholder="doctors phone number"
+                        placeholder="Eg. +233553884561"
                         v-model="doctor_phone"
                     />
                 </div>
@@ -296,8 +296,6 @@ export default {
                     `Donation request has been made!`,
                     "primary"
                 );
-
-                console.log({ data });
 
                 setTimeout(() => {
                     window.location.pathname = "/prescriptions";

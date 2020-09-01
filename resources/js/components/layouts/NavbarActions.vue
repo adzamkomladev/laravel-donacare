@@ -15,7 +15,7 @@ import Donation from "../../services/donation";
 export default {
     name: "NavbarActions",
     components: { PatientActions, DonorActions },
-    async created() {
+    async mounted() {
         await this.pollData();
     },
     beforeDestroy() {
@@ -35,6 +35,7 @@ export default {
                     this.currentUser.id
                 );
                 this.userDonations = data;
+                console.log(data);
             } catch (error) {
                 console.log({ error });
             }
@@ -44,7 +45,7 @@ export default {
 
             this.polling = setInterval(async () => {
                 await this.getUserDonations();
-            }, 60000);
+            }, 30000);
         }
     },
 
