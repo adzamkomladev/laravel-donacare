@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Donation;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreDonation;
 use App\Notifications\DonationRequested;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
@@ -23,16 +25,73 @@ class DonationController extends Controller
         //
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function userDonations($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $role = $user->role;
+
+            $donations = [];
+
+            if ($role === 'admin') {
+                $donations  = Donation::with(['donor', 'patient', 'service']);
+            } else if ($role === 'donor') {
+                $donations  =
+                    Donation::with(['patient', 'service'])->where('donor_id', $id);
+            } else {
+                $donations  =
+                    Donation::with(['donor', 'service'])->where('patient_id', $id);
+            }
+
+            return response([
+                'error' => false,
+                'payload' => ['donations' => $donations]
+            ], 200);
+        } catch (\Exception $exception) {
+            return response([
+                'error' => true,
+                'payload' => ['message' => 'User not found']
+            ], 404);
+        }
+    }
 
     /**
      * Store a newly created resource in storage
      *
-     * @param  StoreDonation  $request
+     * @param  Request  $request
      * @return Response
      */
-    public function store(StoreDonation $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
+        $validator = Validator::make($request->all(), [
+            'patient_id' => 'required|integer|exists:users,id',
+            'value' => 'required|string',
+            'hospital_name' => 'string|string|max:255',
+            'hospital_location' => 'string|string|max:255',
+            'description' => 'nullable|string',
+            'date_needed' => 'required|date',
+            'payment_status' => ['required', Rule::in(['free', 'charged'])],
+            'doctor_name' => 'required|string|max:255',
+            'doctor_phone' => 'required|string|max:15',
+            'doctor_staff_id' => 'required|string|max:40',
+            'payment_method' => 'nullable|string',
+            'share_location' => 'required|boolean',
+            'type' => ['required', Rule::in(['blood', 'organ', 'funds'])]
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'error' => true,
+                'payload' => ['errors' => $validator->errors()->all()]
+            ], 422);
+        }
+
+        $validated = $request->all();
 
         $validated['date_needed'] = Carbon::parse($validated['date_needed']);
         $validated['status'] = 'initiated';
@@ -51,7 +110,10 @@ class DonationController extends Controller
 
         Notification::send($donors, new DonationRequested($donation));
 
-        return $donation;
+        return response([
+            'error' => false,
+            'payload' => ['donation' => $donation]
+        ], 200);
     }
 
 

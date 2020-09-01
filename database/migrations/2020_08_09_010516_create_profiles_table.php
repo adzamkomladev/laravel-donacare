@@ -25,6 +25,7 @@ class CreateProfilesTable extends Migration
             $table->text('medical_details')->nullable();
             $table->string('home_address', 100)->nullable();
             $table->string('email', 100)->nullable();
+            $table->string('jurisdiction', 100)->nullable();
             $table->string('mobile_money_name', 100);
             $table->string('mobile_money_number', 15);
             $table->timestamps();

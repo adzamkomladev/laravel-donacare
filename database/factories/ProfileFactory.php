@@ -16,6 +16,7 @@ $factory->define(Profile::class, function (Faker $faker) {
         'blood_group' => $faker->randomElement(['O+', 'O-', 'A+', 'A-', 'AB+', 'AB-', 'B+', 'B-']),
         'mobile_money_name' => $faker->firstName($gender),
         'mobile_money_number' => $faker->e164PhoneNumber,
-        'email' => $faker->email
+        'email' => $faker->email,
+        'jurisdiction' => $faker->randomElement(['Accra', 'Kumasi', 'Tema', 'Kasoa'])
     ];
 });

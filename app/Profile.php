@@ -15,7 +15,7 @@ class Profile extends Model
         'user_id', 'first_name', 'last_name', 'other_names',
         'gender', 'avatar', 'blood_group', 'mobile_money_name',
         'mobile_money_number', 'home_address', 'medical_details',
-        'email'
+        'email', 'jurisdiction'
     ];
 
     protected $appends = [
