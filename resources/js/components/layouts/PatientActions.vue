@@ -70,13 +70,11 @@
                     <template v-else>
                         <strong class="dropdown-item">
                             <i class="now-ui-icons business_bulb-63"></i>
-                            <span>{{
-                                activeDonation | activeRequestText
-                            }}</span>
+                            <span>Active request</span>
                         </strong>
                         <a
                             class="dropdown-item"
-                            href="#"
+                            :href="getUrl(donation.id)"
                             v-for="donation in topFourDonations"
                             :key="donation.id"
                         >
@@ -153,6 +151,11 @@
 export default {
     name: "PatientActions",
     props: ["userDonations"],
+    methods: {
+        getUrl(donationId) {
+            return `/donations/${donationId}`;
+        }
+    },
     computed: {
         isEmpty() {
             return !this.userDonations || !this.userDonations.length;
@@ -169,7 +172,9 @@ export default {
     },
     filters: {
         activeRequestText(donation) {
-            return `${donation?.value} - ${donation?.donor.profile.full_name}`;
+            const typeName = donation.type === 'blood' ? "Blood Group" : "Organ"
+            return `(${typeName} ${donation?.value}) - ${donation?.donor?.profile
+                .full_name || "N/A"}`;
         }
     }
 };

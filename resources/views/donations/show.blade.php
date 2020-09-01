@@ -65,19 +65,24 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-6">
-                            <label for="donor" class="font-weight-bold text-dark text-uppercase">Donor</label>
-                            <div id="donor" class="card text-center">
-                                <img width="120px" src="/img/avatar-default.png" alt="Donor avatar"
-                                    class="img-fluid rounded-circle mb-3">
-                                <p>
-                                    <a href="{{ route('users.show', ['user' => $donation->donor_id]) }}">
-                                        <i class="fas fa-share-square"></i>
-                                    </a>
-                                    {{ $donation->donor->profile->full_name }}
-                                </p>
+                        @if ($donation->donor_id)
+
+                            <div class="col-md-6">
+                                <label for="donor" class="font-weight-bold text-dark text-uppercase">Donor</label>
+                                <div id="donor" class="card text-center">
+                                    <img width="120px" src="/img/avatar-default.png" alt="Donor avatar"
+                                        class="img-fluid rounded-circle mb-3">
+                                    <p>
+                                        <a href="{{ route('users.show', ['user' => $donation->donor_id]) }}">
+                                            <i class="fas fa-share-square"></i>
+                                        </a>
+                                        {{ $donation->donor->profile->full_name }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+
+                        @endif
+                        
                         <div class="col-md-6">
                             <label for="patient" class="font-weight-bold text-dark text-uppercase">Patient</label>
                             <div id="patient" class="card text-center">
