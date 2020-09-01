@@ -19,28 +19,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except([
-            'update', 'updateJurisdiction', 'createStepOne',
-            'storeStepOne', 'createStepTwo', 'storeStepTwo'
-        ]);
-        $this->middleware(CheckOTP::class)->except([
-            'update', 'updateJurisdiction', 'createStepOne',
-            'storeStepOne', 'createStepTwo', 'storeStepTwo'
-        ]);
-        $this->middleware(CheckProfile::class)->except([
-            'createStepOne', 'storeStepOne', 'createStepTwo', 'storeStepTwo',
-            'store', 'update', 'updateJurisdiction'
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *

@@ -25,8 +25,8 @@
                         <p>Profile</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="{{ 'users.show-donors' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('users.show-donors') }}">
                         <x-nav-icon />
                         <p>Search Donors</p>
                     </a>
@@ -38,7 +38,7 @@
                         <p>Prescriptions</p>
                     </a>
                 </li>
-                <li>
+                <li class="{{ 'donations.index' === Route::currentRouteName() ? 'active' : '' }}">
                     <a href="{{ route('donations.index') }}">
                         <x-nav-icon />
                         <p>Confirmations</p>

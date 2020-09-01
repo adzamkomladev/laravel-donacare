@@ -11,22 +11,11 @@ use Paystack;
 class PaymentController extends Controller
 {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware(CheckOTP::class);
-        $this->middleware(CheckProfile::class);
-    }
-
     public function index(Donation $donation)
     {
         return view('payment.index', ['donation' => $donation]);
     }
+
     /**
      * Redirect the User to Paystack Payment Page
      * @return Url

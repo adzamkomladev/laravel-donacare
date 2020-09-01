@@ -13,18 +13,6 @@ class ServiceController extends Controller
 {
 
     /**
-     * Instantiate a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['toggleAvailability', 'update']);
-        $this->middleware(CheckOTP::class)->except(['toggleAvailability', 'update']);
-        $this->middleware(CheckProfile::class)->except(['toggleAvailability', 'update']);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

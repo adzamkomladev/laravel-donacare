@@ -15,18 +15,6 @@ class ComplaintController extends Controller
 {
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['update']);
-        $this->middleware(CheckOTP::class)->except(['update']);
-        $this->middleware(CheckProfile::class)->except(['update']);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
