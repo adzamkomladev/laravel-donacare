@@ -58,6 +58,7 @@
                         :key="donation.id"
                     >
                         <button
+                            @click.prevent="onAddToDonorDonations(donation)"
                             id="ad"
                             class="now-ui-icons ui-1_simple-add"
                         ></button>
@@ -83,11 +84,14 @@
                     aria-labelledby="navbarDropdownMenuLink"
                 >
                     <strong
-                        v-for="donation in donationsToDisplay"
+                        v-for="donation in myDonationsToDisplay"
                         class="dropdown-item"
                         :key="donation.id"
                     >
                         <button
+                            @click.prevent="
+                                onRemoveFromDonorDonations(donation)
+                            "
                             id="rm"
                             class="now-ui-icons ui-1_simple-delete"
                         ></button>
@@ -127,48 +131,73 @@ export default {
     name: "DonorActions",
     props: ["userDonations"],
     async mounted() {
-        const user_id = Auth.currentUser().id;
-
+        const user_id = this.user.id;
         const { data } = await Notification.newDonations(user_id);
 
         this.notifications = data || [];
-
         this.donations = this.notifications.map(
             notification => notification.data.donation
         );
     },
     data() {
         return {
+            user: Auth.currentUser(),
             myDonations: this.userDonations,
             donations: [],
             notifications: []
         };
     },
     methods: {
-        onAddToDonorDonations(donation) {
-            console.log(donation, "addtodonorrequest");
+        async onAddToDonorDonations(donation) {
+            try {
+                const { data } = await Donation.selectDonor(donation.id, {
+                    donor_id: this.user.id
+                });
+
+                console.log(data, "success");
+                this.myDonations.push(data);
+
+                this.donations = this.donations.filter(
+                    myDonation => myDonation.id !== donation.id
+                );
+            } catch (error) {
+                const { data } = error;
+
+                console.log(error, "failed");
+            }
         },
-        onRemoveFromDonorDonations(donation) {
-            console.log(donation, "removefromdonorrequest");
+        async onRemoveFromDonorDonations(donation) {
+            try {
+                const { data } = await Donation.deselectDonor(donation.id, {
+                    donor_id: this.user.id
+                });
+
+                console.log(data, "success");
+
+                this.myDonations = this.myDonations.filter(
+                    myDonation => myDonation.id !== donation.id
+                );
+            } catch (error) {
+                const { data } = error;
+
+                console.log(error, "failed");
+            }
         }
     },
     computed: {
         myDonationsToDisplay() {
-            return this.myDonations
-                .filter(donation => donation.status === "assigned")
-                .sort((a, b) => {
-                    const dateA = new Date(a.updated_at);
-                    const dateB = new Date(b.updated_at);
-
-                    if (a < b) return -1;
-
-                    if (a > b) return 1;
-
-                    return 0;
-                });
+            return (
+                this.myDonations.filter(
+                    donation => donation.status === "assigned"
+                ) || []
+            );
         },
         donationsToDisplay() {
-            return this.donations || [];
+            return (
+                this.donations.filter(
+                    donation => donation.status === "initiated"
+                ) || []
+            );
         }
     },
     filters: {

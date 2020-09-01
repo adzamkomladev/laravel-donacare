@@ -80,6 +80,7 @@ class DonationController extends Controller
         $validated = $request->validated();
 
         $validated['date_needed'] = Carbon::parse($validated['date_needed']);
+        $validated['status'] = 'initiated';
 
         $donation = Donation::create($validated);
 
@@ -90,6 +91,8 @@ class DonationController extends Controller
         $donation->files()->createMany($images);
 
         $donation->load('patient');
+
+        $donation->refresh();
 
         $donors = User::ofRole('donor')->get();
 
@@ -160,6 +163,33 @@ class DonationController extends Controller
         $donationData['status'] = 'assigned';
 
         $donation->update($donationData);
+
+        return $donation;
+    }
+
+    /**
+     * Select donor for donation.
+     *
+     * @param Request $request
+     * @param Donation $donation
+     * @return Response
+     */
+    public function deselectDonor(Request $request, Donation $donation)
+    {
+        Validator::make($request->all(), [
+            'donor_id' => 'required|integer|exists:users,id',
+        ])->validate();
+
+        if ($donation->donor_id === $request['donor_id']) {
+            return response([
+                'message' => 'Not allowed'
+            ], 405);
+        }
+
+        $donation->update([
+            'donor_id' => null,
+            'status' => 'initiated'
+        ]);
 
         return $donation;
     }
