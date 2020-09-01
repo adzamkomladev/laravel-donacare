@@ -13,18 +13,6 @@ use Illuminate\Http\Response;
 class UserController extends Controller
 {
     /**
-     * Instantiate a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['toggleActivation', 'donations']);
-        $this->middleware(CheckOTP::class)->except(['toggleActivation', 'donations']);
-        $this->middleware(CheckProfile::class)->except(['toggleActivation', 'donations']);
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return Response
@@ -84,6 +72,19 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('users.show', ['user' => $user]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param User $user
+     * @return Response
+     */
+    public function showDonors()
+    {
+        $donors = User::ofRole('donor')->get();
+
+        return view('users.donors', ['donors' => $donors]);
     }
 
     /**
