@@ -23,7 +23,7 @@ class Donation extends Model
      *
      * @var array
      */
-    protected $with = ['files'];
+    protected $with = ['files', 'patient', 'donor'];
 
     public function patient()
     {

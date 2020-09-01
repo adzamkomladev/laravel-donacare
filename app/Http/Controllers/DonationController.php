@@ -31,7 +31,7 @@ class DonationController extends Controller
         $donations = [];
 
         if ($role === 'admin') {
-            $donations  = Donation::with(['donor', 'service'])->paginate(6);
+            $donations  = Donation::with(['donor', 'patient', 'service'])->paginate(6);
         } else if ($role === 'donor') {
             $donations  =
                 Donation::with(['patient', 'service'])->where('donor_id', Auth::id())->paginate(6);
@@ -180,7 +180,7 @@ class DonationController extends Controller
             'donor_id' => 'required|integer|exists:users,id',
         ])->validate();
 
-        if ($donation->donor_id === $request['donor_id']) {
+        if ($donation->donor_id !== $request['donor_id']) {
             return response([
                 'message' => 'Not allowed'
             ], 405);

@@ -45,9 +45,7 @@ class DonationController extends Controller
 
         $donation->files()->createMany($images);
 
-        $donation->load('patient');
-
-        $donation->refresh();
+        $donation = Donation::find($donation->id);
 
         $donors = User::ofRole('donor')->get();
 

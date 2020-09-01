@@ -52,18 +52,24 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                 >
-                    <strong
-                        v-for="donation in donationsToDisplay"
-                        class="dropdown-item"
-                        :key="donation.id"
-                    >
-                        <button
-                            @click.prevent="onAddToDonorDonations(donation)"
-                            id="ad"
-                            class="now-ui-icons ui-1_simple-add"
-                        ></button>
-                        <span>{{ donation | donationText }}</span>
-                    </strong>
+                    <div class="dropdown-item" v-if="isDonationsEmpty">
+                        <span>No items here</span>
+                    </div>
+
+                    <template v-else>
+                        <strong
+                            v-for="donation in donationsToDisplay"
+                            class="dropdown-item"
+                            :key="donation.id"
+                        >
+                            <button
+                                @click.prevent="onAddToDonorDonations(donation)"
+                                id="ad"
+                                class="now-ui-icons ui-1_simple-add"
+                            ></button>
+                            <span>{{ donation | donationText }}</span>
+                        </strong>
+                    </template>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -83,39 +89,46 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                 >
-                    <strong
-                        v-for="donation in myDonationsToDisplay"
-                        class="dropdown-item"
-                        :key="donation.id"
-                    >
-                        <button
-                            @click.prevent="
-                                onRemoveFromDonorDonations(donation)
-                            "
-                            id="rm"
-                            class="now-ui-icons ui-1_simple-delete"
-                        ></button>
-                        <span>{{ donation | donationText }}</span>
-                        <br />
-                        <button class="dropdown-item" id="ord">
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                title="click to view profile"
-                                >details</a
-                            >
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                >map</a
-                            >
-                            <a
-                                id="ordd"
-                                class="btn btn-round btn-primary col-lg-4"
-                                >payments</a
-                            >
-                        </button>
-                    </strong>
+                    <div class="dropdown-item" v-if="isMyDonationsEmpty">
+                        <span>No items here</span>
+                    </div>
+
+                    <template v-else>
+                        <strong
+                            v-for="donation in myDonationsToDisplay"
+                            class="dropdown-item"
+                            :key="donation.id"
+                        >
+                            <button
+                                @click.prevent="
+                                    onRemoveFromDonorDonations(donation)
+                                "
+                                id="rm"
+                                class="now-ui-icons ui-1_simple-delete"
+                            ></button>
+                            <span>{{ donation | donationText }}</span>
+                            <br />
+                            <button class="dropdown-item" id="ord">
+                                <a
+                                    :href="getUrl(donation.id)"
+                                    id="ordd"
+                                    class="btn btn-round btn-primary col-lg-4"
+                                    title="click to view profile"
+                                    >details</a
+                                >
+                                <a
+                                    id="ordd"
+                                    class="btn btn-round btn-primary col-lg-4"
+                                    >map</a
+                                >
+                                <a
+                                    id="ordd"
+                                    class="btn btn-round btn-primary col-lg-4"
+                                    >payments</a
+                                >
+                            </button>
+                        </strong>
+                    </template>
                 </div>
             </li>
         </ul>
@@ -148,6 +161,9 @@ export default {
         };
     },
     methods: {
+        getUrl(donationId) {
+            return `/donations/${donationId}`;
+        },
         async onAddToDonorDonations(donation) {
             try {
                 const { data } = await Donation.selectDonor(donation.id, {
@@ -185,6 +201,12 @@ export default {
         }
     },
     computed: {
+        isDonationsEmpty() {
+            return !this.donations || !this.donations.length;
+        },
+        isMyDonationsEmpty() {
+            return !this.myDonations || !this.myDonations.length;
+        },
         myDonationsToDisplay() {
             return (
                 this.myDonations.filter(

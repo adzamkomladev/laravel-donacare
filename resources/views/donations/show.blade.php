@@ -5,12 +5,12 @@
         <div class="col-md-8 ml-auto mr-auto">
             <div class="card card-upgrade">
                 <div class="card-header text-center">
-                    <h4 class="card-title">Request details</h4>
+                    <h4 class="card-title">Donation details</h4>
                 </div>
                 <div class="card-body">
                     <div class="text-center">
                         <h4 class="font-weight-bold">
-                            {{ $donation->service->name }} - {{ 'GHC ' . $donation->service->price }}
+                            ({{ 'Group ' . $donation->value }})
                         </h4>
                         <p>{{ $donation->description }}</p>
                     </div>
@@ -23,16 +23,16 @@
                                 <p id="hospital-name">{{ $donation->hospital_name ?? 'N/A' }}</p>
                             </div>
                             <div class="item">
-                                <label for="hospital-contact">
-                                    <i class="fas fa-phone"></i> Hospital contact
-                                </label>
-                                <p id="hospital-contact">{{ $donation->hospital_contact ?? 'N/A' }}</p>
-                            </div>
-                            <div class="item">
                                 <label for="hospital-location">
                                     <i class="fas fa-location-arrow"></i> Hospital location
                                 </label>
                                 <p id="hospital-location">{{ $donation->hospital_location ?? 'N/A' }}</p>
+                            </div>
+                            <div class="item">
+                                <label for="doctor-staff-id">
+                                    <i class="fas fa-id-card"></i> Doctor staff id
+                                </label>
+                                <p id="doctor-staff-id">{{ $donation->doctor_staff_id ?? 'N/A' }}</p>
                             </div>
                             <div class="donor">
 
@@ -49,7 +49,7 @@
                                 <label for="doctor-contact">
                                     <i class="fas fa-phone"></i> Doctor contact
                                 </label>
-                                <p id="doctor-contact">{{ $donation->doctor_contact ?? 'N/A' }}</p>
+                                <p id="doctor-contact">{{ $donation->doctor_phone ?? 'N/A' }}</p>
                             </div>
                             <div class="item">
                                 <label for="hospital-contact">

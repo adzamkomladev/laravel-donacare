@@ -5,18 +5,18 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Services requests</h4>
+                    <h4 class="card-title">Orders</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
-                                <th>Service</th>
-                                <th>Price (GH₵)</th>
+                                <th>Order</th>
                                 <th>
                                     {{ Auth::user()->role === 'donor' ? 'Patient' : 'Donor' }}
                                 </th>
                                 <th>Status</th>
+                                <th>Date</th>
                                 <th>Actions</th>
                             </thead>
                             <tbody>
