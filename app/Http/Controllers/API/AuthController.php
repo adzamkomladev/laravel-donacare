@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Location;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
@@ -54,6 +55,9 @@ class AuthController extends Controller
         event(new Registered($user));
 
         if ($token = JWTAuth::attempt(['telephone' => $request['telephone'], 'password' => $request['password']])) {
+            $requestData = $request->all();
+            Location::updateOrCreate(['user_id' => auth()->user()->id], $requestData);
+
             return response([
                 'error' => false,
                 'payload' => $this->createNewToken($token)
@@ -76,6 +80,7 @@ class AuthController extends Controller
      */
     protected function createNewToken($token)
     {
+        auth()->user()->refresh();
         return [
             'access_token' => $token,
             'token_type' => 'bearer',
@@ -104,6 +109,9 @@ class AuthController extends Controller
         }
 
         if ($token = JWTAuth::attempt(['telephone' => $request['telephone'], 'password' => $request['password']])) {
+            $requestData = $request->all();
+            Location::updateOrCreate(['user_id' => auth()->user()->id], $requestData);
+
             return response([
                 'error' => false,
                 'payload' => $this->createNewToken($token)

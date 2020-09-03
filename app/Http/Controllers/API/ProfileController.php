@@ -42,6 +42,7 @@ class ProfileController extends Controller
             'gender' => ['required', Rule::in(['male', 'female'])],
             'medical_details' => 'nullable|string',
             'home_address' => 'nullable|string|max:100',
+            'jurisdiction' => 'nullable|string|max:100'
         ]);
 
         if ($validator->fails()) {
@@ -109,6 +110,7 @@ class ProfileController extends Controller
             'gender' => ['required', Rule::in(['male', 'female'])],
             'medical_details' => 'nullable|string',
             'home_address' => 'nullable|string|max:100',
+            'jurisdiction' => 'nullable|string|max:100'
         ]);
 
         if ($validator->fails()) {
