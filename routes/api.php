@@ -65,6 +65,8 @@ Route::group(['prefix' => 'v2'], function () {
 
             Route::get('donations/{id}', 'API\DonationController@userDonations');
             Route::post('donations', 'API\DonationController@store');
+
+            Route::get('locations/{id}', 'API\LocationController@update');
         });
     });
 });
