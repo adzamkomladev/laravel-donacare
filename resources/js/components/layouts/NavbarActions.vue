@@ -1,7 +1,11 @@
 <template>
     <div>
         <PatientActions :user-donations="userDonations" v-if="isPatient" />
-        <DonorActions :user-donations="userDonations" v-if="isDonor" />
+        <DonorActions
+            :user-donations="userDonations"
+            @removeDonation="onRemoveDonation"
+            v-if="isDonor"
+        />
     </div>
 </template>
 
@@ -34,8 +38,8 @@ export default {
                 const { data } = await Donation.userDonations(
                     this.currentUser.id
                 );
+                console.log(data, "polling user donations");
                 this.userDonations = data;
-                console.log(data);
             } catch (error) {
                 console.log({ error });
             }
@@ -45,7 +49,10 @@ export default {
 
             this.polling = setInterval(async () => {
                 await this.getUserDonations();
-            }, 30000);
+            }, 60000);
+        },
+        async onRemoveDonation() {
+            await this.getUserDonations();
         }
     },
 

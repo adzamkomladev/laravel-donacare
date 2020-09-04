@@ -28,14 +28,12 @@ class CreateDonationsTable extends Migration
             $table->text('description')->nullable();
             $table->date('date_needed');
             $table->double('cost', 10, 2)->nullable();
+            $table->integer('quantity')->unsigned()->default(1);
             $table->enum('payment_status', ['free', 'charged']);
             $table->string('payment_method', 100)->nullable();
             $table->string('hospital_name', 255);
             $table->string('hospital_location', 255);
             $table->boolean('share_location')->nullable()->default(false);
-            $table->string('doctor_name', 255);
-            $table->string('doctor_phone', 15);
-            $table->string('doctor_staff_id', 40);
 
             $table->timestamps();
         });

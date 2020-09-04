@@ -32,12 +32,10 @@ class StoreDonation extends FormRequest
             'description' => 'nullable|string',
             'date_needed' => 'required|date',
             'payment_status' => ['required', Rule::in(['free', 'charged'])],
-            'doctor_name' => 'required|string|max:255',
-            'doctor_phone' => 'required|string|max:15',
-            'doctor_staff_id' => 'required|string|max:40',
             'payment_method' => 'nullable|string',
             'share_location' => 'required|boolean',
-            'type' => ['required', Rule::in(['blood', 'organ', 'funds'])]
+            'type' => ['required', Rule::in(['blood', 'organ', 'funds'])],
+            'quantity' => 'nullable|integer',
         ];
     }
 }

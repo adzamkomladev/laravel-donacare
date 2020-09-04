@@ -14,8 +14,8 @@ class Donation extends Model
     protected $fillable = [
         'patient_id', 'donor_id', 'service_id', 'location_id', 'description',
         'hospital_name', 'date_needed', 'payment_status', 'payment_method',
-        'hospital_location', 'doctor_name', 'doctor_phone', 'doctor_staff_id',
-        'share_location', 'type', 'status', 'value', 'cost'
+        'hospital_location', 'share_location', 'type', 'status', 'value',
+        'cost', 'quantity'
     ];
 
     /**

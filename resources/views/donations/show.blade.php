@@ -29,10 +29,10 @@
                                 <p id="hospital-location">{{ $donation->hospital_location ?? 'N/A' }}</p>
                             </div>
                             <div class="item">
-                                <label for="doctor-staff-id">
-                                    <i class="fas fa-id-card"></i> Doctor staff id
+                                <label for="value">
+                                    <i class="fas fa-bed"></i> Request item
                                 </label>
-                                <p id="doctor-staff-id">{{ $donation->doctor_staff_id ?? 'N/A' }}</p>
+                                <p id="value">{{ $donation->value }}</p>
                             </div>
                             <div class="donor">
 
@@ -40,22 +40,22 @@
                         </div>
                         <div class="col-md-6">
                             <div class="item">
-                                <label for="doctor-name">
-                                    <i class="fas fa-user-md"></i> Doctor name
+                                <label for="quantity">
+                                    <i class="fas fa-shopping-basket"></i> Quantity
                                 </label>
-                                <p id="doctor-name">{{ $donation->doctor_name ?? 'N/A' }}</p>
+                                <p id="quantity">{{ $donation->quantity }}</p>
                             </div>
                             <div class="item">
-                                <label for="doctor-contact">
-                                    <i class="fas fa-phone"></i> Doctor contact
+                                <label for="payment-status">
+                                    <i class="fas fa-money-bill"></i> Free/Charged
                                 </label>
-                                <p id="doctor-contact">{{ $donation->doctor_phone ?? 'N/A' }}</p>
+                                <p id="payment-status" class="text-capitalize">{{ $donation->payment_status }}</p>
                             </div>
                             <div class="item">
-                                <label for="hospital-contact">
+                                <label for="status">
                                     <i class="fas fa-file-alt"></i> Status
                                 </label>
-                                <p id="hospital-contact">
+                                <p id="status">
                                     <span class="badge badge-pill badge-info">
                                         {{ $donation->status }}
                                     </span>
@@ -82,7 +82,7 @@
                             </div>
 
                         @endif
-                        
+
                         <div class="col-md-6">
                             <label for="patient" class="font-weight-bold text-dark text-uppercase">Patient</label>
                             <div id="patient" class="card text-center">

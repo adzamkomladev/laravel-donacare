@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -155,6 +157,12 @@ class DonationController extends Controller
      */
     public function selectDonor(Request $request, Donation $donation)
     {
+        if ($donation->status === 'assigned') {
+            return response(['errors' => [
+                ['message' => 'Donation request has already been assigned!']
+            ]], 405);
+        }
+
         Validator::make($request->all(), [
             'donor_id' => 'required|integer|exists:users,id',
         ])->validate();
@@ -163,6 +171,11 @@ class DonationController extends Controller
         $donationData['status'] = 'assigned';
 
         $donation->update($donationData);
+
+        DB::table('notifications')
+            ->where('type', 'App\Notifications\DonationRequested')
+            ->where('data->donation->id', $donation->id)
+            ->delete();
 
         return $donation;
     }
@@ -176,6 +189,7 @@ class DonationController extends Controller
      */
     public function deselectDonor(Request $request, Donation $donation)
     {
+
         Validator::make($request->all(), [
             'donor_id' => 'required|integer|exists:users,id',
         ])->validate();
@@ -190,6 +204,10 @@ class DonationController extends Controller
             'donor_id' => null,
             'status' => 'initiated'
         ]);
+
+        $donors = User::ofRole('donor')->get();
+
+        Notification::send($donors, new DonationRequested($donation));
 
         return $donation;
     }

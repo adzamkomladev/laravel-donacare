@@ -112,7 +112,7 @@
                         id="share-location"
                         class="form-control"
                         v-model="share_location"
-                        readonly
+                        disabled
                     >
                         <option id="jui" value="">-- share location --</option>
                         <option id="jui" value="1">yes</option>
@@ -122,61 +122,10 @@
             </div>
         </div>
         <div class="card-header">
-            <h6 class="title">Doctors details</h6>
-        </div>
-        <div class="row">
-            <div class="col-md-3 pr-1">
-                <div class="form-group">
-                    <label>Hospital</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="hospital"
-                        readonly
-                        v-model="hospital_name"
-                    />
-                </div>
-            </div>
-            <div class="col-md-3 px-1">
-                <div class="form-group">
-                    <label>Doctors Name</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="doctors name"
-                        v-model="doctor_name"
-                    />
-                </div>
-            </div>
-            <div class="col-md-3 pl-1">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Doc. Staff ID</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="doctors staff ID"
-                        v-model="doctor_staff_id"
-                    />
-                </div>
-            </div>
-            <div class="col-md-3 pl-1">
-                <div class="form-group">
-                    <label for="doctor-phone">Doctors Phone Number</label>
-                    <input
-                        id="doctor-phone"
-                        type="tel"
-                        class="form-control"
-                        placeholder="Eg. +233553884561"
-                        v-model="doctor_phone"
-                    />
-                </div>
-            </div>
-        </div>
-        <div class="card-header">
             <h6 class="title">{{ valueHeader }}</h6>
         </div>
         <div class="row">
-            <div class="col-md-12 pr-1">
+            <div class="col-md-9 pr-1">
                 <div class="form-group">
                     <label> {{ valueLabel }} </label>
                     <input
@@ -184,6 +133,20 @@
                         class="form-control"
                         placeholder="Donation item"
                         v-model="value"
+                    />
+                </div>
+            </div>
+            <div class="col-md-3 pl-1">
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input
+                        id="quantity"
+                        type="number"
+                        min="1"
+                        class="form-control"
+                        placeholder="Quantity"
+                        required
+                        v-model="quantity"
                     />
                 </div>
             </div>
@@ -239,11 +202,9 @@ export default {
             hospital_name: "",
             hospital_location: "",
             share_location: 1,
+            quantity: 1,
             payment_status: "",
             date_needed: "",
-            doctor_name: "",
-            doctor_staff_id: "",
-            doctor_phone: "",
             value: "",
             payment_method: "",
             images: [],
@@ -277,9 +238,7 @@ export default {
             donationData.append("share_location", this.share_location);
             donationData.append("payment_status", this.payment_status);
             donationData.append("date_needed", this.date_needed);
-            donationData.append("doctor_name", this.doctor_name);
-            donationData.append("doctor_staff_id", this.doctor_staff_id);
-            donationData.append("doctor_phone", this.doctor_phone);
+            donationData.append("quantity", this.quantity);
             donationData.append("value", this.value);
             donationData.append("type", this.type);
             if (this.willPay) {
