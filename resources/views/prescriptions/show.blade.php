@@ -15,7 +15,8 @@
                 <div class="card-body">
                     <img src="{{ $prescription->path }}" alt="Prescription image">
                     <div class="row">
-                        <a class="btn btn-primary btn-round mt-5">View Request</a>
+                        <a href="{{ route('donations.show', [$prescription->donation->id]) }}"
+                            class="btn btn-primary btn-round mt-5">View Request</a>
                         <a href="{{ $prescription->path }}" target="_blank" class="btn btn-primary btn-round mt-5">
                             Download prescription image
                         </a>

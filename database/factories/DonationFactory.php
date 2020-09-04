@@ -18,8 +18,6 @@ $factory->define(Donation::class, function (Faker $faker) {
         'hospital_name' => $faker->company,
         'hospital_location' => $faker->city,
         'share_location' => $faker->boolean,
-        'doctor_name' => $faker->name(),
-        'doctor_phone' => $faker->e164PhoneNumber,
-        'doctor_staff_id' => $faker->e164PhoneNumber,
+        'quantity' => $faker->randomElement([1, 2, 3, 4]),
     ];
 });

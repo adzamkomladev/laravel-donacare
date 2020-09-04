@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -82,7 +83,9 @@ class UserController extends Controller
      */
     public function showDonors()
     {
-        $donors = User::ofRole('donor')->get();
+        $donors = User::whereHas('profile', function ($query) {
+            return $query->where('blood_group', '=', Auth::user()->profile->blood_group);
+        })->ofRole('donor')->get();
 
         return view('users.donors', ['donors' => $donors]);
     }

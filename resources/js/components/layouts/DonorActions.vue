@@ -52,22 +52,26 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                 >
-                    <div class="dropdown-item" v-if="isDonationsEmpty">
+                    <div class="dropdown-item" v-if="isNotificationsEmpty">
                         <span>No items here</span>
                     </div>
 
                     <template v-else>
                         <strong
-                            v-for="donation in donationsToDisplay"
+                            v-for="notification in notificationsToDisplay"
                             class="dropdown-item"
-                            :key="donation.id"
+                            :key="notification.id"
                         >
                             <button
-                                @click.prevent="onAddToDonorDonations(donation)"
+                                @click.prevent="
+                                    onAddToDonorDonations(notification)
+                                "
                                 id="ad"
                                 class="now-ui-icons ui-1_simple-add"
                             ></button>
-                            <span>{{ donation | donationText }}</span>
+                            <span>{{
+                                notification.data.donation | donationText
+                            }}</span>
                         </strong>
                     </template>
                 </div>
@@ -144,42 +148,63 @@ export default {
     name: "DonorActions",
     props: ["userDonations"],
     async mounted() {
-        const user_id = this.user.id;
-        const { data } = await Notification.newDonations(user_id);
-
-        this.notifications = data || [];
-        this.donations = this.notifications.map(
-            notification => notification.data.donation
-        );
+        this.pollNotifications();
+    },
+    beforeDestroy() {
+        clearInterval(this.polling);
     },
     data() {
         return {
             user: Auth.currentUser(),
             myDonations: this.userDonations,
-            donations: [],
-            notifications: []
+            notifications: [],
+            polling: null
         };
     },
     methods: {
+        async getNotifications() {
+            const user_id = this.user.id;
+            const { data } = await Notification.newDonations(user_id);
+
+            console.log(data, "Polled notifications");
+
+            this.notifications = data || [];
+        },
+        async pollNotifications() {
+            await this.getNotifications();
+
+            this.polling = setInterval(async () => {
+                await this.getNotifications();
+            }, 60000);
+        },
         getUrl(donationId) {
             return `/donations/${donationId}`;
         },
-        async onAddToDonorDonations(donation) {
+        async onAddToDonorDonations(notification) {
+            const { donation } = notification.data;
+
             try {
                 const { data } = await Donation.selectDonor(donation.id, {
                     donor_id: this.user.id
                 });
 
-                console.log(data, "success");
                 this.myDonations.push(data);
 
-                this.donations = this.donations.filter(
-                    myDonation => myDonation.id !== donation.id
+                this.notifications = this.notifications.filter(
+                    myNotification => myNotification.id !== notification.id
+                );
+
+                this.showNotification(
+                    "fas fa-check",
+                    "Donation request has been added!",
+                    "primary"
                 );
             } catch (error) {
-                const { data } = error;
-
-                console.log(error, "failed");
+                this.showNotification(
+                    "fas fa-times",
+                    "Failed to add donation request, It is either taken or unavailable!",
+                    "danger"
+                );
             }
         },
         async onRemoveFromDonorDonations(donation) {
@@ -188,21 +213,32 @@ export default {
                     donor_id: this.user.id
                 });
 
-                console.log(data, "success");
-
                 this.myDonations = this.myDonations.filter(
                     myDonation => myDonation.id !== donation.id
                 );
-            } catch (error) {
-                const { data } = error;
 
-                console.log(error, "failed");
+                this.$emit("removeDonation");
+
+                this.showNotification(
+                    "fas fa-check",
+                    "Donation request has been removed!",
+                    "primary"
+                );
+            } catch (error) {
+                this.showNotification(
+                    "fas fa-times",
+                    "Failed to remove donation request",
+                    "danger"
+                );
             }
+        },
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 2500 });
         }
     },
     computed: {
-        isDonationsEmpty() {
-            return !this.donations || !this.donations.length;
+        isNotificationsEmpty() {
+            return !this.notifications || !this.notifications.length;
         },
         isMyDonationsEmpty() {
             return !this.myDonations || !this.myDonations.length;
@@ -214,10 +250,11 @@ export default {
                 ) || []
             );
         },
-        donationsToDisplay() {
+        notificationsToDisplay() {
             return (
-                this.donations.filter(
-                    donation => donation.status === "initiated"
+                this.notifications.filter(
+                    notification =>
+                        notification.data.donation.status === "initiated"
                 ) || []
             );
         }
