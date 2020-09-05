@@ -11,7 +11,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <donation-form type="{{ $type }}"></donation-form>
+                    <donation-form type="{{ $type }}" :services="{{ $services }}"></donation-form>
                 </div>
             </div>
         </div>

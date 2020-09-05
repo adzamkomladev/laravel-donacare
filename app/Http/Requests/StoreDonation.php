@@ -36,6 +36,8 @@ class StoreDonation extends FormRequest
             'share_location' => 'required|boolean',
             'type' => ['required', Rule::in(['blood', 'organ', 'funds'])],
             'quantity' => 'nullable|integer',
+            'service_id' => 'nullable|integer|exists:services,id',
+            'cost' => 'nullable|numeric',
         ];
     }
 }
