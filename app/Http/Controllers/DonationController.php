@@ -6,21 +6,24 @@ use App\Service;
 use App\Donation;
 use App\File;
 use App\Http\Requests\StoreDonation;
-use App\Notifications\DonationRequested;
-use App\User;
-use Carbon\Carbon;
+use App\Services\DonationService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
+
+    /** @var DonationService $donationService  */
+    protected $donationService;
+
+    public function __construct(DonationService $donationService)
+    {
+        $this->donationService = $donationService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,21 +31,9 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $role = Auth::user()->role;
-
-        $donations = [];
-
-        if ($role === 'admin') {
-            $donations  = Donation::with(['donor', 'patient', 'service'])->paginate(6);
-        } else if ($role === 'donor') {
-            $donations  =
-                Donation::with(['patient', 'service'])->where('donor_id', Auth::id())->paginate(6);
-        } else {
-            $donations  =
-                Donation::with(['donor', 'service'])->where('patient_id', Auth::id())->paginate(6);
-        }
-
-        return view('donations.index', ['donations' => $donations]);
+        return view('donations.index', [
+            'donations' => $this->donationService->findAll()
+        ]);
     }
 
     /**
@@ -80,27 +71,9 @@ class DonationController extends Controller
     public function store(StoreDonation $request)
     {
         $validated = $request->validated();
+        $imageUrls = json_decode($request->all()['images']);
 
-        $validated['date_needed'] = Carbon::parse($validated['date_needed']);
-        $validated['status'] = 'initiated';
-
-        $donation = Donation::create($validated);
-
-        $images = collect(json_decode($request->all()['images']))->map(function ($image) {
-            return ['path' => $image];
-        })->toArray();
-
-        $donation->files()->createMany($images);
-
-        $donation->load('patient');
-
-        $donation->refresh();
-
-        $donors = User::ofRole('donor')->get();
-
-        Notification::send($donors, new DonationRequested($donation));
-
-        return $donation;
+        return $this->donationService->store($validated, $imageUrls);
     }
 
     /**
@@ -168,16 +141,8 @@ class DonationController extends Controller
         ])->validate();
 
         $donationData = $request->all();
-        $donationData['status'] = 'assigned';
 
-        $donation->update($donationData);
-
-        DB::table('notifications')
-            ->where('type', 'App\Notifications\DonationRequested')
-            ->where('data->donation->id', $donation->id)
-            ->delete();
-
-        return $donation;
+        return $this->donationService->assignDonation($donationData, $donation);
     }
 
     /**
@@ -200,16 +165,7 @@ class DonationController extends Controller
             ], 405);
         }
 
-        $donation->update([
-            'donor_id' => null,
-            'status' => 'initiated'
-        ]);
-
-        $donors = User::ofRole('donor')->get();
-
-        Notification::send($donors, new DonationRequested($donation));
-
-        return $donation;
+        return $this->donationService->unassignDonation($donation);
     }
 
     /**
@@ -235,8 +191,6 @@ class DonationController extends Controller
             ],
         ])->validate();
 
-        $donation->update($request->all());
-
-        return $donation;
+        return $this->donationService->updateStatus($request->all(), $donation);
     }
 }

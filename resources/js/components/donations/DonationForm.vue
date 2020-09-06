@@ -150,6 +150,26 @@
                     />
                 </div>
             </div>
+            <div class="col-md-6 pl-1">
+                <div class="form-group">
+                    <label for="service-id">Select service</label>
+                    <select
+                        id="service-id"
+                        class="form-control"
+                        v-model="service_id"
+                        disabled
+                    >
+                        <option id="jui" value="">-- choose service --</option>
+                        <option
+                            v-for="service in services"
+                            :key="service.id"
+                            id="jui"
+                            :value="service.id"
+                            >{{ service | serviceOptionText }}</option
+                        >
+                    </select>
+                </div>
+            </div>
         </div>
         <div v-if="willPay" class="card-header">
             <h6 class="title">Payment details</h6>
@@ -191,7 +211,7 @@ import Donation from "../../services/donation";
 
 export default {
     name: "DonationForm",
-    props: ["type"],
+    props: ["type", "services"],
     mounted() {
         this.value = this.initialValue;
     },
@@ -203,6 +223,9 @@ export default {
             hospital_location: "",
             share_location: 1,
             quantity: 1,
+            service_id: this.services.find(service =>
+                service.name.toLowerCase().includes(this.type)
+            )?.id,
             payment_status: "",
             date_needed: "",
             value: "",
@@ -239,9 +262,16 @@ export default {
             donationData.append("payment_status", this.payment_status);
             donationData.append("date_needed", this.date_needed);
             donationData.append("quantity", this.quantity);
+            donationData.append("service_id", this.service_id);
             donationData.append("value", this.value);
             donationData.append("type", this.type);
             if (this.willPay) {
+                const service = this.services.find(
+                    service => service.id === this.service_id
+                );
+                const cost = service?.price * this.quantity;
+
+                donationData.append("cost", cost);
                 donationData.append("payment_method", this.payment_method);
             }
             const urls = await this.getFileUrls();
@@ -326,6 +356,9 @@ export default {
             return images.length === 0
                 ? "Choose images"
                 : `${images.length} images uploaded!`;
+        },
+        serviceOptionText(service) {
+            return `${service.name} - GHc ${service.price}`;
         }
     }
 };
