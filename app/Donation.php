@@ -44,4 +44,9 @@ class Donation extends Model
     {
         return $this->hasMany(File::class);
     }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }

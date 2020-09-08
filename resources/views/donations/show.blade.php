@@ -63,10 +63,19 @@
                             </div>
                         </div>
                     </div>
+                    @if ($donation->patient_id === Auth::id())
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{{ route('user_reviews.create', ['donation' => $donation->id]) }}"
+                                    class="btn btn-success btn-round">
+                                    Make a review
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                     <hr>
                     <div class="row">
                         @if ($donation->donor_id)
-
                             <div class="col-md-6">
                                 <label for="donor" class="font-weight-bold text-dark text-uppercase">Donor</label>
                                 <div id="donor" class="card text-center">
