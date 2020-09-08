@@ -72,11 +72,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('files/{donation}', 'FileController@store')->name('files.store');
 
         // Paystack
-        Route::get('/pay/{donation}', 'PaymentController@index')->name('payment.index');
-        Route::post('/pay', 'PaymentController@redirectToGateway')->name('payment.pay');
+        Route::get('pay/{donation}', 'PaymentController@index')->name('payment.index');
+        Route::post('pay', 'PaymentController@redirectToGateway')->name('payment.pay');
 
         // Prescriptions
-        Route::get('/prescriptions', 'PrescriptionController@index')->name('prescriptions.index');
-        Route::get('/prescriptions/{prescription}', 'PrescriptionController@show')->name('prescriptions.show');
+        Route::get('prescriptions', 'PrescriptionController@index')->name('prescriptions.index');
+        Route::get('prescriptions/{prescription}', 'PrescriptionController@show')->name('prescriptions.show');
+
+        // UserReviews
+        Route::get('user-reviews', 'UserReviewController@index')->name('user_reviews.index');
+        Route::get('user-reviews/create/{donation}', 'UserReviewController@create')->name('user_reviews.create');
+        Route::post('user-reviews', 'UserReviewController@store')->name('user_reviews.store');
     });
 });

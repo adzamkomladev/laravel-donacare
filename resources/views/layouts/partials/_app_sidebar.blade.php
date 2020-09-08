@@ -69,8 +69,8 @@
                         <p>Payments</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="{{ 'user_reviews.index' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('user_reviews.index') }}">
                         <x-nav-icon />
                         <p>Ratings</p>
                     </a>
