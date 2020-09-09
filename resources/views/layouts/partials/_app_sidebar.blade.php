@@ -63,8 +63,8 @@
                         <p>Orders</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="{{ 'donation_payments.index' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('donation_payments.index') }}">
                         <x-nav-icon />
                         <p>Payments</p>
                     </a>

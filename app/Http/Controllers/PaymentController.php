@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\CheckOTP;
-use App\Http\Middleware\CheckProfile;
 use App\Donation;
 use Illuminate\Http\Request;
 use Paystack;

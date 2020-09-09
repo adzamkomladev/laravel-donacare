@@ -71,9 +71,11 @@ Route::middleware(['auth'])->group(function () {
         // File upload for donation
         Route::post('files/{donation}', 'FileController@store')->name('files.store');
 
-        // Paystack
+        // Payment
         Route::get('pay/{donation}', 'PaymentController@index')->name('payment.index');
         Route::post('pay', 'PaymentController@redirectToGateway')->name('payment.pay');
+        Route::get('donation-payments/{payment}/confirm', 'DonationPaymentController@confirm')->name('donation_payments.confirm');
+        Route::get('donation-payments', 'DonationPaymentController@index')->name('donation_payments.index');
 
         // Prescriptions
         Route::get('prescriptions', 'PrescriptionController@index')->name('prescriptions.index');

@@ -53,7 +53,15 @@ class DonationService
         })->toArray();
 
         $donation->files()->createMany($images);
-        $donation->load('patient');
+
+        if ($donation->payment_status === 'free') {
+            $donation->payments()->create([
+                'type' => $donation->payment_status,
+                'amount' => 0.0
+            ]);
+        }
+
+        $donation->load('patient', 'payments');
         $donation->refresh();
 
         $donors = User::ofRole('donor')->get();
