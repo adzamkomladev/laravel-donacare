@@ -310,7 +310,7 @@ export default {
             this.images = event.target.files;
         },
         async getFileUrls() {
-            const apikey = "AWGiGTsD9SnDckR6H8erIz";
+            const apikey = "Aw7Es3zsBRRuECxYQDkBzz";
             const client = filestack.init(apikey);
 
             const files = await Promise.all(
