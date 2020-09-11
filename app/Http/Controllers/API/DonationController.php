@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Donation;
 use App\Http\Controllers\Controller;
 use App\Notifications\DonationRequested;
+use App\Services\DonationService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,6 +16,14 @@ use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
+    /** @var \App\Services\DonationService $donationService  */
+    protected $donationService;
+
+    public function __construct(DonationService $donationService)
+    {
+        $this->donationService = $donationService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,7 +87,10 @@ class DonationController extends Controller
             'payment_status' => ['required', Rule::in(['free', 'charged'])],
             'payment_method' => 'nullable|string',
             'share_location' => 'required|boolean',
-            'type' => ['required', Rule::in(['blood', 'organ', 'funds'])]
+            'type' => ['required', Rule::in(['blood', 'organ', 'funds'])],
+            'quantity' => 'nullable|integer',
+            'service_id' => 'nullable|integer|exists:services,id',
+            'cost' => 'nullable|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -89,23 +101,9 @@ class DonationController extends Controller
         }
 
         $validated = $request->all();
+        $imageUrls = $validated['images'] ?? [];
 
-        $validated['date_needed'] = Carbon::parse($validated['date_needed']);
-        $validated['status'] = 'initiated';
-
-        $donation = Donation::create($validated);
-
-        $images = collect(json_decode($request->all()['images']))->map(function ($image) {
-            return ['path' => $image];
-        })->toArray();
-
-        $donation->files()->createMany($images);
-
-        $donation = Donation::find($donation->id);
-
-        $donors = User::ofRole('donor')->get();
-
-        Notification::send($donors, new DonationRequested($donation));
+        $donation = $this->donationService->store($validated, $imageUrls);
 
         return response([
             'error' => false,
