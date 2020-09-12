@@ -62,7 +62,7 @@
                         class="form-control"
                         placeholder="Your home address"
                         :readonly="!canUpdate"
-                        :value="profile.home_address"
+                        v-model="profile.home_address"
                     />
                 </div>
             </div>
