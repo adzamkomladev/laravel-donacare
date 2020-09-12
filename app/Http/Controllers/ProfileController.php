@@ -148,44 +148,4 @@ class ProfileController extends Controller
 
         return $profile;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Profile $profile
-     * @return Response
-     */
-    public function destroy(Profile $profile)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Profile $profile
-     * @return Application|Factory|Response|View
-     */
-    public function editJurisdiction(Profile $profile)
-    {
-        return view('profiles.update-jurisdiction', ['profile' => $profile]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Profile $profile
-     * @return Profile
-     */
-    public function updateJurisdiction(Request $request, Profile $profile)
-    {
-        Validator::make($request->all(), [
-            'jurisdiction' => 'required|string|max:100',
-        ])->validate();
-
-        $profile->update($request->all());
-
-        return $profile;
-    }
 }

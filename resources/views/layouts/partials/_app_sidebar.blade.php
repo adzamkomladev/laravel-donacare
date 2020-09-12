@@ -51,8 +51,8 @@
                     </a>
                 </li>
             @elseif(Auth::user()->role === 'donor')
-                <li class="{{ 'profiles.jurisdiction' === Route::currentRouteName() ? 'active' : '' }}">
-                    <a href="{{ route('profiles.jurisdiction', ['profile' => Auth::user()->profile->id]) }}">
+                <li class="{{ 'profile_jurisdictions.edit' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('profile_jurisdictions.edit', ['profile' => Auth::user()->profile->id]) }}">
                         <x-nav-icon />
                         <p>Working Jurisdiction</p>
                     </a>

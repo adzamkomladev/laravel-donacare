@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('users/donors/show', 'UserController@showDonors')->name('users.show-donors');
 
         // Profile
-        Route::get('profiles/{profile}/jurisdiction', 'ProfileController@editJurisdiction')->name('profiles.jurisdiction');
+        Route::get('profile-jurisdictions/{profile}/edit', 'ProfileJurisdictionController@edit')->name('profile_jurisdictions.edit');
 
         // Services
         Route::get('services', 'ServiceController@index')->name('services.index');
