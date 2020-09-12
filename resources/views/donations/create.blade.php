@@ -16,6 +16,7 @@
             </div>
         </div>
     </div>
+    <donation-form-summary></donation-form-summary>
 
     @push('scripts')
         <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>

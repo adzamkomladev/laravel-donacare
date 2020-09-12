@@ -4,6 +4,6 @@ export default class Profile {
     }
 
     static updateJurisdiction(profileId, data) {
-        return axios.patch(`/api/v1/profiles/${profileId}/jurisdiction`, data);
+        return axios.patch(`/api/v1/profile-jurisdictions/${profileId}`, data);
     }
 }

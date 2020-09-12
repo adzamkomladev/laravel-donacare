@@ -89,6 +89,10 @@ Vue.component(
     "search-box",
     require("./components/layouts/SearchBox.vue").default
 );
+Vue.component(
+    "donation-form-summary",
+    require("./components/donations/DonationFormSummary.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

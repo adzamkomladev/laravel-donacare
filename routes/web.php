@@ -29,10 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([CheckOTP::class])->group(function () {
 
         // Profiles
-        Route::get('profiles/step-one', 'ProfileController@createStepOne')->name('profiles.create-step-one');
-        Route::post('profiles/step-one', 'ProfileController@storeStepOne')->name('profiles.store-step-one');
-        Route::get('profiles/step-two', 'ProfileController@createStepTwo')->name('profiles.create-step-two');
-        Route::post('profiles/step-two', 'ProfileController@storeStepTwo')->name('profiles.store-step-two');
+        Route::get('profiles/step-one', 'StepOneProfileCreationController@create')->name('profiles.create_step_one');
+        Route::post('profiles/step-one', 'StepOneProfileCreationController@store')->name('profiles.store_step_one');
+        Route::get('profiles/step-two', 'StepTwoProfileCreationController@create')->name('profiles.create_step_two');
+        Route::post('profiles/step-two', 'StepTwoProfileCreationController@store')->name('profiles.store_step_two');
         Route::post('profiles', 'ProfileController@store')->name('profiles.store');
     });
 
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('users/donors/show', 'UserController@showDonors')->name('users.show-donors');
 
         // Profile
-        Route::get('profiles/{profile}/jurisdiction', 'ProfileController@editJurisdiction')->name('profiles.jurisdiction');
+        Route::get('profile-jurisdictions/{profile}/edit', 'ProfileJurisdictionController@edit')->name('profile_jurisdictions.edit');
 
         // Services
         Route::get('services', 'ServiceController@index')->name('services.index');

@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <form>
         <div class="card-header">
             <h6 class="title">General</h6>
         </div>
@@ -125,9 +125,28 @@
             <h6 class="title">{{ valueHeader }}</h6>
         </div>
         <div class="row">
-            <div class="col-md-9 pr-1">
-                <div class="form-group">
-                    <label> {{ valueLabel }} </label>
+            <div class="col-md-8 pr-1">
+                <div v-if="isBlood" class="form-group">
+                    <label for="blood-group">{{ valueLabel }}</label>
+                    <div class="input-group">
+                        <select
+                            id="blood-group"
+                            class="form-control"
+                            v-model="value"
+                        >
+                            <option value="O+">O positive</option>
+                            <option value="O-">O negative</option>
+                            <option value="A+">A positive</option>
+                            <option value="A-">A negative</option>
+                            <option value="B+">B positive</option>
+                            <option value="B-">B negative</option>
+                            <option value="AB+">AB positive</option>
+                            <option value="AB-">AB negative</option>
+                        </select>
+                    </div>
+                </div>
+                <div v-else class="form-group">
+                    <label> </label>
                     <input
                         type="text"
                         class="form-control"
@@ -136,7 +155,7 @@
                     />
                 </div>
             </div>
-            <div class="col-md-3 pl-1">
+            <div class="col-md-4 pl-1">
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
                     <input
@@ -198,7 +217,11 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-round">
+        <button
+            @click.prevent="onOpenModal"
+            type="submit"
+            class="btn btn-primary btn-round"
+        >
             <i v-if="isLoading" class="now-ui-icons loader_refresh spin"></i>
             Make request
         </button>
@@ -206,12 +229,16 @@
 </template>
 
 <script>
+import { eventBus } from "../../events/event-bus";
 import Auth from "../../services/auth";
 import Donation from "../../services/donation";
 
 export default {
     name: "DonationForm",
     props: ["type", "services"],
+    created() {
+        eventBus.$on("submitDonationForm", this.onSubmit);
+    },
     mounted() {
         this.value = this.initialValue;
     },
@@ -251,6 +278,27 @@ export default {
         onSelectHospital() {
             this.hospital_location = this.locations[this.hospital_name];
         },
+        onOpenModal() {
+            $("#donation-summary").modal("show");
+
+            eventBus.$emit("openDonationSummaryModal", {
+                fullName: this.full_name,
+                hospitalName: this.hospital_name,
+                hospitalLocation: this.hospital_location,
+                shareLocation: this.share_location,
+                quantity: this.quantity,
+                value: this.value,
+                paymentStatus: this.payment_status,
+                paymentMethod: this.payment_method,
+                service: this.services.find(
+                    service => this.service_id === service.id
+                ),
+                dateNeeded: this.date_needed,
+                images: Array.from(this.images).map(image =>
+                    URL.createObjectURL(image)
+                )
+            });
+        },
         async onSubmit() {
             this.isLoading = true;
 
@@ -280,6 +328,7 @@ export default {
             try {
                 const { data } = await Donation.save(donationData);
 
+                eventBus.$emit("donationFormSubmitted");
                 this.showNotification(
                     "fas fa-check",
                     `Donation request has been made!`,
@@ -287,7 +336,7 @@ export default {
                 );
 
                 setTimeout(() => {
-                    window.location.pathname = "/prescriptions";
+                    this.routeBasedOnPaymentMethod(this.payment_method);
                 }, 3000);
             } catch (error) {
                 console.log({ error });
@@ -301,6 +350,17 @@ export default {
                 this.showNotification("fas fa-times", errorMessage, "danger");
             } finally {
                 this.isLoading = false;
+            }
+        },
+        routeBasedOnPaymentMethod(paymentMethod) {
+            if (paymentMethod === "cash" || !paymentMethod) {
+                window.location.pathname = "/prescriptions";
+                return;
+            }
+
+            if (paymentMethod === "mobile money") {
+                window.location.pathname = "/prescriptions";
+                return;
             }
         },
         showNotification(icon, message, type) {

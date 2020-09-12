@@ -24,7 +24,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/users/{user}/donations', 'UserController@donations');
 
     Route::patch('/profiles/{profile}', 'ProfileController@update');
-    Route::patch('profiles/{profile}/jurisdiction', 'ProfileController@updateJurisdiction');
+    Route::patch('profile-jurisdictions/{profile}', 'ProfileJurisdictionController@update');
 
     Route::patch('/services/{service}/toggle-availability', 'ServiceController@toggleAvailability');
     Route::put('/services/{service}', 'ServiceController@update');

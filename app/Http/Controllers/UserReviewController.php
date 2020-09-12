@@ -22,7 +22,7 @@ class UserReviewController extends Controller
             ->get()
             ->map(function ($donation) {
                 return $donation->review;
-            });
+            })->filter();
 
         return view('user_reviews.index', ['reviews' => $reviews]);
     }
