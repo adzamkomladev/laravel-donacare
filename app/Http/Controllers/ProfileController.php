@@ -2,89 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\CheckOTP;
-use App\Http\Middleware\CheckProfile;
-use App\Http\Requests\StepOneStoreProfile;
-use App\Http\Requests\StepTwoStoreProfile;
+
 use App\Http\Requests\StoreProfile;
 use App\Profile;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Services\ProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
+    /** @var \App\Services\ProfileService $profileService  */
+    protected $profileService;
+
+    public function __construct(ProfileService $profileService)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|Response|View
-     */
-    public function createStepOne()
-    {
-        return view('profiles.step_one');
-    }
-
-    /**
-     * Step one of profile form
-     *
-     * @param StepOneStoreProfile $request
-     * @return RedirectResponse
-     */
-    public function storeStepOne(StepOneStoreProfile $request)
-    {
-        $validated = $request->validated();
-        $validated['user_id'] = Auth::id();
-
-        $request->session()->put('step_one', $validated);
-
-        return redirect()->route('profiles.create-step-two');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|Response|View
-     */
-    public function createStepTwo()
-    {
-        return view('profiles.step_two');
-    }
-
-    /**
-     * Step two of profile form
-     *
-     * @param StepTwoStoreProfile $request
-     * @return RedirectResponse
-     */
-    public function storeStepTwo(StepTwoStoreProfile $request)
-    {
-        $validated = $request->validated();
-        $stepOne = $request->session()->get('step_one');
-        $profileData = collect($validated)->merge($stepOne)->all();
-
-        $profile = Profile::create($profileData);
-
-        $profile->user->role = $profileData['role'];
-        $profile->user->save();
-
-        $request->session()->forget('step_one');
-
-        return redirect()->route('home');
+        $this->profileService = $profileService;
     }
 
     /**
@@ -106,27 +40,6 @@ class ProfileController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Profile $profile
-     * @return Response
-     */
-    public function show(Profile $profile)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Profile $profile
-     * @return Response
-     */
-    public function edit(Profile $profile)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -144,8 +57,6 @@ class ProfileController extends Controller
             'home_address' => 'nullable|string|max:100',
         ])->validate();
 
-        $profile->update($request->all());
-
-        return $profile;
+       return $this->profileService->update($profile, $request->all());
     }
 }

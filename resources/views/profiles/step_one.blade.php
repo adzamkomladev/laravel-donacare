@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body px-4">
                         <h4 class="card-title mb-5">Personal profile</h4>
-                        <form method="POST" action="{{ route('profiles.store-step-one') }}">
+                        <form method="POST" action="{{ route('profiles.store_step_one') }}">
                             @csrf
 
                             <div class="row">
@@ -68,14 +68,16 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="email">Email address</label>
-                                        <div class="input-group @error('email') has-danger @enderror">
-                                            <input id="email" type="email"
-                                                class="form-control @error('email') form-control-danger @enderror"
-                                                name="email" value="{{ old('email') }}" autofocus
-                                                placeholder="Your email address">
+                                        <label for="role">Purpose</label>
+                                        <div class="input-group @error('role') has-danger @enderror">
+                                            <select id="role"
+                                                class="form-control @error('role') form-control-danger @enderror"
+                                                name="role" required>
+                                                <option value="patient">Patient</option>
+                                                <option value="donor">Donor</option>
+                                            </select>
                                         </div>
-                                        @error('email')
+                                        @error('role')
                                         <small class="form-text text-muted text-danger">
                                             <strong>{{ $message }}</strong>
                                         </small>
@@ -85,14 +87,22 @@
 
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label for="home-address">Home address</label>
-                                        <div class="input-group @error('home_address') has-danger @enderror">
-                                            <input id="home-address" type="home_address"
-                                                class="form-control @error('home_address') form-control-danger @enderror"
-                                                name="home_address" value="{{ old('home_address') }}" autofocus
-                                                placeholder="Your home address">
+                                        <label for="blood_group">Blood group</label>
+                                        <div class="input-group @error('blood_group') has-danger @enderror">
+                                            <select id="blood_group"
+                                                class="form-control @error('blood_group') form-control-danger @enderror"
+                                                name="blood_group" required>
+                                                <option value="O+" selected>O positive</option>
+                                                <option value="O-">O negative</option>
+                                                <option value="A+">A positive</option>
+                                                <option value="A-">A negative</option>
+                                                <option value="B+">B positive</option>
+                                                <option value="B-">B negative</option>
+                                                <option value="AB+">AB positive</option>
+                                                <option value="AB-">AB negative</option>
+                                            </select>
                                         </div>
-                                        @error('home_address')
+                                        @error('blood_group')
                                         <small class="form-text text-muted text-danger">
                                             <strong>{{ $message }}</strong>
                                         </small>
@@ -124,7 +134,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary btn-round mb-3">
-                                        Create profile
+                                        Save and continue
                                     </button>
                                 </div>
                             </div>

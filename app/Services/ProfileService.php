@@ -6,17 +6,21 @@ use App\Profile;
 
 class ProfileService
 {
-
     /**
      * Create profile
      *
      * @return \App\Profile
      **/
-    public function create(Profile $profile, array $requestData)
+    public function create(array $requestData)
     {
-        $profile = Profile::create($requestData);
+        $stepOne = $this->getStepOneData();
+        $profileData = collect($requestData)->merge($stepOne)->all();
 
-        $profile->user()->update(['role' => $requestData['role']]);
+        $profile = Profile::create($profileData);
+
+        $profile->user()->update(['role' => $profileData['role']]);
+
+        session()->forget('step_one');
 
         return $profile;
     }
@@ -43,5 +47,24 @@ class ProfileService
         $profile->update(['jurisdiction' => $jurisdiction]);
 
         return $profile;
+    }
+
+    /**
+     * Save data from step one of profile creation form
+     *
+     **/
+    public function saveStepOneData($validatedData)
+    {
+        session(['step_one' => $validatedData]);
+    }
+
+    /**
+     * Retrieve data from step one of profile creation form
+     *
+     * @return array
+     **/
+    public function getStepOneData()
+    {
+        return session('step_one');
     }
 }

@@ -24,7 +24,7 @@ class CheckProfile
                 ], 422);
             }
 
-            return redirect()->route('profiles.create-step-one');
+            return redirect()->route('profiles.create_step_one');
         }
 
         return $next($request);
