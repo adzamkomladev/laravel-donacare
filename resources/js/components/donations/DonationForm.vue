@@ -206,10 +206,10 @@
                         required
                     >
                         <option id="jui" value="">-- select method --</option>
-                        <!-- <option id="jui" value="Mobile money"
+                        <option id="jui" value="Mobile money"
                             >Mobile money</option
                         >
-                        <option id="jui" value="Debit/Credit card"
+                        <!-- <option id="jui" value="Debit/Credit card"
                             >Debit/Credit card</option
                         > -->
                         <option id="jui" value="Cash">Cash</option>
@@ -336,7 +336,7 @@ export default {
                 );
 
                 setTimeout(() => {
-                    this.routeBasedOnPaymentMethod(this.payment_method);
+                    this.routeBasedOnPaymentMethod(this.payment_method, data.donation.id);
                 }, 3000);
             } catch (error) {
                 console.log({ error });
@@ -352,14 +352,14 @@ export default {
                 this.isLoading = false;
             }
         },
-        routeBasedOnPaymentMethod(paymentMethod) {
-            if (paymentMethod === "cash" || !paymentMethod) {
-                window.location.pathname = "/prescriptions";
+        routeBasedOnPaymentMethod(paymentMethod, donationId) {
+            if (paymentMethod === "Cash" || !paymentMethod) {
+                window.location.pathname = `/donations/${donationId}`;
                 return;
             }
 
-            if (paymentMethod === "mobile money") {
-                window.location.pathname = "/prescriptions";
+            if (paymentMethod === "Mobile money") {
+                window.location.pathname = `/payments/${donationId}`;
                 return;
             }
         },
