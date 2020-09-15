@@ -32,6 +32,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::put('/complaints/{complaint}', 'ComplaintController@update');
 
     Route::post('/locations', 'LocationController@store');
+    Route::get('/locations/{user}', 'LocationController@show');
 
     Route::get('/donations', 'DonationController@allDonations');
     Route::patch('/donations/{donation}/select-donor', 'DonationController@selectDonor');

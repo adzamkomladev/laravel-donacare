@@ -1,5 +1,6 @@
 <template>
     <div>
+        <ObtainCurrentLocation />
         <PatientActions :user-donations="userDonations" v-if="isPatient" />
         <DonorActions
             :user-donations="userDonations"
@@ -12,13 +13,14 @@
 <script>
 import PatientActions from "./PatientActions";
 import DonorActions from "./DonorActions";
+import ObtainCurrentLocation from "../auth/ObtainCurrentLocation";
 
 import Auth from "../../services/auth";
 import Donation from "../../services/donation";
 
 export default {
     name: "NavbarActions",
-    components: { PatientActions, DonorActions },
+    components: { PatientActions, DonorActions, ObtainCurrentLocation },
     async mounted() {
         await this.pollData();
     },
@@ -38,7 +40,6 @@ export default {
                 const { data } = await Donation.userDonations(
                     this.currentUser.id
                 );
-                console.log(data, "polling user donations");
                 this.userDonations = data;
             } catch (error) {
                 console.log({ error });
