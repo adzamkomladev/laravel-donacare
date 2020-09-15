@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get('/user', 'API\AuthController@currentUser');
 
 Route::group(['prefix' => 'v1'], function () {
     Route::patch('/users/{user}/toggle-activation', 'UserController@toggleActivation');
@@ -49,9 +47,7 @@ Route::group(['prefix' => 'v2'], function () {
     Route::post('register', 'API\AuthController@register');
 
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
+        Route::get('/user', 'API\AuthController@currentUser');
 
         Route::post('verify-otp', 'API\AuthController@verifyOtp');
 
