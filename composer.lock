@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5165644f6788ec33796c3080e192ef93",
+    "content-hash": "f9ce56e1b721aa1b1943480dac6c5375",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -159,6 +159,75 @@
                 "tls"
             ],
             "time": "2020-04-08T08:27:21+00:00"
+        },
+        {
+            "name": "digikraaft/laravel-paystack-webhooks",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/digikraaft/laravel-paystack-webhooks.git",
+                "reference": "26ff0b7dd9a9e26197b8c83885f66533c599648c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/digikraaft/laravel-paystack-webhooks/zipball/26ff0b7dd9a9e26197b8c83885f66533c599648c",
+                "reference": "26ff0b7dd9a9e26197b8c83885f66533c599648c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "^7.4",
+                "guzzlehttp/guzzle": "^6.5",
+                "illuminate/contracts": "^7.15|^8.0",
+                "illuminate/http": "^7.15|^8.0",
+                "illuminate/notifications": "^7.15|^8.0",
+                "illuminate/routing": "^7.15|^8.0",
+                "illuminate/support": "^7.15|^8.0",
+                "php": "^7.4",
+                "symfony/http-kernel": "^5.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "orchestra/testbench": "^5.0",
+                "phpunit/phpunit": "^9.0",
+                "psalm/plugin-laravel": "^1.2",
+                "vimeo/psalm": "^3.11"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Digikraaft\\PaystackWebhooks\\PaystackWebhooksServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Digikraaft\\PaystackWebhooks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tim Oladoyinbo",
+                    "email": "dev@digikraaft.ng",
+                    "homepage": "https://digikraaft.ng",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle Paystack webhooks in a Laravel application",
+            "homepage": "https://github.com/digikraaft/laravel-paystack-webhooks",
+            "keywords": [
+                "billing",
+                "digikraaft",
+                "laravel-paystack-webhooks",
+                "payment",
+                "paystack",
+                "webhooks"
+            ],
+            "time": "2020-09-10T05:05:55+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

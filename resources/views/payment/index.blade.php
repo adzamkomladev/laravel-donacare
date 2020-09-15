@@ -8,7 +8,7 @@
                     <h5 class="title">Payment</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('payment.pay') }}" method="POST" accept-charset="UTF-8" class="form-horizontal"
+                    <form action="{{ route('payments.pay') }}" method="POST" accept-charset="UTF-8" class="form-horizontal"
                         role="form">
                         @csrf
                         <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">
@@ -49,7 +49,7 @@
                 <div class="card-body">
                     <h4>Bill summary</h4>
                     <p><strong>Service:</strong> {{ $donation->service->name }}</p>
-                    <p><strong>Donor:</strong> {{ $donation->donor->profile->full_name }}</p>
+                    <p><strong>Donor:</strong> {{ $donation->donor->profile->full_name ?? 'N/A' }}</p>
                     <p><strong>Address:</strong> {{ $donation->service->user->location->address ?? 'Close by' }}</p>
                     <p class="text-right">Total: <strong> (GHc) {{ $donation->service->price }}<strong></p>
                 </div>

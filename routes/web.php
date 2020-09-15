@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
 Auth::routes();
 
@@ -72,8 +70,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('files/{donation}', 'FileController@store')->name('files.store');
 
         // Payment
-        Route::get('pay/{donation}', 'PaymentController@index')->name('payment.index');
-        Route::post('pay', 'PaymentController@redirectToGateway')->name('payment.pay');
+        Route::get('payments/{donation}', 'PaymentController@index')->name('payments.index');
+        Route::post('payments', 'PaymentController@redirectToGateway')->name('payments.pay');
+        Route::post('paystack/webhook','\App\Http\Controllers\PaystackWebhookController@handleWebhook');
         Route::get('donation-payments/{payment}/confirm', 'DonationPaymentController@confirm')->name('donation_payments.confirm');
         Route::get('donation-payments', 'DonationPaymentController@index')->name('donation_payments.index');
 

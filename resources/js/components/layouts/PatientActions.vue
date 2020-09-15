@@ -1,5 +1,6 @@
 <template>
     <div>
+        <GmapMap :center="{ lat: 0, lng: 0 }" ref="mapRef"></GmapMap>
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a
@@ -106,11 +107,25 @@
                             <i class="now-ui-icons location_map-big"></i>
                             <span class="text-danger">ETA</span>
                         </strong>
-                        <a class="dropdown-item" href="#">
+                        <a
+                            v-for="(etaData, index) in eta"
+                            :key="index"
+                            class="dropdown-item"
+                            href="#"
+                        >
                             <i class="now-ui-icons location_pin"></i>
                             help for
-                            <span class="text-success">Blood</span> arrives in
-                            <span class="text-danger"> 30 minutes</span>
+                            <span class="text-success">{{
+                                activeDonation.value
+                            }}</span>
+                            arrives in
+                            <span class="text-danger">{{
+                                etaData.duration
+                            }}</span
+                            >. Donor is
+                            <span class="text-info">
+                                {{ etaData.distance }} </span
+                            >away
                         </a>
                     </template>
                     <div class="dropdown-item" v-else>
@@ -148,12 +163,92 @@
 </template>
 
 <script>
+import { gmapApi } from "vue2-google-maps";
+
+import ObtainCurrentLocation from "../auth/ObtainCurrentLocation";
+
+import Auth from "../../services/auth";
+import Location from "../../services/location";
+
 export default {
     name: "PatientActions",
     props: ["userDonations"],
+    async mounted() {
+        this.$refs.mapRef.$mapPromise.then(map => {
+            this.map = map;
+            this.init();
+        });
+        await this.pollEta();
+    },
+    beforeDestroy() {
+        clearInterval(this.polling);
+    },
+    data() {
+        return {
+            eta: [],
+            polling: null,
+            map: null
+        };
+    },
     methods: {
+        init() {
+            new this.google.maps.Marker({
+                position: {
+                    lat: 0,
+                    lng: 0
+                },
+                map: this.map
+            });
+        },
         getUrl(donationId) {
             return `/donations/${donationId}`;
+        },
+        async durationToDestination(donation) {
+            const [currentLocation, targetLocation] = await Promise.all([
+                Location.findByUserId(Auth.currentUser().id),
+                Location.findByUserId(donation.donor_id)
+            ]);
+            // const origin = new gmapApi.LatLng(
+            //     currentLocation.data.lat,
+            //     currentLocation.data.lng
+            // ); // using google.maps.LatLng class
+
+            const origin =
+                currentLocation.data.lat + ", " + currentLocation.data.lng; // using string
+
+            const destination =
+                targetLocation.data.lat + ", " + targetLocation.data.lng; // using string
+
+            const directionsService = new this.google.maps.DirectionsService();
+            const request = {
+                origin: origin, // LatLng|string
+                destination: destination, // LatLng|string
+                travelMode: this.google.maps.DirectionsTravelMode.WALKING
+            };
+
+            directionsService.route(request, (response, status) => {
+                if (status === "OK") {
+                    const point = response.routes[0].legs[0];
+                    this.eta.push({
+                        distance: point.distance.text,
+                        duration: point.duration.text
+                    });
+                }
+            });
+        },
+        async obtainEtaInformation() {
+            const donation = this.activeDonation;
+
+            if (donation) {
+                await this.durationToDestination(donation);
+            }
+        },
+        async pollEta() {
+            await this.obtainEtaInformation();
+
+            this.polling = setInterval(async () => {
+                await this.obtainEtaInformation();
+            }, 60000);
         }
     },
     computed: {
@@ -168,13 +263,15 @@ export default {
                 donation => donation?.status === "assigned"
             );
             return donation;
-        }
+        },
+        google: gmapApi
     },
     filters: {
         activeRequestText(donation) {
-            const typeName = donation.type === 'blood' ? "Blood Group" : "Organ"
-            return `(${typeName} ${donation?.value}) - ${donation?.donor?.profile
-                .full_name || "N/A"}`;
+            const typeName =
+                donation.type === "blood" ? "Blood Group" : "Organ";
+            return `(${typeName} ${donation?.value}) - ${donation?.donor
+                ?.profile.full_name || "N/A"}`;
         }
     }
 };

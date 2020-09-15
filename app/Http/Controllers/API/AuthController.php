@@ -179,6 +179,11 @@ class AuthController extends Controller
         ], 200);
     }
 
+    public function currentUser(Request $request)
+    {
+        return $request->user();
+    }
+
     /**
      * Refresh a token.
      *
