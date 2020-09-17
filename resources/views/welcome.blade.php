@@ -11,7 +11,7 @@
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap"
         rel="stylesheet">
 
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="favicon.ico">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -36,7 +36,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
         integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
         crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
 
 </head>
@@ -49,7 +51,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="/">
-                            BLOOD DONOR
+                            DONOR APP
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -86,12 +88,12 @@
                 <div class="col-lg-5 col-xl-5">
                     <div class="banner_text">
                         <div class="banner_text_iner">
-                            <h5>We are here for your needs</h5>
-                            <h1>Best Resources &
-                                Better System</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Quis ipsum suspendisse ultrices gravida.Risus cmodo viverra </p>
+                            <h5>Simply request for free or pay less for your donations.</h5>
+                            <h1>Easy and affordable @
+                                Your convenience</h1>
+                            <p>We care about the wellbeing of every citizen, find a compatible donor for yourself,
+                                sibling, friend etc
+                                with our DONOR platform. </p>
                             <a href="/login" class="btn_2">Request for a donation</a>
 
                         </div>
@@ -119,10 +121,16 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="about_us_text">
                         <h2>About us</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed
-                            do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                            Quis ipsum suspendisse ultrices gravida. Risus cmodo viverra
-                            maecenas accumsan lacus vel</p>
+                        <p>We are a team of committed health officials and IT experts focused on solving problems
+                            through
+                            cutting-edge technology. The company has been committed to providing integrated end-to-end
+                            innovations to deliver excellent health care and value to patients, health workers, donors
+                            and the
+                            general public sector. BITTECH CORPORATION believes in Problem solving and technological
+                            innovation
+                            as a core value of the company, investing 10% of annual revenue in Educating brighter minds
+                            in
+                            technology in solving problems face by all people both local and internationally.</p>
                         <a class="btn_2 " href="#">learn more</a>
                         <div class="banner_item">
                             <div class="single_item">
@@ -161,16 +169,19 @@
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_1.svg" alt=""></span>
                             <h4>Better Future</h4>
-                            <p>Darkness multiply rule Which from without life creature blessed
-                                give moveth moveth seas make day which divided our have.</p>
+                            <p>We as a company hope to provide quality services to our clientele by deploying all
+                                resources to improve
+                                the daily lives of people. We seek to develop more innovative ways to make health care
+                                delivery systems
+                                easier in the country.</p>
                         </div>
                     </div>
                     <div class="single_feature">
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_2.svg" alt=""></span>
-                            <h4>Better Future</h4>
-                            <p>Darkness multiply rule Which from without life creature blessed
-                                give moveth moveth seas make day which divided our have.</p>
+                            <h4>Vision</h4>
+                            <p>We intend to be the world’s most evolutionary IT Company that insists on improving lives
+                                through cutting edge technologies and innovative ideas.</p>
                         </div>
                     </div>
                 </div>
@@ -184,16 +195,20 @@
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_1.svg" alt=""></span>
                             <h4>Better Future</h4>
-                            <p>Darkness multiply rule Which from without life creature blessed
-                                give moveth moveth seas make day which divided our have.</p>
+                            <p>We as a company hope to provide quality services to our clientele by deploying all
+                                resources to improve
+                                the daily lives of people. We seek to develop more innovative ways to make health care
+                                delivery systems
+                                easier in the country</p>
                         </div>
                     </div>
                     <div class="single_feature">
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_2.svg" alt=""></span>
-                            <h4>Better Future</h4>
-                            <p>Darkness multiply rule Which from without life creature blessed
-                                give moveth moveth seas make day which divided our have.</p>
+                            <h4>Mission</h4>
+                            <p>We are a company that exists to develop products that achieve excellent results through
+                                deep
+                                collaborative work, project review and expert minds.</p>
                         </div>
                     </div>
                 </div>
@@ -217,8 +232,34 @@
                                             <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
                                                     alt=""></span>
                                             <h4>Better Future</h4>
-                                            <p>Darkness multiply rule Which from without life creature blessed
-                                                give moveth moveth seas make day which divided our have.</p>
+                                            <p>We as a company hope to provide quality services to our clientele by
+                                                deploying all
+                                                resources to improve
+                                                the daily lives of people. We seek to develop more innovative ways to
+                                                make health care
+                                                delivery systems
+                                                easier in the country.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="single_our_depertment">
+                                            <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
+                                                    alt=""></span>
+                                            <h4>Vision</h4>
+                                            <p>We intend to be the world’s most evolutionary IT Company that insists on
+                                                improving lives
+                                                through cutting edge technologies and innovative ideas.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6">
+                                        <div class="single_our_depertment">
+                                            <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
+                                                    alt=""></span>
+                                            <h4>Mission</h4>
+                                            <p>We are a company that exists to develop products that achieve excellent
+                                                results through
+                                                deep
+                                                collaborative work, project review and expert minds.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6">
@@ -226,26 +267,13 @@
                                             <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
                                                     alt=""></span>
                                             <h4>Better Future</h4>
-                                            <p>Darkness multiply rule Which from without life creature blessed
-                                                give moveth moveth seas make day which divided our have.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-6">
-                                        <div class="single_our_depertment">
-                                            <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
-                                                    alt=""></span>
-                                            <h4>Better Future</h4>
-                                            <p>Darkness multiply rule Which from without life creature blessed
-                                                give moveth moveth seas make day which divided our have.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-6">
-                                        <div class="single_our_depertment">
-                                            <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
-                                                    alt=""></span>
-                                            <h4>Better Future</h4>
-                                            <p>Darkness multiply rule Which from without life creature blessed
-                                                give moveth moveth seas make day which divided our have.</p>
+                                            <p>We as a company hope to provide quality services to our clientele by
+                                                deploying all
+                                                resources to improve
+                                                the daily lives of people. We seek to develop more innovative ways to
+                                                make health care
+                                                delivery systems
+                                                easier in the country.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +288,7 @@
     <!-- our depertment part end-->
 
     <!--::doctor_part start::-->
-    <section id="hospitals" class="doctor_part section_padding">
+    {{-- <section id="hospitals" class="doctor_part section_padding">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-8">
@@ -358,7 +386,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!--::doctor_part end::-->
 
     <!-- footer part start-->
@@ -370,7 +398,8 @@
                         <a href="/" class="footer_logo">
                             BLOOD DONOR
                         </a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
+                        <p>We intend to be the world’s most evolutionary IT Company that insists on improving lives
+                            through cutting edge technologies and innovative ideas </p>
                         <div class="social_logo">
                             <a href="#"><i class="ti-facebook"></i></a>
                             <a href="#"> <i class="ti-twitter"></i> </a>
@@ -388,7 +417,7 @@
                             <li><a href="#">Department</a></li>
                         </ul>
                     </div>
-                    <div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
+                    {{-- <div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
                         <h4>Explore</h4>
                         <ul>
                             <li><a href="#">In the community</a></li>
@@ -397,7 +426,7 @@
                             <li><a href="#">Business solution</a></li>
                             <li><a href="#">Community clinic</a></li>
                         </ul>
-                    </div>
+                    </div> --}}
                     <div class="col-xl-2 col-sm-6 col-md-6 single-footer-widget">
                         <h4>Resources</h4>
                         <ul>

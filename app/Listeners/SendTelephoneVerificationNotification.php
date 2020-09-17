@@ -29,8 +29,8 @@ class SendTelephoneVerificationNotification
     public function handle(Registered $event)
     {
         $otp = $event->user->otp;
-        $phone = $event->user->telephone;
-        $arkeselApikey = env('ARKESEL_API_KEY');
+        $phone = '+233' . $event->user->telephone;
+        $arkeselApikey = config('app.arkesel_api_key');
         $message = "Hello! Your PIN for Blood Donor is {$otp}";
 
         Log::info('Registered user OTP', ['otp' => $otp, 'phone' => $phone, 'api_key' => $arkeselApikey]);
