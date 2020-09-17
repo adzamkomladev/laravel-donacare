@@ -67,10 +67,7 @@
                         <div class="col-md-6">
                             <label for="cost">Cost (in GHc) </label>
                             <p id="cost">
-                                {{
-                                    donationSummary.service.price *
-                                        donationSummary.quantity
-                                }}
+                                {{ costText }}
                             </p>
                         </div>
                     </div>
@@ -127,6 +124,19 @@ export default {
         onSubmit() {
             this.isLoading = true;
             eventBus.$emit("submitDonationForm");
+        }
+    },
+    computed: {
+        costText() {
+            return this.donationSummary.paymentStatus === "free"
+                ? "Free"
+                : (
+                      Math.round(
+                          this.donationSummary?.service?.price *
+                              this.donationSummary.quantity *
+                              100
+                      ) / 100
+                  ).toFixed(2);
         }
     },
     filters: {

@@ -4,7 +4,7 @@
 -->
     <div class="logo">
         <a href="{{ url('/') }}" class="simple-text logo-mini">
-            {{ config('app.name', '--') }}
+            <img src="{{ asset('img/logo.png') }}" alt="Donor app logo">
         </a>
         <a href="{{ route('home') }}" class="simple-text logo-normal">
             {{ (Auth::user()->role === 'admin' ? 'ADMIN' : Auth::user()->role === 'donor') ? 'DONOR' : 'USER' }}
