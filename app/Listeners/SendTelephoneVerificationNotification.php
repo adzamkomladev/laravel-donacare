@@ -29,7 +29,7 @@ class SendTelephoneVerificationNotification
     public function handle(Registered $event)
     {
         $otp = $event->user->otp;
-        $phone = $event->user->telephone;
+        $phone = '+233' . $event->user->telephone;
         $arkeselApikey = env('ARKESEL_API_KEY');
         $message = "Hello! Your PIN for Blood Donor is {$otp}";
 
