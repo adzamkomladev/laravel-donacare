@@ -156,7 +156,6 @@ export default {
     data() {
         return {
             user: Auth.currentUser(),
-            myDonations: this.userDonations,
             notifications: [],
             polling: null
         };
@@ -188,7 +187,7 @@ export default {
                     donor_id: this.user.id
                 });
 
-                this.myDonations.push(data);
+                this.userDonations.push(data);
 
                 this.notifications = this.notifications.filter(
                     myNotification => myNotification.id !== notification.id
@@ -213,7 +212,7 @@ export default {
                     donor_id: this.user.id
                 });
 
-                this.myDonations = this.myDonations.filter(
+                this.userDonations = this.userDonations.filter(
                     myDonation => myDonation.id !== donation.id
                 );
 
@@ -241,11 +240,12 @@ export default {
             return !this.notifications || !this.notifications.length;
         },
         isMyDonationsEmpty() {
-            return !this.myDonations || !this.myDonations.length;
+            console.log('How is this possilbe', this.userDonations);
+            return !this.userDonations || !this.userDonations.length;
         },
         myDonationsToDisplay() {
             return (
-                this.myDonations.filter(
+                this.userDonations.filter(
                     donation => donation.status === "assigned"
                 ) || []
             );
