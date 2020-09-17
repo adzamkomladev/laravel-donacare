@@ -2,6 +2,8 @@
 
 return [
 
+    'arkesel_api_key' => env('ARKESEL_API_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

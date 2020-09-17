@@ -24,7 +24,7 @@
                                     </div>
                                     <input type="tel" class="form-control @error('telephone') form-control-danger @enderror"
                                         name="telephone" value="{{ old('telephone') }}" required autocomplete="tel"
-                                        autofocus placeholder="Eg. 553884561" maxlength="7">
+                                        autofocus placeholder="Eg. 553884561" maxlength="9">
                                 </div>
                                 @error('telephone')
                                 <small class="form-text text-muted text-danger">
