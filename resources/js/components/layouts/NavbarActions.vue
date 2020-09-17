@@ -40,7 +40,8 @@ export default {
                 const { data } = await Donation.userDonations(
                     this.currentUser.id
                 );
-                this.userDonations = data;
+                this.userDonations = [...data];
+                console.log("My trials okay", data);
             } catch (error) {
                 console.log({ error });
             }
