@@ -125,7 +125,7 @@
             <h6 class="title">{{ valueHeader }}</h6>
         </div>
         <div class="row">
-            <div class="col-md-8 pr-1">
+            <div class="col-md-4 pr-1">
                 <div v-if="isBlood" class="form-group">
                     <label for="blood-group">{{ valueLabel }}</label>
                     <div class="input-group">
@@ -169,7 +169,13 @@
                     />
                 </div>
             </div>
-            <div class="col-md-6 pl-1">
+            <div class="col-md-4 pl-1">
+                <div class="form-group">
+                    <label for="quantity">Price per bag</label>
+                    <p id="price">{{ priceText }}</p>
+                </div>
+            </div>
+            <!-- <div class="col-md-6 pl-1" v-if="!willPay">
                 <div class="form-group">
                     <label for="service-id">Select service</label>
                     <select
@@ -188,7 +194,7 @@
                         >
                     </select>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div v-if="willPay" class="card-header">
             <h6 class="title">Payment details</h6>
@@ -253,6 +259,9 @@ export default {
             service_id: this.services.find(service =>
                 service.name.toLowerCase().includes(this.type)
             )?.id,
+            service: this.services.find(service =>
+                service.name.toLowerCase().includes(this.type)
+            ),
             payment_status: "",
             date_needed: "",
             value: "",
@@ -336,7 +345,10 @@ export default {
                 );
 
                 setTimeout(() => {
-                    this.routeBasedOnPaymentMethod(this.payment_method, data.donation.id);
+                    this.routeBasedOnPaymentMethod(
+                        this.payment_method,
+                        data.donation.id
+                    );
                 }, 3000);
             } catch (error) {
                 console.log({ error });
@@ -409,6 +421,11 @@ export default {
         },
         initialValue() {
             return this.isBlood ? this.user?.profile.blood_group : "";
+        },
+        priceText() {
+            return this.payment_status === "free"
+                ? "Free"
+                : `GHc ${this.service?.price}`;
         }
     },
     filters: {

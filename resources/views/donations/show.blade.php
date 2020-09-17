@@ -34,6 +34,12 @@
                                 </label>
                                 <p id="value">{{ $donation->value }}</p>
                             </div>
+                            <div class="item">
+                                <label for="date-needed">
+                                    <i class="fas fa-calendar"></i> Date needed
+                                </label>
+                                <p id="date-needed">{{ $donation->date_needed }}</p>
+                            </div>
                             <div class="donor">
 
                             </div>
@@ -44,6 +50,13 @@
                                     <i class="fas fa-shopping-basket"></i> Quantity
                                 </label>
                                 <p id="quantity">{{ $donation->quantity }}</p>
+                            </div>
+                            <div class="item">
+                                <label for="quantity">
+                                    <i class="fas fa-coins"></i> Cost
+                                </label>
+                                <p id="quantity">
+                                    {{ $donation->payment_status === 'free' ? 'Free' : 'GHc ' . $donation->cost }}</p>
                             </div>
                             <div class="item">
                                 <label for="payment-status">
@@ -63,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                    @if ($donation->patient_id === Auth::id())
+                    @if ($donation->patient_id === Auth::id() && $donation->status === 'completed')
                         <div class="row">
                             <div class="col-md-6">
                                 <a href="{{ route('user_reviews.create', ['donation' => $donation->id]) }}"
