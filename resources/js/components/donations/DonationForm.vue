@@ -222,6 +222,19 @@
                     </select>
                 </div>
             </div>
+            <div v-if="isMobileMoney" class="col-md-6 pl-1">
+                <div class="form-group">
+                    <label for="phone">Mobile number</label>
+                    <input
+                        id="phone"
+                        type="tel"
+                        class="form-control"
+                        required
+                        v-model="phone"
+                        placeholder="Eg. +233202384567"
+                    />
+                </div>
+            </div>
         </div>
         <button
             @click.prevent="onOpenModal"
@@ -236,12 +249,14 @@
 
 <script>
 import { eventBus } from "../../events/event-bus";
+
 import Auth from "../../services/auth";
 import Donation from "../../services/donation";
+import Paystack from "../../services/paystack";
 
 export default {
     name: "DonationForm",
-    props: ["type", "services"],
+    props: ["type", "services", "paystackPublicKey"],
     created() {
         eventBus.$on("submitDonationForm", this.onSubmit);
     },
@@ -280,7 +295,8 @@ export default {
                 "Komfo Anokye Hospital": "Okomfo Anokye Road, Kumasi",
                 "Holy Trinity Hospital": "Amar Koranten St, Accra",
                 "Ridge Hospital": "Castle Rd, Accra"
-            }
+            },
+            phone: Auth.currentUser()?.profile?.mobile_money_number ?? null
         };
     },
     methods: {
@@ -336,6 +352,7 @@ export default {
 
             try {
                 const { data } = await Donation.save(donationData);
+                data.email = "adzamkomla@gmail.com";
 
                 eventBus.$emit("donationFormSubmitted");
                 this.showNotification(
@@ -344,11 +361,18 @@ export default {
                     "primary"
                 );
 
+                const routeData = {
+                    email: this.email || "adzamkomla@gmail.com",
+                    paymentMethod: data?.payment_method,
+                    paymentStatus: data?.payment_status,
+                    phone: this.phone,
+                    cost: data?.cost,
+                    donationId: data?.id,
+                    paystackPublicKey: this.paystackPublicKey
+                };
+
                 setTimeout(() => {
-                    this.routeBasedOnPaymentMethod(
-                        this.payment_method,
-                        data.donation.id
-                    );
+                    this.routeBasedOnPaymentMethod(routeData);
                 }, 3000);
             } catch (error) {
                 console.log({ error });
@@ -364,15 +388,14 @@ export default {
                 this.isLoading = false;
             }
         },
-        routeBasedOnPaymentMethod(paymentMethod, donationId) {
-            if (paymentMethod === "Cash" || !paymentMethod) {
-                window.location.pathname = `/donations/${donationId}`;
+        routeBasedOnPaymentMethod(data) {
+            if (data.paymentMethod === "Cash" || !data.paymentMethod) {
+                window.location.pathname = `/donations/${data.donationId}`;
                 return;
             }
 
-            if (paymentMethod === "Mobile money") {
-                window.location.pathname = `/payments/${donationId}`;
-                return;
+            if (data.paymentMethod === "Mobile money") {
+                Paystack.save(data);
             }
         },
         showNotification(icon, message, type) {
@@ -395,6 +418,9 @@ export default {
     computed: {
         willPay() {
             return this.payment_status === "charged";
+        },
+        isMobileMoney() {
+            return this.payment_method === "Mobile money";
         },
         isBlood() {
             return this.type === "blood";
