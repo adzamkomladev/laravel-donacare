@@ -55,9 +55,6 @@ class ProfileController extends Controller
         $profileData = $request->all();
         $profileData['user_id'] = Auth::id();
 
-        $user = User::find($profileData['user_id']);
-        $user->update(['role' => $request['role']]);
-
         $profile = Profile::create($profileData);
 
         return response([
