@@ -11,7 +11,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <donation-form type="{{ $type }}" :services="{{ $services }}"></donation-form>
+                <donation-form type="{{ $type }}" :services="{{ $services }}" paystack-public-key="{{ config('paystack.publicKey') }}"></donation-form>
                 </div>
             </div>
         </div>
@@ -20,5 +20,6 @@
 
     @push('scripts')
         <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js" crossorigin="anonymous"></script>
+        <script src="https://js.paystack.co/v1/inline.js"></script>
     @endpush
 @endsection
