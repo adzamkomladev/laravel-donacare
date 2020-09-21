@@ -25,6 +25,7 @@ class CreateDonationsTable extends Migration
             $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('incomplete');
             $table->enum('type', ['blood', 'organ', 'funds']);
             $table->text('value');
+            $table->text('value_type');
             $table->text('description')->nullable();
             $table->date('date_needed');
             $table->double('cost', 10, 2)->nullable();
@@ -33,6 +34,8 @@ class CreateDonationsTable extends Migration
             $table->string('payment_method', 100)->nullable();
             $table->string('hospital_name', 255);
             $table->string('hospital_location', 255);
+            $table->string('blood_unit_name', 255);
+            $table->string('blood_unit_location', 255);
             $table->boolean('share_location')->nullable()->default(false);
 
             $table->timestamps();

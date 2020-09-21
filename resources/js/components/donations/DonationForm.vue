@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-4 pr-1">
                 <div class="form-group">
-                    <label>Name</label>
+                    <label>NamHospitale</label>
                     <input
                         type="text"
                         class="form-control"
@@ -48,6 +48,41 @@
                         placeholder="location"
                         required
                         v-model="hospital_location"
+                    />
+                </div>
+            </div>
+            <div class="col-md-4 px-1">
+                <div class="form-group">
+                    <label>Blood unit</label>
+                    <input
+                        type="text"
+                        list="blood_units"
+                        class="form-control"
+                        placeholder="Blood unit"
+                        required
+                        v-model="blood_unit_name"
+                        @change="onSelectBoodUnit()"
+                    />
+                    <datalist id="blood_units">
+                        <option value="Kaneshie Polyclinic"> </option>
+                        <option value="Korle Bu Hospital"> </option>
+                        <option value="Ridge Hospital"> </option>
+                        <option value="Amasaman Gen. Hospital"> </option>
+                        <option value="Komfo Anokye Hospital"> </option>
+                        <option value="Holy Trinity Hospital"> </option>
+                    </datalist>
+                </div>
+            </div>
+            <div class="col-md-4 pl-1">
+                <div class="form-group">
+                    <label for="blood-unit-location">Blood unit location</label>
+                    <input
+                        id="blood-unit-location"
+                        type="text"
+                        class="form-control"
+                        placeholder="Blood unit location"
+                        required
+                        v-model="blood_unit_location"
                     />
                 </div>
             </div>
@@ -105,7 +140,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 pl-1">
+            <div class="col-md-6 pl-1" hidden>
                 <div class="form-group">
                     <label for="share-location">Share Location</label>
                     <select
@@ -126,25 +161,51 @@
         </div>
         <div class="row">
             <div class="col-md-4 pr-1">
-                <div v-if="isBlood" class="form-group">
-                    <label for="blood-group">{{ valueLabel }}</label>
-                    <div class="input-group">
-                        <select
-                            id="blood-group"
-                            class="form-control"
-                            v-model="value"
-                        >
-                            <option value="O+">O positive</option>
-                            <option value="O-">O negative</option>
-                            <option value="A+">A positive</option>
-                            <option value="A-">A negative</option>
-                            <option value="B+">B positive</option>
-                            <option value="B-">B negative</option>
-                            <option value="AB+">AB positive</option>
-                            <option value="AB-">AB negative</option>
-                        </select>
+                <template v-if="isBlood">
+                    <div class="form-group">
+                        <label for="blood-group">{{ valueLabel }}</label>
+                        <div class="input-group">
+                            <select
+                                id="blood-group"
+                                class="form-control"
+                                v-model="value"
+                            >
+                                <option value="O+">O positive</option>
+                                <option value="O-">O negative</option>
+                                <option value="A+">A positive</option>
+                                <option value="A-">A negative</option>
+                                <option value="B+">B positive</option>
+                                <option value="B-">B negative</option>
+                                <option value="AB+">AB positive</option>
+                                <option value="AB-">AB negative</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="value-type">Blood type</label>
+                        <div class="input-group">
+                            <select
+                                id="value-type"
+                                class="form-control"
+                                v-model="value_type"
+                            >
+                                <option value="Whole blood donation" selected
+                                    >Whole blood donation</option
+                                >
+                                <option value="Power red donation"
+                                    >Power red donation</option
+                                >
+                                <option value="Platelet donation"
+                                    >Platelet donation</option
+                                >
+                                <option value="Plasma donation"
+                                    >Plasma donation</option
+                                >
+                            </select>
+                        </div>
+                    </div>
+                </template>
+
                 <div v-else class="form-group">
                     <label> </label>
                     <input
@@ -269,6 +330,8 @@ export default {
             full_name: Auth.currentUser().profile.full_name,
             hospital_name: "",
             hospital_location: "",
+            blood_unit_name: "",
+            blood_unit_location: "",
             share_location: 1,
             quantity: 1,
             service_id: this.services.find(service =>
@@ -280,6 +343,7 @@ export default {
             payment_status: "",
             date_needed: "",
             value: "",
+            value_type: "Whole blood donation",
             payment_method: "",
             images: [],
             isLoading: false,
@@ -302,6 +366,13 @@ export default {
     methods: {
         onSelectHospital() {
             this.hospital_location = this.locations[this.hospital_name];
+            if (!this.blood_unit_name) {
+                this.blood_unit_location = this.hospital_location;
+                this.blood_unit_name = this.hospital_name;
+            }
+        },
+        onSelectBloodUnit() {
+            this.blood_unit_location = this.locations[this.blood_unit_name];
         },
         onOpenModal() {
             $("#donation-summary").modal("show");
@@ -310,9 +381,12 @@ export default {
                 fullName: this.full_name,
                 hospitalName: this.hospital_name,
                 hospitalLocation: this.hospital_location,
+                bloodUnitName: this.blood_unit_name,
+                bloodUnitLocation: this.blood_unit_location,
                 shareLocation: this.share_location,
                 quantity: this.quantity,
                 value: this.value,
+                valueType: this.value_type,
                 paymentStatus: this.payment_status,
                 paymentMethod: this.payment_method,
                 service: this.services.find(
@@ -331,12 +405,18 @@ export default {
             donationData.append("patient_id", this.user.id);
             donationData.append("hospital_name", this.hospital_name);
             donationData.append("hospital_location", this.hospital_location);
+            donationData.append("blood_unit_name", this.blood_unit_name);
+            donationData.append(
+                "blood_unit_location",
+                this.blood_unit_location
+            );
             donationData.append("share_location", this.share_location);
             donationData.append("payment_status", this.payment_status);
             donationData.append("date_needed", this.date_needed);
             donationData.append("quantity", this.quantity);
             donationData.append("service_id", this.service_id);
             donationData.append("value", this.value);
+            donationData.append("value_type", this.value_type);
             donationData.append("type", this.type);
             if (this.willPay) {
                 const service = this.services.find(

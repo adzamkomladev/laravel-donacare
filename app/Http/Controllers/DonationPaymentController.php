@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Donation;
 use App\Payment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DonationPaymentController extends Controller
