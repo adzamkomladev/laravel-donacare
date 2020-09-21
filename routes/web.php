@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
         // Payment
         Route::get('payments/{donation}', 'PaymentController@index')->name('payments.index');
         Route::post('payments', 'PaymentController@redirectToGateway')->name('payments.pay');
-        Route::post('paystack/webhook','\App\Http\Controllers\PaystackWebhookController@handleWebhook');
+        Route::post('paystack/webhook', '\App\Http\Controllers\PaystackWebhookController@handleWebhook');
         Route::get('donation-payments/{payment}/confirm', 'DonationPaymentController@confirm')->name('donation_payments.confirm');
         Route::get('donation-payments', 'DonationPaymentController@index')->name('donation_payments.index');
 
@@ -84,5 +84,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('user-reviews', 'UserReviewController@index')->name('user_reviews.index');
         Route::get('user-reviews/create/{donation}', 'UserReviewController@create')->name('user_reviews.create');
         Route::post('user-reviews', 'UserReviewController@store')->name('user_reviews.store');
+
+        // History
+        Route::get('histories', 'ShowUserHistory')->name('histories.index');
     });
 });
