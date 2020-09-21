@@ -44,8 +44,8 @@
                         <p>Confirmations</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="{{ 'histories.index' === Route::currentRouteName() ? 'active' : '' }}">
+                    <a href="{{ route('histories.index') }}">
                         <x-nav-icon />
                         <p>History</p>
                     </a>

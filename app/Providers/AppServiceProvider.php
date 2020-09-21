@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Donation;
+use App\Observers\DonationObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Donation::observe(DonationObserver::class);
     }
 }
