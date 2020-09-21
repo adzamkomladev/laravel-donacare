@@ -51,7 +51,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="/">
-                            DONOR APP
+                            <img src="img/Home2.png" width="300" height="100" alt="">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -88,12 +88,16 @@
                 <div class="col-lg-5 col-xl-5">
                     <div class="banner_text">
                         <div class="banner_text_iner">
-                            <h5>Simply request for free or pay less for your donations.</h5>
+
                             <h1>Easy and affordable @
                                 Your convenience</h1>
-                            <p>We care about the wellbeing of every citizen, find a compatible donor for yourself,
+                            <p>
+                            <h4>We care about the wellbeing of every citizen, find a compatible donor for yourself,
                                 sibling, friend etc
-                                with our DONOR platform. </p>
+                                with our DONOR platform. </h4>
+                            </p>
+                            <h3>Simply request for free or pay less for your donations.</h3>
+
                             <a href="/login" class="btn_2">Request for a donation</a>
 
                         </div>
@@ -168,20 +172,20 @@
                     <div class="single_feature">
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_1.svg" alt=""></span>
-                            <h4>Better Future</h4>
+                            <h4>BLOOD DONATION</h4>
                             <p>We as a company hope to provide quality services to our clientele by deploying all
-                                resources to improve
-                                the daily lives of people. We seek to develop more innovative ways to make health care
-                                delivery systems
-                                easier in the country.</p>
+                                resources to improve blood donations services in the country saving
+                                the daily lives of people. Users can simply download Our app from Playstore/Apple Store
+                                register and at a click away you can find a compatible donor. EASY AND FRIENDLY.</p>
                         </div>
                     </div>
                     <div class="single_feature">
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_2.svg" alt=""></span>
-                            <h4>Vision</h4>
-                            <p>We intend to be the world’s most evolutionary IT Company that insists on improving lives
-                                through cutting edge technologies and innovative ideas.</p>
+                            <h4>ORGAN DONATION</h4>
+                            <p>We provide a more secured, wider and easy way for patient in need of transplant to find
+                                their match in terms of Organ donation. This system supports inter-hospital organ search
+                                engine for patient-doctor to find possible organ donors in time. </p>
                         </div>
                     </div>
                 </div>
@@ -194,21 +198,19 @@
                     <div class="single_feature">
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_1.svg" alt=""></span>
-                            <h4>Better Future</h4>
-                            <p>We as a company hope to provide quality services to our clientele by deploying all
-                                resources to improve
-                                the daily lives of people. We seek to develop more innovative ways to make health care
-                                delivery systems
-                                easier in the country</p>
+                            <h4>FUND DONATION</h4>
+                            <p>We create an enabling environment for everyone in need of funds to support his/her
+                                medical treatment in the country have access to public/NGO donations</p>
                         </div>
                     </div>
                     <div class="single_feature">
                         <div class="single_feature_part">
                             <span class="single_feature_icon"><img src="img/icon/feature_2.svg" alt=""></span>
-                            <h4>Mission</h4>
-                            <p>We are a company that exists to develop products that achieve excellent results through
-                                deep
-                                collaborative work, project review and expert minds.</p>
+                            <h4>HOSPITAL ASSISTANT</h4>
+                            <p>We provide a medium for patients to have healthy individuals assist them in the hospitals
+                                in cases where patient has no family relation aid their activities in the hospital.
+                                Patient can easily request the services of unkwon but willing individual to to assist
+                                them.</p>
                         </div>
                     </div>
                 </div>
@@ -225,31 +227,13 @@
                     <div class="depertment_content">
                         <div class="row justify-content-center">
                             <div class="col-xl-8">
-                                <h2>Our Depertment</h2>
+                                <h2>BITTECH CORPORATION</h2>
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-6">
-                                        <div class="single_our_depertment">
-                                            <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
-                                                    alt=""></span>
-                                            <h4>Better Future</h4>
-                                            <p>We as a company hope to provide quality services to our clientele by
-                                                deploying all
-                                                resources to improve
-                                                the daily lives of people. We seek to develop more innovative ways to
-                                                make health care
-                                                delivery systems
-                                                easier in the country.</p>
-                                        </div>
+
                                     </div>
                                     <div class="col-lg-6 col-sm-6">
-                                        <div class="single_our_depertment">
-                                            <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
-                                                    alt=""></span>
-                                            <h4>Vision</h4>
-                                            <p>We intend to be the world’s most evolutionary IT Company that insists on
-                                                improving lives
-                                                through cutting edge technologies and innovative ideas.</p>
-                                        </div>
+
                                     </div>
                                     <div class="col-lg-6 col-sm-6">
                                         <div class="single_our_depertment">
@@ -266,14 +250,10 @@
                                         <div class="single_our_depertment">
                                             <span class="our_depertment_icon"><img src="img/icon/feature_2.svg"
                                                     alt=""></span>
-                                            <h4>Better Future</h4>
-                                            <p>We as a company hope to provide quality services to our clientele by
-                                                deploying all
-                                                resources to improve
-                                                the daily lives of people. We seek to develop more innovative ways to
-                                                make health care
-                                                delivery systems
-                                                easier in the country.</p>
+                                            <h4>Vision</h4>
+                                            <p>We intend to be the world’s most evolutionary IT Company that insists on
+                                                improving lives
+                                                through cutting edge technologies and innovative ideas.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -288,7 +268,7 @@
     <!-- our depertment part end-->
 
     <!--::doctor_part start::-->
-    {{-- <section id="hospitals" class="doctor_part section_padding">
+    <section id="hospitals" class="doctor_part section_padding">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-8">
@@ -386,7 +366,7 @@
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
     <!--::doctor_part end::-->
 
     <!-- footer part start-->
@@ -445,7 +425,7 @@
             <div class="container">
                 <div class="row align-items-center">
                     <p class="footer-text m-0 col-lg-8 col-md-12">
-                        Copyright &copy;<script>
+                        BITTECH CORPORATION || www.bittechcorp.com || Copyright &copy;<script>
                             document.write(new Date().getFullYear());
 
                         </script>

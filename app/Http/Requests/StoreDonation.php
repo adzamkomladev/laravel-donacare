@@ -27,8 +27,11 @@ class StoreDonation extends FormRequest
         return [
             'patient_id' => 'required|integer|exists:users,id',
             'value' => 'required|string',
+            'value_type' => 'required|string',
             'hospital_name' => 'string|string|max:255',
             'hospital_location' => 'string|string|max:255',
+            'blood_unit_name' => 'string|string|max:255',
+            'blood_unit_location' => 'string|string|max:255',
             'description' => 'nullable|string',
             'date_needed' => 'required|date',
             'payment_status' => ['required', Rule::in(['free', 'charged'])],

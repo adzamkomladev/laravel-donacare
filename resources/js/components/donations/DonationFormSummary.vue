@@ -5,13 +5,13 @@
                 <div class="card-body">
                     <h4 class="text-center">Verify request</h4>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="hospital-name">Hospital name</label>
                             <p id="hospital-name">
                                 {{ donationSummary.hospitalName }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="hospital-location"
                                 >Hospital location</label
                             >
@@ -19,7 +19,21 @@
                                 {{ donationSummary.hospitalLocation }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="blood-unit-name">Blood unit name</label>
+                            <p id="bloodUnit-name">
+                                {{ donationSummary.bloodUnitName }}
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="blood-unit-location"
+                                >Blood unit location</label
+                            >
+                            <p id="blood-unit-location">
+                                {{ donationSummary.bloodUnitLocation }}
+                            </p>
+                        </div>
+                        <div class="col-md-4">
                             <label for="share-location">Share location</label>
                             <p id="share-location">
                                 {{
@@ -28,21 +42,27 @@
                                 }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="date-needed">Date needed</label>
                             <p id="date-needed">
                                 {{ donationSummary.dateNeeded }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="value">Donation item</label>
                             <p id="value">{{ donationSummary.value }}</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="value-type">Blood type</label>
+                            <p id="value-type">
+                                {{ donationSummary.valueType }}
+                            </p>
+                        </div>
+                        <div class="col-md-4">
                             <label for="quantity">Quantity</label>
                             <p id="quantity">{{ donationSummary.quantity }}</p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="payment-status">Payment Status</label>
                             <p id="payment-status">
                                 {{ donationSummary.paymentStatus }}
@@ -50,7 +70,7 @@
                         </div>
                         <div
                             v-if="donationSummary.paymentMethod"
-                            class="col-md-6"
+                            class="col-md-4"
                         >
                             <label
                                 for="payment-method
@@ -64,7 +84,7 @@
                                 {{ donationSummary.paymentMethod }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="cost">Cost (in GHc) </label>
                             <p id="cost">
                                 {{ costText }}

@@ -240,7 +240,7 @@ export default {
             return !this.notifications || !this.notifications.length;
         },
         isMyDonationsEmpty() {
-            console.log('How is this possilbe', this.userDonations);
+            console.log("How is this possilbe", this.userDonations);
             return !this.userDonations || !this.userDonations.length;
         },
         myDonationsToDisplay() {
@@ -265,9 +265,10 @@ export default {
             const serviceType = donation.type;
             const hospitalName = donation.hospital_name;
             const value = donation.value;
-            const patientBloodType = donation.patient?.profile?.blood_group;
+            const valueType = donation.value_type;
+            const bloodUnitName = donation.blood_unit_name;
 
-            return `${patientName} needs ${serviceType} (${value}) ${patientBloodType} @${hospitalName}`;
+            return `${patientName} needs ${serviceType} (${value}) ${valueType} @${hospitalName}`;
         }
     }
 };

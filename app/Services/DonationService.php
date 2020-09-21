@@ -61,8 +61,14 @@ class DonationService
             ]);
         }
 
+        if($donation->payment_method === 'Cash') {
+            $donation->payments()->create([
+                'type' => $donation->payment_method,
+                'amount' => $donation->cost
+            ]);
+        }
+
         $donation->load('patient', 'payments');
-        $donation->refresh();
 
         $donors = User::ofRole('donor')->get();
 
