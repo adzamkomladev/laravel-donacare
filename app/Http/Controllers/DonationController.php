@@ -15,7 +15,6 @@ use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
-
     /** @var DonationService $donationService  */
     protected $donationService;
 
