@@ -13,9 +13,6 @@ try {
     require('bootstrap');
 
     // Add vendors
-    require('./vendor/bootstrap-notify');
-    require('./vendor/perfect-scrollbar.jquery.min.js');
-    require('./vendor/chartjs.min.js');
     require('./vendor/now-ui-dashboard');
     require('./vendor/bossware');
     require('./vendor/demo');
@@ -49,8 +46,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // });
 
 
-$(document).ready(function () {
-    // Javascript method's body can be found in assets/js/demos.js
-    demo.initDashboardPageCharts();
+// $(document).ready(function () {
+//     // Javascript method's body can be found in assets/js/demos.js
+//     demo.initDashboardPageCharts();
 
-});
+// });
