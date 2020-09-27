@@ -31,13 +31,13 @@
             <ul class="navbar-nav">
                 <navbar-actions></navbar-actions>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                         <p>
                             <span class="d-lg-none d-md-block">Stats</span>
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
