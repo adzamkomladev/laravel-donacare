@@ -4,31 +4,37 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Donocare') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta name="description"
+        content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
 
     <!-- Google / Search Engine Tags -->
     <meta itemprop="name" content="Donacare - Medical donation Platform">
-    <meta itemprop="description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta itemprop="description"
+        content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
     <meta itemprop="image" content="http://donacare.net/img/Home2.png">
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="http://donacare.net">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Donacare - Medical donation Platform">
-    <meta property="og:description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta property="og:description"
+        content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
     <meta property="og:image" content="http://donacare.net/img/Home2.png">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Donacare - Medical donation Platform">
-    <meta name="twitter:description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta name="twitter:description"
+        content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
     <meta name="twitter:image" content="http://donacare.net/img/Home2.png">
 
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Roboto:300,400,500,700&display=swap"
         rel="stylesheet">
 
     <link rel="icon" href="favicon.ico">
@@ -112,11 +118,11 @@
                             <h1>Easy and affordable @
                                 Your convenience</h1>
                             <p>
-                            <h4>We care about the wellbeing of every citizen, find a compatible donor for yourself,
+                                We care about the wellbeing of every citizen, find a compatible donor for yourself,
                                 sibling, friend etc
-                                with our DONOR platform. </h4>
+                                with our DONOR platform.
                             </p>
-                            <h3>Simply request for free or pay less for your donations.</h3>
+                            <p>Simply request for free or pay less for your donations.</p>
 
                             <a href="/login" class="btn_2">Request for a donation</a>
 
@@ -303,7 +309,7 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="single_blog_item">
                         <div class="single_blog_img">
-                            <img src="img/doctor/doctor_1.png" alt="doctor">
+                            <img src="{{ asset('img/hospitals/kaneshie.jpeg') }}" alt="doctor">
                             <div class="social_icon">
                                 <ul>
                                     <li><a href="#"> <i class="ti-facebook"></i> </a></li>
@@ -324,7 +330,7 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="single_blog_item">
                         <div class="single_blog_img">
-                            <img src="img/doctor/doctor_4.png" alt="doctor">
+                            <img src="{{ asset('img/hospitals/ridge.jpg') }}" alt="doctor">
                             <div class="social_icon">
                                 <ul>
                                     <li><a href="#"> <i class="ti-facebook"></i> </a></li>
@@ -345,7 +351,7 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="single_blog_item">
                         <div class="single_blog_img">
-                            <img src="img/doctor/doctor_2.png" alt="doctor">
+                            <img src="{{ asset('img/hospitals/korlebu.jpg') }}" alt="doctor">
                             <div class="social_icon">
                                 <ul>
                                     <li><a href="#"> <i class="ti-facebook"></i> </a></li>
@@ -366,7 +372,7 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="single_blog_item">
                         <div class="single_blog_img">
-                            <img src="img/doctor/doctor_3.png" alt="doctor">
+                            <img src="{{ asset('img/hospitals/kaneshie.jpeg') }}" alt="doctor">
                             <div class="social_icon">
                                 <ul>
                                     <li><a href="#"> <i class="ti-facebook"></i> </a></li>
@@ -396,7 +402,7 @@
                 <div class="row justify-content-between">
                     <div class="col-xl-2 col-md-4 col-sm-6 single-footer-widget">
                         <a href="/" class="footer_logo">
-                            BLOOD DONOR
+                            {{ config('app.name', 'Donocare') }}
                         </a>
                         <p>We intend to be the world’s most evolutionary IT Company that insists on improving lives
                             through cutting edge technologies and innovative ideas </p>
