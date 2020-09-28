@@ -4,8 +4,28 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Donacare - Medical donation Platform">
+    <meta itemprop="description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta itemprop="image" content="http://donacare.net/img/Home2.png">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="http://donacare.net">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Donacare - Medical donation Platform">
+    <meta property="og:description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta property="og:image" content="http://donacare.net/img/Home2.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Donacare - Medical donation Platform">
+    <meta name="twitter:description" content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
+    <meta name="twitter:image" content="http://donacare.net/img/Home2.png">
+
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap"
