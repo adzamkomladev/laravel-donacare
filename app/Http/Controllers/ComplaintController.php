@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Complaint;
-use App\Http\Middleware\CheckOTP;
-use App\Http\Middleware\CheckProfile;
 use App\Http\Requests\StoreComplaint;
-use Carbon\Carbon;
+use App\Services\ComplaintService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ComplaintController extends Controller
 {
+    /** @var \App\Services\ComplaintService $complaintService  */
+    protected $complaintService;
+
+    public function __construct(ComplaintService $complaintService)
+    {
+        $this->complaintService = $complaintService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,11 +26,9 @@ class ComplaintController extends Controller
      */
     public function index()
     {
-        $complaints = Complaint::paginate(6);
-
-//        dd($complaints);
-
-        return view('complaints.index', ['complaints' => $complaints]);
+        return view('complaints.index', [
+            'complaints' => $this->complaintService->findAll(),
+        ]);
     }
 
     /**
@@ -41,7 +44,6 @@ class ComplaintController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreComplaint $request)
@@ -49,32 +51,9 @@ class ComplaintController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
 
-
-        Complaint::create($validated);
+        $this->complaintService->create($validated);
 
         return redirect()->route('complaints.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -90,22 +69,6 @@ class ComplaintController extends Controller
             'response' => 'required|string',
         ])->validate();
 
-        $complaint->update($request->all());
-        $complaint->status = 'addressed';
-        $complaint->address_date = Carbon::now()->toDateTimeString();
-        $complaint->save();
-
-        return $complaint;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $this->complaintService->address($complaint, $request->all());
     }
 }

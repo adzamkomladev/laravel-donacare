@@ -13,11 +13,11 @@
                         </p>
                 </div>
                 <div class="card-body">
-                    <img src="{{ $prescription->path }}" alt="Prescription image">
+                    <img src="{{ asset($prescription->path) }}" alt="Prescription image">
                     <div class="row">
                         <a href="{{ route('donations.show', [$prescription->donation->id]) }}"
                             class="btn btn-primary btn-round mt-5">View Request</a>
-                        <a href="{{ $prescription->path }}" target="_blank" class="btn btn-primary btn-round mt-5">
+                        <a href="{{ asset($prescription->path) }}" target="_blank" class="btn btn-primary btn-round mt-5">
                             Download prescription image
                         </a>
                     </div>

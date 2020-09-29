@@ -22,4 +22,7 @@ mix.js("resources/js/app.js", "public/js")
         ],
         "public/css/landing.css"
     )
-    .copyDirectory("resources/img", "public/img");
+    .copyDirectory("resources/img", "public/img")
+    .copyDirectory("resources/fonts", "public/fonts");
+
+mix.browserSync('http://localhost:8000');

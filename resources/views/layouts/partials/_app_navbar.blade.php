@@ -1,5 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute" @if ('home' === Route::currentRouteName()) id="bgtop"
-    style="background-image:url('{{ asset('img/bg.png') }}');" @endif>
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-light bg-primary  navbar-absolute {{ ('home' === Route::currentRouteName()) ? 'navbar-background' : '' }}" @if ('home' === Route::currentRouteName()) id="bgtop" @endif>
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -31,13 +30,13 @@
             <ul class="navbar-nav">
                 <navbar-actions></navbar-actions>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                         <p>
                             <span class="d-lg-none d-md-block">Stats</span>
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">

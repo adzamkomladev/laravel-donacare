@@ -1,13 +1,13 @@
 <template>
     <div>
         <ul class="navbar-nav">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link">
                     <p>
                         <span class="d-lg-none d-md-block">Stats</span>
                     </p>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
                 <a
                     class="nav-link dropdown-toggle"
@@ -45,7 +45,7 @@
                 >
                     <i class="now-ui-icons ui-1_bell-53"></i>
                     <p>
-                        <span class="d-lg-none d-md-block">visibility</span>
+                        <span class="d-lg-none d-md-block">New Requests</span>
                     </p>
                 </a>
                 <div
@@ -86,7 +86,7 @@
                 >
                     <i class="now-ui-icons shopping_cart-simple"></i>
                     <p>
-                        <span class="d-lg-none d-md-block">visibility</span>
+                        <span class="d-lg-none d-md-block">Cart</span>
                     </p>
                 </a>
                 <div
