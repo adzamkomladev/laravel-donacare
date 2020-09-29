@@ -2104,7 +2104,7 @@ ul {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #1c19ab;
+  background-color: #e65d31;
   opacity: 0.8;
   z-index: -1;
 }
@@ -2220,10 +2220,8 @@ ul {
 
 /* line 102, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_our_depertment.scss */
 .our_depertment .single_our_depertment:hover {
-  background-color:
-#e65d31;
-  border: 1px solid
-#e65d31;
+  background-color:#e65d31;
+  border: 1px solid#e65d31;
 }
 
 /* line 106, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_our_depertment.scss */
