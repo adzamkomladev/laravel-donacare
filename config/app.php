@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Unicodeveloper\Paystack\PaystackServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -177,8 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
-        Unicodeveloper\Paystack\PaystackServiceProvider::class,
-
+        App\Providers\ServicesProvider::class,
     ],
 
     /*

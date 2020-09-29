@@ -13,6 +13,7 @@ try {
     require('bootstrap');
 
     // Add vendors
+    require('./vendor/bootstrap-notify');
     require('./vendor/now-ui-dashboard');
     require('./vendor/bossware');
     require('./vendor/demo');

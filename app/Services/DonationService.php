@@ -9,9 +9,17 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use App\Services\PrescriptionService;
 
 class DonationService
 {
+    /** @var \App\Services\PrescriptionService $prescriptionService  */
+    protected $prescriptionService;
+
+    public function __construct(PrescriptionService $prescriptionService)
+    {
+        $this->prescriptionService = $prescriptionService;
+    }
     /**
      * Get all donations based on Authenticated user's role
      *
@@ -41,18 +49,16 @@ class DonationService
      *
      * @return App\Donation
      **/
-    public function store(array $validatedData, array $imageUrls)
+    public function store(array $validatedData, array $images)
     {
         $validatedData['date_needed'] = Carbon::parse($validatedData['date_needed']);
         $validatedData['status'] = 'initiated';
 
         $donation = Donation::create($validatedData);
 
-        $images = collect($imageUrls)->map(function ($image) {
-            return ['path' => $image];
-        })->toArray();
-
-        $donation->files()->createMany($images);
+        if (count($images) > 0) {
+            $this->prescriptionService->createMany($images, $donation);
+        }
 
         if ($donation->payment_status === 'free') {
             $donation->payments()->create([
@@ -61,7 +67,7 @@ class DonationService
             ]);
         }
 
-        if($donation->payment_method === 'Cash') {
+        if ($donation->payment_method === 'Cash') {
             $donation->payments()->create([
                 'type' => $donation->payment_method,
                 'amount' => $donation->cost

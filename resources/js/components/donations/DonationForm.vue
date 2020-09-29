@@ -427,8 +427,11 @@ export default {
                 donationData.append("cost", cost);
                 donationData.append("payment_method", this.payment_method);
             }
-            const urls = await this.getFileUrls();
-            donationData.append("images", JSON.stringify(urls));
+            Array.from(this.images).forEach(image =>
+                donationData.append("images[]", image)
+            );
+            // const urls = await this.getFileUrls();
+            // donationData.append("images", JSON.stringify(urls));
 
             try {
                 const { data } = await Donation.save(donationData);

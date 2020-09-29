@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use App\Donation;
-use App\File;
 use App\Http\Requests\StoreDonation;
 use App\Services\DonationService;
 use Illuminate\Database\Eloquent\Collection;
@@ -70,9 +69,7 @@ class DonationController extends Controller
     public function store(StoreDonation $request)
     {
         $validated = $request->validated();
-        $imageUrls = json_decode($request->all()['images']);
-
-        return $this->donationService->store($validated, $imageUrls);
+        return $this->donationService->store($validated, $request->file('images'));
     }
 
     /**
