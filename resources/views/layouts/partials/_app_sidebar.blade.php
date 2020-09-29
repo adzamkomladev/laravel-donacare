@@ -3,8 +3,8 @@
     Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
 -->
     <div class="logo">
-        <a href="{{ url('/') }}" class="simple-text logo-mini">
-            <img src="{{ asset('img/logo.png') }}" alt="Donor app logo">
+        <a href="{{ url('/') }}" class="simple-text logo-normal">
+            <img src="{{ asset('img/logo2.png') }}" alt="Donor app logo">
         </a>
         <a href="{{ route('home') }}" class="simple-text logo-normal">
             {{ (Auth::user()->role === 'admin' ? 'ADMIN' : Auth::user()->role === 'donor') ? 'DONOR' : 'USER' }}
