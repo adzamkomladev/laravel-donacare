@@ -1,5 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute" @if ('home' === Route::currentRouteName()) id="bgtop"
-    style="background-image:url('{{ asset('img/bg.png') }}');" @endif>
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-light bg-primary  navbar-absolute {{ ('home' === Route::currentRouteName()) ? 'navbar-background' : '' }}" @if ('home' === Route::currentRouteName()) id="bgtop" @endif>
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <div class="navbar-toggle">

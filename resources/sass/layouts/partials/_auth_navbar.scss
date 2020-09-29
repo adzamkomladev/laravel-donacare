@@ -1,3 +1,13 @@
 .auth-navbar {
     box-shadow: none;
 }
+
+.navbar-background {
+    background-image: url('../img/bg.png');
+}
+
+@media only screen and (max-width: 1024px) {
+    .navbar-background {
+        background-image: none !important;
+    }
+}

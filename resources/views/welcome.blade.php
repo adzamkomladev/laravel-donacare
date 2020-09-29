@@ -21,14 +21,14 @@
     <meta property="og:title" content="Donacare - Medical donation Platform">
     <meta property="og:description"
         content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
-    <meta property="og:image" content="http://donacare.net/img/Home2.png">
+    <meta property="og:image" content="http://donacare.net/img/logo1.png">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Donacare - Medical donation Platform">
     <meta name="twitter:description"
         content="Donacare is a platform to perform medical donation requests from blood to organs to funds. You can sign up as a patient or a donor on donacare. Donacare offers free and charged donations.">
-    <meta name="twitter:image" content="http://donacare.net/img/Home2.png">
+    <meta name="twitter:image" content="http://donacare.net/img/logo1.png">
 
     <!-- Fonts -->
     <link
@@ -77,7 +77,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="/">
-                            <img src="img/Home2.png" width="300" height="100" alt="">
+                            <img src="img/logo1.png" width="240" alt="Donacare logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
