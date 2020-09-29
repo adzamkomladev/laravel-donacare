@@ -10,13 +10,13 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <div class="form-group row mb-4">
-                                <div class="col-md-4">
+                            <div class="form-group row">
+                                <div class="col-md-4 mb-4">
                                     <select class="form-control">
                                         <option value="+233" selected>+233</option>
                                     </select>
                                 </div>
-                                <div class="col-md-8 input-group @error('telephone') has-danger @enderror">
+                                <div class="col-md-8 mb-4 input-group @error('telephone') has-danger @enderror">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-phone"></i>
