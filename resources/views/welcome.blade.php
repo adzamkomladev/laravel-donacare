@@ -77,7 +77,7 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="/">
-                            <img src="img/logo1.png" width="240" alt="Donacare logo">
+                            <img src="img/logo2.png" width="180" alt="Donacare logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
