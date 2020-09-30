@@ -76,7 +76,9 @@ class DonationService
 
         $donation->load('patient', 'payments');
 
-        $donors = User::ofRole('donor')->get();
+        $donors = User::ofRole('donor')->get()->filter(function ($donor) use ($donation) {
+            return $donor->profile->blood_group === $donation->patient->profile->blood_group;
+        });
 
         Notification::send($donors, new DonationRequested($donation));
 
