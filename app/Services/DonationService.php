@@ -20,6 +20,7 @@ class DonationService
     {
         $this->prescriptionService = $prescriptionService;
     }
+
     /**
      * Get all donations based on Authenticated user's role
      *
@@ -42,6 +43,16 @@ class DonationService
         }
 
         return $donations;
+    }
+
+    /**
+     * Find a donation by id
+     *
+     * @return \App\Donation;
+     **/
+    public function findById(int $id)
+    {
+        return Donation::with(['patient', 'donor'])->where('id', $id)->first();
     }
 
     /**

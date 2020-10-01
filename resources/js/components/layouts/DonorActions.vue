@@ -120,11 +120,13 @@
                                     >details</a
                                 >
                                 <a
+                                    :href="getETAMapUrl(donation.id)"
                                     id="ordd"
                                     class="btn btn-round btn-primary col-md-4"
                                     >map</a
                                 >
                                 <a
+                                    href="/donation-payments"
                                     id="ordd"
                                     class="btn btn-round btn-primary col-md-4"
                                     >payments</a
@@ -177,6 +179,9 @@ export default {
         },
         getUrl(donationId) {
             return `/donations/${donationId}`;
+        },
+        getETAMapUrl(donationId) {
+            return `/eta-maps/${donationId}`;
         },
         async onAddToDonorDonations(notification) {
             const { donation } = notification.data;
@@ -272,5 +277,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

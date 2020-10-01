@@ -87,5 +87,8 @@ Route::middleware(['auth'])->group(function () {
 
         // History
         Route::get('histories', 'ShowUserHistory')->name('histories.index');
+
+        // ETA
+        Route::get('eta-maps/{id}', 'ShowETAMap')->name('eta-maps.index');
     });
 });

@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-4 pr-1">
                 <div class="form-group">
-                    <label>NamHospitale</label>
+                    <label>Full name</label>
                     <input
                         type="text"
                         class="form-control"
@@ -25,7 +25,7 @@
                         class="form-control"
                         placeholder="Hospital"
                         required
-                        v-model="hospital_name"
+                        v-model="donationData.hospital_name"
                         @change="onSelectHospital()"
                     />
                     <datalist id="hospitals">
@@ -47,7 +47,7 @@
                         class="form-control"
                         placeholder="location"
                         required
-                        v-model="hospital_location"
+                        v-model="donationData.hospital_location"
                     />
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         class="form-control"
                         placeholder="Blood unit"
                         required
-                        v-model="blood_unit_name"
+                        v-model="donationData.blood_unit_name"
                         @change="onSelectBoodUnit()"
                     />
                     <datalist id="blood_units">
@@ -82,7 +82,7 @@
                         class="form-control"
                         placeholder="Blood unit location"
                         required
-                        v-model="blood_unit_location"
+                        v-model="donationData.blood_unit_location"
                     />
                 </div>
             </div>
@@ -104,7 +104,7 @@
                                 class="custom-file-label"
                                 for="prescription-images"
                             >
-                                {{ images | uploadText }}
+                                {{ donationData.images | uploadText }}
                             </label>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                     <select
                         class="form-control"
                         id="payment-status"
-                        v-model="payment_status"
+                        v-model="donationData.payment_status"
                     >
                         <option id="jui" value="">-- payment_status --</option>
                         <option id="jui" value="free">Free</option>
@@ -133,7 +133,7 @@
                         type="date"
                         class="form-control"
                         placeholder="content"
-                        v-model="date_needed"
+                        v-model="donationData.date_needed"
                         required
                     />
                 </div>
@@ -146,7 +146,7 @@
                     <select
                         id="share-location"
                         class="form-control"
-                        v-model="share_location"
+                        v-model="donationData.share_location"
                         disabled
                     >
                         <option id="jui" value="">-- share location --</option>
@@ -168,7 +168,7 @@
                             <select
                                 id="blood-group"
                                 class="form-control"
-                                v-model="value"
+                                v-model="donationData.value"
                             >
                                 <option value="O+">O positive</option>
                                 <option value="O-">O negative</option>
@@ -187,7 +187,7 @@
                             <select
                                 id="value-type"
                                 class="form-control"
-                                v-model="value_type"
+                                v-model="donationData.value_type"
                             >
                                 <option value="Whole blood donation" selected
                                     >Whole blood donation</option
@@ -212,7 +212,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Donation item"
-                        v-model="value"
+                        v-model="donationData.value"
                     />
                 </div>
             </div>
@@ -226,7 +226,7 @@
                         class="form-control"
                         placeholder="Quantity"
                         required
-                        v-model="quantity"
+                        v-model="donationData.quantity"
                     />
                 </div>
             </div>
@@ -269,7 +269,7 @@
                     <select
                         id="payment-method"
                         class="form-control"
-                        v-model="payment_method"
+                        v-model="donationData.payment_method"
                         required
                     >
                         <option id="jui" value="">-- select method --</option>
@@ -291,7 +291,7 @@
                         type="tel"
                         class="form-control"
                         required
-                        v-model="phone"
+                        v-model="donationData.phone"
                         placeholder="Eg. +233202384567"
                     />
                 </div>
@@ -322,30 +322,34 @@ export default {
         eventBus.$on("submitDonationForm", this.onSubmit);
     },
     mounted() {
-        this.value = this.initialValue;
+        this.donationData.value = this.initialValue;
     },
     data() {
         return {
+            donationData: {
+                patient_id: Auth.currentUser().id,
+                hospital_name: "",
+                hospital_location: "",
+                blood_unit_name: "",
+                blood_unit_location: "",
+                share_location: 1,
+                quantity: 1,
+                service_id: this.services.find(service =>
+                    service.name.toLowerCase().includes(this.type)
+                )?.id,
+                payment_status: "",
+                date_needed: "",
+                value: "",
+                value_type: "Whole blood donation",
+                payment_method: "",
+                images: [],
+                phone: Auth.currentUser()?.profile?.mobile_money_number ?? null
+            },
             user: Auth.currentUser(),
             full_name: Auth.currentUser().profile.full_name,
-            hospital_name: "",
-            hospital_location: "",
-            blood_unit_name: "",
-            blood_unit_location: "",
-            share_location: 1,
-            quantity: 1,
-            service_id: this.services.find(service =>
-                service.name.toLowerCase().includes(this.type)
-            )?.id,
             service: this.services.find(service =>
                 service.name.toLowerCase().includes(this.type)
             ),
-            payment_status: "",
-            date_needed: "",
-            value: "",
-            value_type: "Whole blood donation",
-            payment_method: "",
-            images: [],
             isLoading: false,
             currentDate: new Date()
                 .toISOString()
@@ -359,41 +363,44 @@ export default {
                 "Komfo Anokye Hospital": "Okomfo Anokye Road, Kumasi",
                 "Holy Trinity Hospital": "Amar Koranten St, Accra",
                 "Ridge Hospital": "Castle Rd, Accra"
-            },
-            phone: Auth.currentUser()?.profile?.mobile_money_number ?? null
+            }
         };
     },
     methods: {
         onSelectHospital() {
-            this.hospital_location = this.locations[this.hospital_name];
-            if (!this.blood_unit_name) {
-                this.blood_unit_location = this.hospital_location;
-                this.blood_unit_name = this.hospital_name;
+            this.donationData.hospital_location = this.locations[
+                this.donationData.hospital_name
+            ];
+            if (!this.donationData.blood_unit_name) {
+                this.donationData.blood_unit_location = this.donationData.hospital_location;
+                this.donationData.blood_unit_name = this.donationData.hospital_name;
             }
         },
         onSelectBloodUnit() {
-            this.blood_unit_location = this.locations[this.blood_unit_name];
+            this.donationData.blood_unit_location = this.locations[
+                this.donationData.blood_unit_name
+            ];
         },
         onOpenModal() {
             $("#donation-summary").modal("show");
 
             eventBus.$emit("openDonationSummaryModal", {
                 fullName: this.full_name,
-                hospitalName: this.hospital_name,
-                hospitalLocation: this.hospital_location,
-                bloodUnitName: this.blood_unit_name,
-                bloodUnitLocation: this.blood_unit_location,
-                shareLocation: this.share_location,
-                quantity: this.quantity,
-                value: this.value,
-                valueType: this.value_type,
-                paymentStatus: this.payment_status,
-                paymentMethod: this.payment_method,
+                hospitalName: this.donationData.hospital_name,
+                hospitalLocation: this.donationData.hospital_location,
+                bloodUnitName: this.donationData.blood_unit_name,
+                bloodUnitLocation: this.donationData.blood_unit_location,
+                shareLocation: this.donationData.share_location,
+                quantity: this.donationData.quantity,
+                value: this.donationData.value,
+                valueType: this.donationData.value_type,
+                paymentStatus: this.donationData.payment_status,
+                paymentMethod: this.donationData.payment_method,
                 service: this.services.find(
-                    service => this.service_id === service.id
+                    service => this.donationData.service_id === service.id
                 ),
-                dateNeeded: this.date_needed,
-                images: Array.from(this.images).map(image =>
+                dateNeeded: this.donationData.date_needed,
+                images: Array.from(this.donationData.images).map(image =>
                     URL.createObjectURL(image)
                 )
             });
@@ -401,41 +408,38 @@ export default {
         async onSubmit() {
             this.isLoading = true;
 
-            const donationData = new FormData();
-            donationData.append("patient_id", this.user.id);
-            donationData.append("hospital_name", this.hospital_name);
-            donationData.append("hospital_location", this.hospital_location);
-            donationData.append("blood_unit_name", this.blood_unit_name);
-            donationData.append(
-                "blood_unit_location",
-                this.blood_unit_location
-            );
-            donationData.append("share_location", this.share_location);
-            donationData.append("payment_status", this.payment_status);
-            donationData.append("date_needed", this.date_needed);
-            donationData.append("quantity", this.quantity);
-            donationData.append("service_id", this.service_id);
-            donationData.append("value", this.value);
-            donationData.append("value_type", this.value_type);
-            donationData.append("type", this.type);
             if (this.willPay) {
                 const service = this.services.find(
-                    service => service.id === this.service_id
+                    service => service.id === this.donationData.service_id
                 );
-                const cost = service?.price * this.quantity;
-
-                donationData.append("cost", cost);
-                donationData.append("payment_method", this.payment_method);
+                const cost = service?.price * this.donationData.quantity;
+                this.donationData.cost = cost;
             }
-            Array.from(this.images).forEach(image =>
-                donationData.append("images[]", image)
-            );
-            // const urls = await this.getFileUrls();
-            // donationData.append("images", JSON.stringify(urls));
+            this.donationData.images = Array.from(this.donationData.images);
+            const donationFormData = this.getFormData();
 
             try {
-                const { data } = await Donation.save(donationData);
-                data.email = "adzamkomla@gmail.com";
+                if (
+                    this.donationData.payment_method === "Cash" ||
+                    !this.donationData.payment_method
+                ) {
+                    const { data } = await Donation.save(donationFormData);
+
+                    setTimeout(
+                        () =>
+                            (window.location.pathname = `/donations/${data.donationId}`),
+                        3100
+                    );
+                } else if (
+                    this.donationData.payment_method === "Mobile money"
+                ) {
+                    await Paystack.save({
+                        email: this.email || "adzamkomla@gmail.com",
+                        paystackPublicKey: this.paystackPublicKey,
+                        donationFormData,
+                        ...this.donationData
+                    });
+                }
 
                 eventBus.$emit("donationFormSubmitted");
                 this.showNotification(
@@ -443,20 +447,6 @@ export default {
                     `Donation request has been made!`,
                     "primary"
                 );
-
-                const routeData = {
-                    email: this.email || "adzamkomla@gmail.com",
-                    paymentMethod: data?.payment_method,
-                    paymentStatus: data?.payment_status,
-                    phone: this.phone,
-                    cost: data?.cost,
-                    donationId: data?.id,
-                    paystackPublicKey: this.paystackPublicKey
-                };
-
-                setTimeout(() => {
-                    this.routeBasedOnPaymentMethod(routeData);
-                }, 3000);
             } catch (error) {
                 console.log({ error });
 
@@ -471,39 +461,34 @@ export default {
                 this.isLoading = false;
             }
         },
-        routeBasedOnPaymentMethod(data) {
-            if (data.paymentMethod === "Cash" || !data.paymentMethod) {
-                window.location.pathname = `/donations/${data.donationId}`;
-                return;
-            }
+        getFormData() {
+            const donationFormData = new FormData();
 
-            if (data.paymentMethod === "Mobile money") {
-                Paystack.save(data);
+            for (let key in this.donationData) {
+                if (key === "images") {
+                    continue;
+                }
+                donationFormData.append(key, this.donationData[key]);
             }
+            Array.from(this.donationData.images).forEach(image =>
+                donationFormData.append("images[]", image)
+            );
+
+            return donationFormData;
         },
         showNotification(icon, message, type) {
             $.notify({ icon, message }, { type, timer: 2500 });
         },
         onUpload(event) {
-            this.images = event.target.files;
-        },
-        async getFileUrls() {
-            const apikey = "Aw7Es3zsBRRuECxYQDkBzz";
-            const client = filestack.init(apikey);
-
-            const files = await Promise.all(
-                Array.from(this.images).map(image => client.upload(image))
-            );
-
-            return files.map(file => file.url);
+            this.donationData.images = event.target.files;
         }
     },
     computed: {
         willPay() {
-            return this.payment_status === "charged";
+            return this.donationData.payment_status === "charged";
         },
         isMobileMoney() {
-            return this.payment_method === "Mobile money";
+            return this.donationData.payment_method === "Mobile money";
         },
         isBlood() {
             return this.type === "blood";
@@ -532,7 +517,7 @@ export default {
             return this.isBlood ? this.user?.profile.blood_group : "";
         },
         priceText() {
-            return this.payment_status === "free"
+            return this.donationData.payment_status === "free"
                 ? "Free"
                 : `GHc ${this.service?.price}`;
         }
@@ -549,5 +534,3 @@ export default {
     }
 };
 </script>
-
-<style></style>
