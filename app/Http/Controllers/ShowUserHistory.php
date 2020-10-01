@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ShowUserHistory extends Controller
 {
-    /** @var DonationService $historyService  */
+    /** @var \App\Services\HistoryService $historyService  */
     protected $historyService;
 
     public function __construct(HistoryService $historyService)

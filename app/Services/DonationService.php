@@ -20,6 +20,7 @@ class DonationService
     {
         $this->prescriptionService = $prescriptionService;
     }
+
     /**
      * Get all donations based on Authenticated user's role
      *
@@ -42,6 +43,16 @@ class DonationService
         }
 
         return $donations;
+    }
+
+    /**
+     * Find a donation by id
+     *
+     * @return \App\Donation;
+     **/
+    public function findById(int $id)
+    {
+        return Donation::with(['patient', 'donor'])->where('id', $id)->first();
     }
 
     /**
@@ -76,7 +87,9 @@ class DonationService
 
         $donation->load('patient', 'payments');
 
-        $donors = User::ofRole('donor')->get();
+        $donors = User::ofRole('donor')->get()->filter(function ($donor) use ($donation) {
+            return $donor->profile->blood_group === $donation->patient->profile->blood_group;
+        });
 
         Notification::send($donors, new DonationRequested($donation));
 

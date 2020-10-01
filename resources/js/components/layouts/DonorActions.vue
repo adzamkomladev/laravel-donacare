@@ -98,7 +98,7 @@
                     </div>
 
                     <template v-else>
-                        <strong
+                        <div
                             v-for="donation in myDonationsToDisplay"
                             class="dropdown-item"
                             :key="donation.id"
@@ -111,27 +111,28 @@
                                 class="now-ui-icons ui-1_simple-delete"
                             ></button>
                             <span>{{ donation | donationText }}</span>
-                            <br />
-                            <button class="dropdown-item" id="ord">
+                            <div class="dropdown-item row">
                                 <a
                                     :href="getUrl(donation.id)"
                                     id="ordd"
-                                    class="btn btn-round btn-primary col-lg-4"
+                                    class="btn btn-round btn-primary col-md-4"
                                     title="click to view profile"
                                     >details</a
                                 >
                                 <a
+                                    :href="getETAMapUrl(donation.id)"
                                     id="ordd"
-                                    class="btn btn-round btn-primary col-lg-4"
+                                    class="btn btn-round btn-primary col-md-4"
                                     >map</a
                                 >
                                 <a
+                                    href="/donation-payments"
                                     id="ordd"
-                                    class="btn btn-round btn-primary col-lg-4"
+                                    class="btn btn-round btn-primary col-md-4"
                                     >payments</a
                                 >
-                            </button>
-                        </strong>
+                            </div>
+                        </div>
                     </template>
                 </div>
             </li>
@@ -178,6 +179,9 @@ export default {
         },
         getUrl(donationId) {
             return `/donations/${donationId}`;
+        },
+        getETAMapUrl(donationId) {
+            return `/eta-maps/${donationId}`;
         },
         async onAddToDonorDonations(notification) {
             const { donation } = notification.data;
@@ -273,5 +277,3 @@ export default {
     }
 };
 </script>
-
-<style></style>
