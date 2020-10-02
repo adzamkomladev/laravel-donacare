@@ -20,6 +20,14 @@ Vue.use(VueGoogleMaps, {
     }
 });
 
+Vue.mixin({
+    methods: {
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 3000 });
+        }
+    }
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
