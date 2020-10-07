@@ -90,5 +90,8 @@ Route::middleware(['auth'])->group(function () {
 
         // ETA
         Route::get('eta-maps/{id}', 'ShowETAMap')->name('eta-maps.index');
+
+        // Settings
+        Route::get('settings/show', 'SettingController@show')->name('settings.show');
     });
 });

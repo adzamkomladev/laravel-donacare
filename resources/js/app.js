@@ -102,6 +102,10 @@ Vue.component(
     require("./components/donations/DonationFormSummary.vue").default
 );
 Vue.component("eta-map", require("./components/donations/ETAMap.vue").default);
+Vue.component(
+    "update-setting",
+    require("./components/settings/UpdateSetting.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

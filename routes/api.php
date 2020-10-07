@@ -40,6 +40,9 @@ Route::group(['prefix' => 'v1'], function () {
 
     // Notifications
     Route::get('/notifications/donations/{user}/new', 'NotificationController@newDonationsNotifications');
+
+    // Settings
+    Route::post('settings', 'SettingController@store');
 });
 
 Route::group(['prefix' => 'v2'], function () {

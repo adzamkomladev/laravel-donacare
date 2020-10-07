@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ServiceSeeder::class,
             DonationSeeder::class,
-            ReviewSeeder::class
+            ReviewSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }
