@@ -7,7 +7,7 @@
                     <small>Admin</small>
                 </div>
             </td>
-            <td class="text-left">{{ user.profile.full_name }}</td>
+            <td class="text-left">{{ user.profile.fullName }}</td>
             <td class="text-left">{{ user.telephone }}</td>
             <td>
                 <div v-if="!isAdmin" class="form-check">
@@ -78,14 +78,14 @@
 </template>
 
 <script>
-import User from "../../services/user.js";
+import { UserService } from "../../common/api.service";
 
 export default {
     props: ["rowUser"],
     data() {
         return {
             canShow: true,
-            user: this.rowUser
+            user: this.toCamelCase(_.cloneDeep(this.rowUser))
         };
     },
     computed: {
@@ -99,7 +99,7 @@ export default {
     methods: {
         async onActivateUser() {
             try {
-                await User.toggleActivation(this.user.id);
+                await UserService.toggleActivation(this.user.id);
 
                 this.showNotification(
                     "fas fa-check",
@@ -128,9 +128,6 @@ export default {
             );
 
             this.canShow = false;
-        },
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
 };

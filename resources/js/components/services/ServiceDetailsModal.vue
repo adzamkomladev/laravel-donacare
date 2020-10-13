@@ -53,7 +53,7 @@ import { eventBus } from "../../events/event-bus.js";
 export default {
     name: "ServiceDetailsModal",
     created() {
-        eventBus.$on("selectedService", service => (this.service = service));
+        eventBus.$on("selectedService", service => (this.service = _.deepClone(service)));
     },
     data() {
         return {

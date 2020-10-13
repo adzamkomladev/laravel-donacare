@@ -101,8 +101,7 @@
 <script>
 import { eventBus } from "../../events/event-bus.js";
 
-import Auth from "../../services/auth.js";
-import Service from "../../services/service.js";
+import { Auth, Service } from "../../common/api.service";
 
 export default {
     name: "ServiceRow",
@@ -110,14 +109,14 @@ export default {
     created() {
         eventBus.$on("updatedService", service => {
             if (this.service.id === service.id) {
-                this.service = { ...service };
+                this.service = _.deepClone(service);
             }
         });
     },
     data() {
         return {
             canShow: true,
-            service: this.rowService
+            service: _.deepClone(this.rowService)
         };
     },
     computed: {
@@ -136,7 +135,7 @@ export default {
     },
     methods: {
         onSelectService() {
-            eventBus.$emit("selectedService", { ...this.service });
+            eventBus.$emit("selectedService", this.service);
         },
         async onToggleAvailability() {
             try {
@@ -169,9 +168,6 @@ export default {
             );
 
             this.canShow = false;
-        },
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
 };

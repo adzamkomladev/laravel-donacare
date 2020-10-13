@@ -23,7 +23,7 @@
 import JurisdictionForm from "../../components/users/JurisdictionForm";
 import DisplayJurisdiction from "../../components/users/DisplayJurisdiction";
 
-import Profile from "../../services/profile";
+import { ProfileService } from "../../common/api.service";
 
 export default {
     name: "UpdateJurisdiction",
@@ -31,13 +31,13 @@ export default {
     props: ["selectedProfile"],
     data() {
         return {
-            profile: this.selectedProfile
+            profile: this.toCamelCase(_.cloneDeep(this.selectedProfile))
         };
     },
     methods: {
         async onUpdateJurisdiction(jurisdiction) {
             try {
-                const { data } = await Profile.updateJurisdiction(
+                const { data } = await ProfileService.updateJurisdiction(
                     this.profile.id,
                     { jurisdiction }
                 );
@@ -56,9 +56,6 @@ export default {
 
                 this.showNotification("fas fa-times", message, "danger");
             }
-        },
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
 };

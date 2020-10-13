@@ -31,8 +31,7 @@
 <script>
 import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
 
-import Auth from "../../services/auth";
-import Donation from "../../services/donation";
+import { Auth, DonationService } from "../../common/api.service";
 
 export default {
     name: "GoogleMap",
@@ -41,7 +40,7 @@ export default {
     data() {
         return {
             center: { lat: 0.18702, lng: 5.55602 },
-            donors: this.allDonors,
+            donors: this.allDonors.map(donation => toCamelCase(donation)),
             selectedDonor: null
         };
     },
@@ -51,16 +50,8 @@ export default {
     },
 
     methods: {
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
-        },
-
         onClickMarker(index) {
-            this.selectedDonor = {
-                ...this.donors[index],
-                profile: { ...this.donors[index].profile },
-                location: { ...this.donors[index].location }
-            };
+            this.selectedDonor = _.deepClone(this.donors[index]);
         },
         geolocate() {
             this.center = {
@@ -70,8 +61,8 @@ export default {
         },
         async onSelectDonor() {
             try {
-                await Donation.selectDonor(this.donation.id, {
-                    donor_id: this.selectedDonor.id
+                await DonationService.selectDonor(this.donation.id, {
+                    donorId: this.selectedDonor.id
                 });
 
                 this.showNotification(

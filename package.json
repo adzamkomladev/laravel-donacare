@@ -23,11 +23,13 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-router": "^3.4.6",
+        "vue-template-compiler": "^2.6.10",
+        "vue2-google-maps": "^0.10.7",
+        "vuex": "^3.5.1"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
-        "chart.js": "^2.9.3",
-        "vue2-google-maps": "^0.10.7"
+        "chart.js": "^2.9.3"
     }
 }

@@ -17,9 +17,6 @@
 </template>
 
 <script>
-import Auth from "../../services/auth";
-import Donation from "../../services/donation";
-
 export default {
     name: "ETAMap",
     props: ["donation"],
@@ -32,8 +29,8 @@ export default {
     data() {
         return {
             center: { lat: 0.18702, lng: 5.55602 },
-            donor: _.cloneDeep(this.donation?.donor),
-            patient: _.cloneDeep(this.donation?.patient)
+            donor: toCamelCase(_.cloneDeep(this.donation?.donor)),
+            patient: toCamelCase(_.cloneDeep(this.donation?.patient))
         };
     },
     computed: {
@@ -46,7 +43,7 @@ export default {
                     },
                     title: "Donor location",
                     label: {
-                        text: this.donor?.profile.full_nmae,
+                        text: this.donor?.profile.fullName,
                         color: "black",
                         fontWeight: "bold",
                         fontSize: "12px"
@@ -59,7 +56,7 @@ export default {
                     },
                     title: "Patient location",
                     label: {
-                        text: this.patient?.profile.full_nmae,
+                        text: this.patient?.profile.fullName,
                         color: "green",
                         fontWeight: "bold",
                         fontSize: "12px"

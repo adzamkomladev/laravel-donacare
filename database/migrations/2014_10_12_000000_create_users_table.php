@@ -15,11 +15,14 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->text('firebase_id')->unique()->nullable();
             $table->string('telephone', 9)->unique();
+            $table->string('otp', 6);
             $table->timestamp('telephone_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->enum('role', ['admin', 'patient', 'donor'])->nullable();
+            $table->boolean('activated')->default(false);
             $table->timestamps();
         });
     }

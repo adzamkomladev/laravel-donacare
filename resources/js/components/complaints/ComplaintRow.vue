@@ -31,7 +31,7 @@
 
 <script>
 import { eventBus } from "../../events/event-bus";
-import Auth from "../../services/auth";
+import { Auth } from "../../common/api.service";
 
 export default {
     name: "ComplaintRow",
@@ -39,13 +39,13 @@ export default {
     created() {
         eventBus.$on("updatedComplaint", complaint => {
             if (this.complaint.id === complaint.id) {
-                this.complaint = { ...complaint };
+                this.complaint = _.deepClone(complaint);
             }
         });
     },
     data() {
         return {
-            complaint: this.rowComplaint
+            complaint: this.toCamelCase(_.deepClone(this.rowComplaint))
         };
     },
     computed: {
@@ -55,23 +55,22 @@ export default {
         canShow() {
             return (
                 Auth.currentUser().role === "admin" ||
-                this.rowComplaint.id === Auth.currentUser().id
+                this.complaint.id === Auth.currentUser().id
             );
         },
         isAddressed() {
             return this.complaint.status === "addressed";
         },
         logDate() {
-            return new Date(this.complaint.log_date).toLocaleString();
+            return new Date(this.complaint.logDate).toLocaleString();
         },
         addressDate() {
-            return new Date(this.complaint.address_date).toLocaleString();
+            return new Date(this.complaint.addressDate).toLocaleString();
         }
     },
     methods: {
         onSelectComplaint() {
-            eventBus.$emit("selectedComplaint", { ...this.complaint });
-            console.log("clicked");
+            eventBus.$emit("selectedComplaint", this.complaint);
         }
     }
 };

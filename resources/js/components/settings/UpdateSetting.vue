@@ -24,7 +24,7 @@
                         max="100"
                         class="form-control"
                         placeholder="Percentage charge"
-                        v-model="settingData.percentage_charge"
+                        v-model="settingData.percentageCharge"
                     />
                 </div>
             </div>
@@ -37,7 +37,7 @@
                         min="0"
                         class="form-control"
                         placeholder="Duration between donations"
-                        v-model="settingData.duration_between_donation"
+                        v-model="settingData.durationBetweenDonation"
                     />
                 </div>
             </div>
@@ -51,8 +51,7 @@
 </template>
 
 <script>
-import Auth from "../../services/auth";
-import Setting from "../../services/setting";
+import {Auth, SettingService} from '../../common/api.service';
 
 export default {
     name: "UpdateSetting",
@@ -60,9 +59,9 @@ export default {
     data() {
         return {
             settingData: {
-                system_charge: this.setting.system_charge,
-                percentage_charge: this.setting.percentage_charge,
-                duration_between_donation: this.setting
+                systemCharge: this.setting.system_charge,
+                percentageCharge: this.setting.percentage_charge,
+                durationBetweenDonation: this.setting
                     .duration_between_donation
             }
         };
@@ -70,11 +69,11 @@ export default {
     methods: {
         async onSubmit() {
             try {
-                const { data } = await Setting.create({
-                    user_id: Auth.currentUser().id,
+                const { data } = await SettingService.create({
+                    userId: Auth.currentUser().id,
                     ...this.settingData
                 });
-                this.settingData = _.cloneDeep(JSON.parse(data.data));
+                this.settingData = this.toCamelCase(_.cloneDeep(JSON.parse(data.data)));
 
                 this.showNotification(
                     "fas fa-check",
@@ -95,10 +94,10 @@ export default {
     computed: {
         systemCharge: {
             get() {
-                return (this.settingData.system_charge / 100).toFixed(2);
+                return (this.settingData.systemCharge / 100).toFixed(2);
             },
             set(value) {
-                this.settingData.system_charge = value * 100;
+                this.settingData.systemCharge = value * 100;
             }
         }
     }

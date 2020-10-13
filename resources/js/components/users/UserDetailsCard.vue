@@ -11,27 +11,27 @@
                         :src="avatarUrl"
                         :alt="avatarAlt"
                     />
-                    <h5 class="title">{{ user.profile.full_name }}</h5>
+                    <h5 class="title">{{ user.profile.fullName }}</h5>
                 </a>
                 <p class="description text-capitalize">
                     <i class="fas fa-user-tag"></i>
                     {{ user.role }}
                 </p>
                 <p
-                    v-if="user.profile.home_address"
+                    v-if="user.profile.homeAddress"
                     class="text-muted location-text"
                 >
                     <i class="fas fa-map-marker-alt"></i>
-                    Home address: {{ user.profile.home_address }}
+                    Home address: {{ user.profile.homeAddress }}
                 </p>
                 <p class="text-muted location-text">
-                    Blood group: {{ user.profile.blood_group }}
+                    Blood group: {{ user.profile.bloodAroup }}
                 </p>
                 <p class="text-muted location-text">
-                    Mobile money number: {{ user.profile.mobile_money_number }}
+                    Mobile money number: {{ user.profile.mobileMoneyNumber }}
                 </p>
                 <p class="text-muted location-text">
-                    Mobile money name: {{ user.profile.mobile_money_name }}
+                    Mobile money name: {{ user.profile.mobileMoneyName }}
                 </p>
             </div>
         </div>
@@ -56,11 +56,11 @@ export default {
     computed: {
         avatarUrl() {
             return (
-                this.user.profile.avatar_image_url || "/img/avatar-default.png"
+                this.user.profile.avatarImageUrl || "/img/avatar-default.png"
             );
         },
         avatarAlt() {
-            return `${this.user.profile.full_name}'s avatar`;
+            return `${this.user.profile.fullName}'s avatar`;
         }
     }
 };
