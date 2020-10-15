@@ -141,9 +141,11 @@
 </template>
 
 <script>
-import Donation from "../../services/donation";
-import Notification from "../../services/notification";
-import Auth from "../../services/auth";
+import {
+    Auth,
+    DonationService,
+    NotificationService
+} from "../../common/api.service";
 
 export default {
     name: "DonorActions",
@@ -163,12 +165,14 @@ export default {
     },
     methods: {
         async getNotifications() {
-            const user_id = this.user.id;
-            const { data } = await Notification.newDonations(user_id);
+            const userId = this.user.id;
+            const { data } = await NotificationService.newDonations(userId);
 
-            console.log(data, "Polled notifications");
-
-            this.notifications = data || [];
+            if (data) {
+                this.notifications = [...data];
+            } else  {
+                this.notifications = [];
+            }
         },
         async pollNotifications() {
             await this.getNotifications();
@@ -187,11 +191,14 @@ export default {
             const { donation } = notification.data;
 
             try {
-                const { data } = await Donation.selectDonor(donation.id, {
-                    donor_id: this.user.id
-                });
+                const { data } = await DonationService.selectDonor(
+                    donation.id,
+                    {
+                        donorId: this.user.id
+                    }
+                );
 
-                this.userDonations.push(data);
+                this.userDonations.push(_.cloneDeep(data));
 
                 this.notifications = this.notifications.filter(
                     myNotification => myNotification.id !== notification.id
@@ -212,9 +219,12 @@ export default {
         },
         async onRemoveFromDonorDonations(donation) {
             try {
-                const { data } = await Donation.deselectDonor(donation.id, {
-                    donor_id: this.user.id
-                });
+                const { data } = await DonationService.deselectDonor(
+                    donation.id,
+                    {
+                        donorId: this.user.id
+                    }
+                );
 
                 this.userDonations = this.userDonations.filter(
                     myDonation => myDonation.id !== donation.id
@@ -234,9 +244,6 @@ export default {
                     "danger"
                 );
             }
-        },
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 2500 });
         }
     },
     computed: {
@@ -244,7 +251,6 @@ export default {
             return !this.notifications || !this.notifications.length;
         },
         isMyDonationsEmpty() {
-            console.log("How is this possilbe", this.userDonations);
             return !this.userDonations || !this.userDonations.length;
         },
         myDonationsToDisplay() {
@@ -265,12 +271,12 @@ export default {
     },
     filters: {
         donationText(donation) {
-            const patientName = donation.patient?.profile?.first_name;
+            const patientName = donation.patient?.profile?.firstName;
             const serviceType = donation.type;
-            const hospitalName = donation.hospital_name;
+            const hospitalName = donation.hospitalName;
             const value = donation.value;
-            const valueType = donation.value_type;
-            const bloodUnitName = donation.blood_unit_name;
+            const valueType = donation.valueType;
+            const bloodUnitName = donation.bloodUnitName;
 
             return `${patientName} needs ${serviceType} (${value}) ${valueType} @${hospitalName}`;
         }

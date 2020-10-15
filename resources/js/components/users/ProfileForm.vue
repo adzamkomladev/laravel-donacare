@@ -7,7 +7,7 @@
                     <input
                         type="text"
                         class="form-control"
-                        v-model="profile.first_name"
+                        v-model="profile.firstName"
                         placeholder="Your first name"
                         required
                         :readonly="!canUpdate"
@@ -20,7 +20,7 @@
                     <input
                         type="text"
                         class="form-control"
-                        v-model="profile.last_name"
+                        v-model="profile.lastName"
                         placeholder="Your last name"
                         required
                         :readonly="!canUpdate"
@@ -35,7 +35,7 @@
                     <input
                         type="text"
                         class="form-control"
-                        v-model="profile.other_names"
+                        v-model="profile.otherNames"
                         placeholder="Your other names"
                         :readonly="!canUpdate"
                     />
@@ -62,7 +62,7 @@
                         class="form-control"
                         placeholder="Your home address"
                         :readonly="!canUpdate"
-                        v-model="profile.home_address"
+                        v-model="profile.homeAddress"
                     />
                 </div>
             </div>
@@ -77,7 +77,7 @@
                         class="form-control"
                         placeholder="Here can be your description"
                         :readonly="!canUpdate"
-                        :value="profile.medical_details"
+                        :v-model="profile.medicalDetails"
                     >
                     </textarea>
                 </div>

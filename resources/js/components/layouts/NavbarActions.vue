@@ -15,8 +15,7 @@ import PatientActions from "./PatientActions";
 import DonorActions from "./DonorActions";
 import ObtainCurrentLocation from "../auth/ObtainCurrentLocation";
 
-import Auth from "../../services/auth";
-import Donation from "../../services/donation";
+import { Auth, DonationService } from "../../common/api.service";
 
 export default {
     name: "NavbarActions",
@@ -29,7 +28,7 @@ export default {
     },
     data() {
         return {
-            currentUser: Auth.currentUser(),
+            currentUser: this.toCamelCase(_.cloneDeep(Auth.currentUser())),
             userDonations: [],
             polling: null
         };
@@ -37,13 +36,12 @@ export default {
     methods: {
         async getUserDonations() {
             try {
-                const { data } = await Donation.userDonations(
+                const { data } = await DonationService.userDonations(
                     this.currentUser.id
                 );
                 this.userDonations = [...data];
-                console.log("My trials okay", data);
             } catch (error) {
-                console.log({ error });
+                console.log({ error }, 'No');
             }
         },
         async pollData() {
@@ -68,5 +66,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

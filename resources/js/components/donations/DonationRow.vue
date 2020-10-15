@@ -15,7 +15,7 @@
                 </span>
             </td>
             <td>
-                {{ donation.created_at | formatDate }}
+                {{ donation.createdAt | formatDate }}
             </td>
             <td class="td-actions text-left">
                 <a :href="showDonationUrl" class="btn btn-primary btn-round">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Auth from "../../services/auth";
+import { Auth } from "../../common/api.service";
 
 export default {
     name: "DonationRow",
@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             canShow: true,
-            donation: this.rowDonation
+            donation: this.toCamelCase(_.deepClone(this.rowDonation))
         };
     },
     computed: {
@@ -46,8 +46,8 @@ export default {
             const isDonor = Auth.currentUser().role === "donor";
 
             return isDonor
-                ? this.donation.patient?.profile?.full_name
-                : this.donation.donor?.profile?.full_name;
+                ? this.donation.patient?.profile?.fullName
+                : this.donation.donor?.profile?.fullName;
         },
         isLow() {
             return (
@@ -68,7 +68,7 @@ export default {
             );
         },
         donationCost() {
-            return this.donation.payment_status === "free"
+            return this.donation.paymentStatus === "free"
                 ? 0.0
                 : this.donation.cost || "N/A";
         }

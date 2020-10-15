@@ -167,8 +167,7 @@ import { gmapApi } from "vue2-google-maps";
 
 import ObtainCurrentLocation from "../auth/ObtainCurrentLocation";
 
-import Auth from "../../services/auth";
-import Location from "../../services/location";
+import { Auth, LocationService } from "../../common/api.service";
 
 export default {
     name: "PatientActions",
@@ -205,8 +204,8 @@ export default {
         },
         async durationToDestination(donation) {
             const [currentLocation, targetLocation] = await Promise.all([
-                Location.findByUserId(Auth.currentUser().id),
-                Location.findByUserId(donation.donor_id)
+                LocationService.findByUserId(Auth.currentUser().id),
+                LocationService.findByUserId(donation.donorId)
             ]);
             // const origin = new gmapApi.LatLng(
             //     currentLocation.data.lat,
@@ -271,7 +270,7 @@ export default {
             const typeName =
                 donation.type === "blood" ? "Blood Group" : "Organ";
             return `(${typeName} ${donation?.value}) - ${donation?.donor
-                ?.profile.full_name || "N/A"}`;
+                ?.profile.fullName || "N/A"}`;
         }
     }
 };

@@ -29,6 +29,18 @@
             @yield('content')
         </main>
     </div>
+    @auth
+        <script>
+            window.authState = @json(['user' => Auth::user()])
+
+        </script>
+    @endauth
+    @guest
+        <script>
+            window.authState = @json(['user' => []])
+
+        </script>
+    @endguest
 </body>
 
 </html>

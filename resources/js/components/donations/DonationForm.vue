@@ -340,6 +340,7 @@ export default {
                 payment_status: "",
                 date_needed: "",
                 value: "",
+                type: this.type,
                 value_type: "Whole blood donation",
                 payment_method: "",
                 images: [],
@@ -427,7 +428,7 @@ export default {
 
                     setTimeout(
                         () =>
-                            (window.location.pathname = `/donations/${data.donationId}`),
+                            (window.location.pathname = `/donations/${data.id}`),
                         3100
                     );
                 } else if (

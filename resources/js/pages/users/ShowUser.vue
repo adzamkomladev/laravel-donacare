@@ -24,24 +24,23 @@
 import ProfileForm from "../../components/users/ProfileForm.vue";
 import UserDetailsCard from "../../components/users/UserDetailsCard.vue";
 
-import Profile from "../../services/profile";
-import Auth from "../../services/auth";
+import { ProfileService, Auth } from '../../common/api.service';
 
 export default {
     components: { ProfileForm, UserDetailsCard },
     props: ["selectedUser"],
     data() {
         return {
-            user: this.selectedUser
+            user: this.toCamelCase(_.cloneDeep(this.selectedUser))
         };
     },
     methods: {
         onUpdateProfile(profile) {
-            Profile.update(profile.id, { ...profile })
+            ProfileService.update(profile.id, _.clone(profile))
                 .then(response => {
                     const { data } = response;
 
-                    this.user.profile = { ...data };
+                    this.user.profile = _.cloneDeep(data);
 
                     this.showNotification(
                         "fas fa-check",
@@ -58,9 +57,6 @@ export default {
 
                     this.showNotification("fas fa-times", message, "danger");
                 });
-        },
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
         }
     },
     computed: {

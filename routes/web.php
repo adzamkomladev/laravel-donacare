@@ -27,11 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([CheckOTP::class])->group(function () {
 
         // Profiles
-        Route::get('profiles/step-one', 'StepOneProfileCreationController@create')->name('profiles.create_step_one');
-        Route::post('profiles/step-one', 'StepOneProfileCreationController@store')->name('profiles.store_step_one');
-        Route::get('profiles/step-two', 'StepTwoProfileCreationController@create')->name('profiles.create_step_two');
-        Route::post('profiles/step-two', 'StepTwoProfileCreationController@store')->name('profiles.store_step_two');
-        Route::post('profiles', 'ProfileController@store')->name('profiles.store');
+        Route::get('profiles', 'ProfileController@create')->name('profiles.create');
     });
 
     Route::middleware([CheckOTP::class, CheckProfile::class])->group(function () {
@@ -90,5 +86,8 @@ Route::middleware(['auth'])->group(function () {
 
         // ETA
         Route::get('eta-maps/{id}', 'ShowETAMap')->name('eta-maps.index');
+
+        // Settings
+        Route::get('settings/show', 'SettingController@show')->name('settings.show');
     });
 });

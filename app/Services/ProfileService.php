@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Profile;
+use App\User;
 
 class ProfileService
 {
@@ -11,18 +12,15 @@ class ProfileService
      *
      * @return \App\Profile
      **/
-    public function create(array $requestData)
+    public function create(User $user, array $requestData)
     {
-        $stepOne = $this->getStepOneData();
-        $profileData = collect($requestData)->merge($stepOne)->all();
+        $user->profile()->create($requestData);
 
-        $profile = Profile::create($profileData);
+        if ($requestData['role']) {
+            $user->update(['role' => $requestData['role']]);
+        }
 
-        $profile->user()->update(['role' => $profileData['role']]);
-
-        session()->forget('step_one');
-
-        return $profile;
+        return $user->profile;
     }
 
     /**
@@ -47,24 +45,5 @@ class ProfileService
         $profile->update(['jurisdiction' => $jurisdiction]);
 
         return $profile;
-    }
-
-    /**
-     * Save data from step one of profile creation form
-     *
-     **/
-    public function saveStepOneData($validatedData)
-    {
-        session(['step_one' => $validatedData]);
-    }
-
-    /**
-     * Retrieve data from step one of profile creation form
-     *
-     * @return array
-     **/
-    public function getStepOneData()
-    {
-        return session('step_one');
     }
 }

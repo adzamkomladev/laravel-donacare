@@ -22,6 +22,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/users/{user}/donations', 'UserController@donations');
 
     Route::patch('/profiles/{profile}', 'ProfileController@update');
+    Route::post('profiles/user/{user}', 'ProfileController@store');
     Route::patch('profile-jurisdictions/{profile}', 'ProfileJurisdictionController@update');
 
     Route::patch('/services/{service}/toggle-availability', 'ServiceController@toggleAvailability');
@@ -38,8 +39,15 @@ Route::group(['prefix' => 'v1'], function () {
     Route::patch('/donations/{donation}/update-status', 'DonationController@updateStatus');
     Route::post('/donations', 'DonationController@store');
 
+    Route::resource('donation-donors', 'DonationDonorController')->only([
+        'store', 'update', 'delete'
+    ]);
+
     // Notifications
     Route::get('/notifications/donations/{user}/new', 'NotificationController@newDonationsNotifications');
+
+    // Settings
+    Route::post('settings', 'SettingController@store');
 });
 
 Route::group(['prefix' => 'v2'], function () {
@@ -62,6 +70,13 @@ Route::group(['prefix' => 'v2'], function () {
 
             Route::get('donations/{id}', 'API\DonationController@userDonations');
             Route::post('donations', 'API\DonationController@store');
+
+            Route::resource('donation-donors', 'API\DonationDonorController')->only([
+                'store', 'update', 'destroy'
+            ]);
+            Route::get('user-donations/{id}', 'API\UserDonations');
+            Route::get('incoming-donations', 'API\IncomingDonations');
+            Route::get('active-donation', 'API\ActiveDonation');
 
             Route::get('locations/{id}', 'API\LocationController@update');
 

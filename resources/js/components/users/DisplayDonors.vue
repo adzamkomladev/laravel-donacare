@@ -16,7 +16,7 @@
                         <a
                             :href="donor | donorUrl"
                             class="btn btn-round btn-primary"
-                            >{{ donor.profile.full_name }}</a
+                            >{{ donor.profile.fullName }}</a
                         >
                     </p>
                 </div>
@@ -34,13 +34,13 @@ export default {
     mounted() {
         eventBus.$on("searchText", searchText => {
             this.donors = this.donors.filter(donor =>
-                donor.profile.full_name.includes(searchText)
+                donor.profile.fullName.includes(searchText)
             );
         });
     },
     data() {
         return {
-            donors: this.allDonors
+            donors: this.allDonors.map(donor => this.toCamelCase(donor))
         };
     },
     methods: {

@@ -98,16 +98,16 @@
 </template>
 
 <script>
-import { eventBus } from "../../events/event-bus.js";
+import { eventBus } from "../../events/event-bus";
 
-import Service from "../../services/service.js";
+import { Service } from "../../common/api.service";
 
 export default {
     name: "ServiceUpdateModal",
     created() {
         eventBus.$on(
             "selectedService",
-            service => (this.service = { ...service })
+            service => (this.service = _.deepClone(service))
         );
     },
     data() {
@@ -128,13 +128,14 @@ export default {
             this.errorMessage = "";
 
             try {
-                const { data } = await Service.update(this.service.id, {
-                    ...this.service
-                });
+                const { data } = await Service.update(
+                    this.service.id,
+                    this.service
+                );
 
-                this.service = { ...data };
+                this.service = _.deepClone(data);
 
-                eventBus.$emit("updatedService", { ...this.service });
+                eventBus.$emit("updatedService", this.service);
             } catch (error) {
                 const errors = error?.response?.data?.errors;
 

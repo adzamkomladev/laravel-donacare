@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProfile;
 use App\Profile;
 use App\Services\ProfileService;
+use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,31 +23,30 @@ class ProfileController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function create()
+    {
+        return view('profiles.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
-     * @param StoreProfile $request
-     * @return RedirectResponse
+     * @return \App\Profile
      */
-    public function store(StoreProfile $request)
+    public function store(StoreProfile $request, User $user)
     {
-        $validated = $request->validated();
-        $validated['user_id'] = Auth::id();
-
-        $profile = Profile::create($validated);
-
-        $profile->user->role = $validated['role'];
-        $profile->user->save();
-
-        return redirect()->route('home');
+        return $this->profileService->ccreate($user, $request->validated());
     }
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param Profile $profile
-     * @return Profile
+     * @return \App\Profile
      */
     public function update(Request $request, Profile $profile)
     {
@@ -57,6 +57,6 @@ class ProfileController extends Controller
             'home_address' => 'nullable|string|max:100',
         ])->validate();
 
-       return $this->profileService->update($profile, $request->all());
+        return $this->profileService->update($profile, $request->all());
     }
 }

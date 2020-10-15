@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-light bg-primary  navbar-absolute {{ ('home' === Route::currentRouteName()) ? 'navbar-background' : '' }}" @if ('home' === Route::currentRouteName()) id="bgtop" @endif>
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-light bg-primary  navbar-absolute {{ 'home' === Route::currentRouteName() ? 'navbar-background' : '' }}"
+    @if ('home' === Route::currentRouteName()) id="bgtop" @endif>
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <div class="navbar-toggle">
@@ -57,18 +58,14 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                    </div>
-                </li>
-                @if (Auth::user()->role === 'admin')
-                    <li class="nav-item">
+
                         <a class="nav-link" href="{{ route('users.show', ['user' => Auth::id()]) }}">
                             <i class="now-ui-icons users_single-02"></i>
-                            <p>
-                                <span class="d-lg-none d-md-block">{{ Auth::user()->profile->full_name }}</span>
-                            </p>
+                            {{ Auth::user()->profile->full_name }}
                         </a>
-                    </li>
-                @endif
+                    </div>
+                </li>
+
 
             </ul>
         </div>

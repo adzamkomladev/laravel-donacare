@@ -20,6 +20,45 @@ Vue.use(VueGoogleMaps, {
     }
 });
 
+Vue.mixin({
+    methods: {
+        showNotification(icon, message, type) {
+            $.notify({ icon, message }, { type, timer: 3000 });
+        },
+        toCamelCase(obj) {
+            const traverseArr = arr => {
+                arr.forEach(v => {
+                    if (v) {
+                        if (v.constructor === Object) {
+                            this.toCamelCase(v);
+                        } else if (v.constructor === Array) {
+                            traverseArr(v);
+                        }
+                    }
+                });
+            };
+
+            Object.keys(obj).forEach(k => {
+                if (obj[k]) {
+                    if (obj[k].constructor === Object) {
+                        this.toCamelCase(obj[k]);
+                    } else if (obj[k].constructor === Array) {
+                        traverseArr(obj[k]);
+                    }
+                }
+
+                const sck = _.camelCase(k);
+                if (sck !== k) {
+                    obj[sck] = obj[k];
+                    delete obj[k];
+                }
+            });
+
+            return obj;
+        }
+    }
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -94,6 +133,11 @@ Vue.component(
     require("./components/donations/DonationFormSummary.vue").default
 );
 Vue.component("eta-map", require("./components/donations/ETAMap.vue").default);
+Vue.component(
+    "update-setting",
+    require("./components/settings/UpdateSetting.vue").default
+);
+Vue.component("create-profile", require("./pages/CreateProfile.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

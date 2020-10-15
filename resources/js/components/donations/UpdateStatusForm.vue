@@ -50,8 +50,7 @@
 </template>
 
 <script>
-import Auth from "../../services/auth";
-import Donation from "../../services/donation";
+import { DonationService } from "../../common/api.service";
 
 export default {
     name: "UpdateStatusForm",
@@ -64,7 +63,7 @@ export default {
     methods: {
         async onUpdateStatus() {
             try {
-                await Donation.updateStatus(this.donation.id, {
+                await DonationService.updateStatus(this.donation.id, {
                     status: this.selectedStatus
                 });
                 this.showNotification(
@@ -73,16 +72,12 @@ export default {
                     "primary"
                 );
             } catch (error) {
-                console.log(error);
                 this.showNotification(
                     "fas fa-times",
                     "Failed to update status!",
                     "danger"
                 );
             }
-        },
-        showNotification(icon, message, type) {
-            $.notify({ icon, message }, { type, timer: 3000 });
         }
     }
 };
