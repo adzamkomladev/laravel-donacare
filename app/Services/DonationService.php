@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Donation;
+use App\DonationDonor;
 use App\Notifications\DonationRequested;
 use App\User;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\Services\PrescriptionService;
+use Prophecy\Promise\ReturnPromise;
 
 class DonationService
 {
@@ -40,6 +42,34 @@ class DonationService
         } else {
             $donations  =
                 Donation::with(['donor', 'service'])->where('patient_id', Auth::id())->paginate(6);
+        }
+
+        return $donations;
+    }
+
+    /**
+     * Get all donations for a user
+     *
+     * @return array
+     **/
+    public function findAllForUser(User $user)
+    {
+        $donations = [];
+
+        if ($user->role === 'admin') {
+            $donations  = Donation::with(['donationDonors', 'patient', 'service'])->get();
+        } else if ($user->role === 'donor') {
+            $donationIds = DonationDonor::where('user_id', $user->id)
+                ->get()
+                ->pluck('donation_id')
+                ->toArray();
+
+            $donations  = Donation::with(['patient', 'donationDonors', 'service'])
+            ->whereIn('id', $donationIds)
+                ->get();
+        } else {
+            $donations  =
+                Donation::with(['donor', 'service'])->where('user_id', $user->id);
         }
 
         return $donations;
@@ -144,5 +174,136 @@ class DonationService
         $donation->update($requestData);
 
         return $donation;
+    }
+
+    /**
+     * Assign a donor a donation request
+     *
+     * @return App\Donation|null
+     **/
+    public function assignToDonor(array $requestData)
+    {
+        $donation = Donation::find($requestData['donation_id']);
+
+        if ($donation->status === 'assigned') {
+            return null;
+        }
+
+        $requestData['blood_unit_name'] = $donation->hospital_name;
+        $requestData['blood_unit_location'] = $donation->hospital_location;
+
+        DonationDonor::create($requestData);
+
+        $donation->refresh();
+
+        $isDonationRequestSatisfied = count($donation->donationDonors) == (int)$donation->value;
+
+        if ($isDonationRequestSatisfied) {
+            $donation->update([
+                'status' => 'assigned'
+            ]);
+
+            DB::table('notifications')
+            ->where('type', 'App\Notifications\DonationRequested')
+            ->where('data->donation->id', $donation->id)
+                ->delete();
+        }
+
+        return $donation;
+    }
+
+    /**
+     * Unassign a donor a donation request
+     *
+     * @return \App\Donation
+     **/
+    public function unassignDonor(DonationDonor $donationDonor)
+    {
+        $donationDonor->donation()->update([
+            'status' => 'initiated'
+        ]);
+
+        $donation = $donationDonor->donation;
+
+        $donationDonor->delete();
+
+        $donation->refresh();
+
+        $donors = User::ofRole('donor')->get();
+        Notification::send($donors, new DonationRequested($donation));
+
+        return $donation;
+    }
+
+    /**
+     * Unassign a donor a donation request
+     *
+     * @return \App\Donation
+     **/
+    public function updateDonationDonor(DonationDonor $donationDonor, array $requestData)
+    {
+        if (array_key_exists('date_donated', $requestData)) {
+            $requestData['date_donated'] = Carbon::parse($requestData['date_donated']);
+        }
+
+
+        $donationDonor->update($requestData);
+
+        return $donationDonor;
+    }
+
+    /**
+     * The current / active donation of a user
+     *
+     * @return \App\Donation
+     **/
+    public function activeDonationOfUser(User $user)
+    {
+        if ($user->role === 'donor') {
+            return $this->activeDonationOfDonor($user);
+        }
+
+        if ($user->role === 'patient') {
+            return $this->activeDonationOfPatient($user);
+        }
+    }
+
+    /**
+     * Active donation of a donor
+     *
+     * @return \App\Donation
+     **/
+    private function activeDonationOfDonor(User $user)
+    {
+        return DonationDonor::with(['donation'])
+        ->where('user_id', $user->id)
+            ->get()
+            ->filter(function ($donationDonor) {
+                return count($donationDonor->donation->donationDonors) > 0;
+            })
+            ->sortBy(function ($donationDonor) {
+                return $donationDonor->created_at;
+            })->map(function ($donationDonor) {
+                return $donationDonor->donation;
+            })
+            ->first();
+    }
+
+    /**
+     * Active donation of a patient
+     *
+     * @return \App\Donation
+     **/
+    private function activeDonationOfPatient(User $user)
+    {
+        return Donation::with(['donationDonors'])
+        ->where('patient_id', $user->id)
+            ->where('status', 'initiated')
+            ->orWhere('status', 'assigned')
+            ->get()
+            ->filter(function ($donation) {
+                return count($donation->donationDonors) > 0;
+            })
+            ->first();
     }
 }

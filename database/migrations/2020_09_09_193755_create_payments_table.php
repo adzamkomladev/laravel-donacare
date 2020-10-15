@@ -15,7 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('donation_id')->nullable()->constrained();
+            $table->foreignId('donation_donor_id')->nullable()->constrained();
             $table->string('type', 100)->nullable();
             $table->double('amount', 10, 2)->nullable();
             $table->boolean('confirmed')->default(false);

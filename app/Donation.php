@@ -12,7 +12,7 @@ class Donation extends Model
      * @var array
      */
     protected $fillable = [
-        'patient_id', 'donor_id', 'service_id', 'location_id', 'description',
+        'user_id', 'service_id', 'location_id', 'description',
         'hospital_name', 'date_needed', 'payment_status', 'payment_method',
         'hospital_location', 'share_location', 'type', 'status', 'value',
         'cost', 'quantity', 'blood_unit_name', 'blood_unit_location', 'value_type'
@@ -23,16 +23,16 @@ class Donation extends Model
      *
      * @var array
      */
-    protected $with = ['files', 'patient', 'donor'];
+    protected $with = ['files', 'patient'];
 
     public function patient()
     {
-        return $this->belongsTo(User::class, 'patient_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function donor()
+    public function donationDonors()
     {
-        return $this->belongsTo(User::class, 'donor_id');
+        return $this->hasMany(DonationDonor::class);
     }
 
     public function service()
