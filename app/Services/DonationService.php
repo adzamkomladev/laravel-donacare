@@ -94,6 +94,7 @@ class DonationService
     {
         $validatedData['date_needed'] = Carbon::parse($validatedData['date_needed']);
         $validatedData['status'] = 'initiated';
+        $validatedData['service_id'] = 2;
 
         $donation = Donation::create($validatedData);
 
