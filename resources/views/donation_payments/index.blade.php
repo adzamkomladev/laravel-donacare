@@ -23,8 +23,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <a href="{{ route('donations.show', ['donation' => $payment->donation_id]) }}">
-                                                {{ 'Blood donation (Group ' . $payment->donation->value . ' )' }}
+                                            <a href="{{ route('donations.show', ['donation' => $payment->donationDonor->donation_id]) }}">
+                                                {{ 'Blood donation (Group ' . $payment->donationDonor->donation->value . ' )' }}
                                             </a>
                                         </td>
                                         <td id="{{ $payment->confirmed ? 'complstgrn' : 'complstrd' }}">

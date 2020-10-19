@@ -24,4 +24,9 @@ class DonationDonor extends Model
     {
         return $this->belongsTo(Donation::class);
     }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

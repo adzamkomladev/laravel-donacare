@@ -12,11 +12,12 @@ class Payment extends Model
      * @var array
      */
     protected $fillable = [
-        'donation_id', 'type', 'amount', 'confirmed', 'part_payment'
+        'donation_donor_id', 'platform', 'ref', 'txdata', 'type', 'amount',
+        'confirmed', 'part_payment'
     ];
 
-    public function donation()
+    public function donationDonor()
     {
-        return $this->belongsTo(Donation::class);
+        return $this->belongsTo(DonationDonor::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Donation;
 use App\DonationDonor;
 use App\Http\Requests\AssignDonation;
 use App\Http\Requests\UpdateDonationDonor;
@@ -17,6 +18,16 @@ class DonationDonorController extends Controller
     public function __construct(DonationService $donationService)
     {
         $this->donationService = $donationService;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Donation $donation)
+    {
+        return view('donation_donors.index', ['donation' => $donation]);
     }
 
     /**
