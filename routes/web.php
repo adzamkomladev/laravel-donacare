@@ -61,13 +61,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('donations/create/step-four/{donation}', 'DonationController@createStepFour')->name('donations.create.step-four');
         Route::get('donations', 'DonationController@index')->name('donations.index');
         Route::get('donations/{donation}', 'DonationController@show')->name('donations.show');
-
+        Route::get('donation-donors/{donation}', 'DonationDonorController@index')->name('donation-donors.index');
         // File upload for donation
         Route::post('files/{donation}', 'FileController@store')->name('files.store');
 
         // Payment
         Route::get('payments/{donation}', 'PaymentController@index')->name('payments.index');
-        Route::post('payments', 'PaymentController@redirectToGateway')->name('payments.pay');
+        Route::get('payments', 'PaymentController@redirectToGateway')->name('payments.pay');
+        Route::get('paymentsd', 'PaymentController@myPaid')->name('payments.paid');
+        Route::get('initiate-payment/{donationDonor}', 'InitiatePayment')->name('initiate-payment');
+        Route::get('verify-payment', 'VerifyPayment')->name('verify-payment');
         Route::post('paystack/webhook', '\App\Http\Controllers\PaystackWebhookController@handleWebhook');
         Route::get('donation-payments/{payment}/confirm', 'DonationPaymentController@confirm')->name('donation_payments.confirm');
         Route::get('donation-payments', 'DonationPaymentController@index')->name('donation_payments.index');

@@ -69,7 +69,7 @@ class DonationService
                 ->get();
         } else {
             $donations  =
-                Donation::with(['donor', 'service'])->where('user_id', $user->id);
+                Donation::with(['donationDonors', 'service'])->where('user_id', $user->id)->get();
         }
 
         return $donations;

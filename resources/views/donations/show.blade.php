@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    @if ($donation->patient_id === Auth::id() && $donation->status === 'completed')
+                    @if ($donation->user_id === Auth::id() && $donation->status === 'completed')
                         <div class="row">
                             <div class="col-md-6">
                                 <a href="{{ route('user_reviews.create', ['donation' => $donation->id]) }}"
@@ -107,35 +107,21 @@
                     @endif
                     <hr>
                     <div class="row">
-                        @if ($donation->donor_id)
-                            <div class="col-md-6">
-                                <label for="donor" class="font-weight-bold text-dark text-uppercase">Donor</label>
-                                <div id="donor" class="card text-center">
-                                    <img width="120px" src="/img/avatar-default.png" alt="Donor avatar"
-                                        class="img-fluid rounded-circle mb-3">
-                                    <p>
-                                        <a href="{{ route('users.show', ['user' => $donation->donor_id]) }}">
-                                            <i class="fas fa-share-square"></i>
-                                        </a>
-                                        {{ $donation->donor->profile->full_name }}
-                                    </p>
-                                </div>
-                            </div>
-
-                        @endif
-
                         <div class="col-md-6">
                             <label for="patient" class="font-weight-bold text-dark text-uppercase">Patient</label>
                             <div id="patient" class="card text-center">
                                 <img width="120px" src="/img/avatar-default.png" alt="Donor avatar"
                                     class="img-fluid rounded-circle mb-3">
                                 <p>
-                                    <a href="{{ route('users.show', ['user' => $donation->patient_id]) }}">
+                                    <a href="{{ route('users.show', ['user' => $donation->user_id]) }}">
                                         <i class="fas fa-share-square"></i>
                                     </a>
                                     {{ $donation->patient->profile->full_name }}
                                 </p>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ route('donation-donors.index', ['donation' => $donation]) }}" class="btn btn-round btn-primary">See donation donors</a>
                         </div>
                     </div>
                     <hr>

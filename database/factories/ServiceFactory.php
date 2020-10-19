@@ -9,7 +9,7 @@ $factory->define(Service::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->randomElement(['blood', 'organ', 'funds']),
         'description' => $faker->paragraph(6),
-        'price' => $faker->randomFloat(2, 10, 999.99),
+        'price' => 2000,
         'available' => $faker->boolean
     ];
 });

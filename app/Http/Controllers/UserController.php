@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\CheckOTP;
 use App\Http\Middleware\CheckProfile;
 use App\Donation;
+use App\Services\DonationService;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /** @var \App\Services\DonationService $donationService  */
+    protected $donationService;
+
+    public function __construct(DonationService $donationService)
+    {
+        $this->donationService = $donationService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,15 +42,7 @@ class UserController extends Controller
      */
     public function donations(User $user)
     {
-        if ($user->role === 'patient') {
-            return Donation::with(['donor', 'patient', 'service'])->where('patient_id', $user->id)->get();
-        }
-
-        if ($user->role === 'donor') {
-            return Donation::with(['donor', 'patient', 'service'])->where('donor_id', $user->id)->get();
-        }
-
-        return Donation::with(['donor', 'patient', 'service'])->get();
+        return $this->donationService->findAllForUser($user);
     }
 
     /**

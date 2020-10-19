@@ -9,6 +9,7 @@ use App\Services\DonationService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -30,7 +31,7 @@ class DonationController extends Controller
     public function index()
     {
         return view('donations.index', [
-            'donations' => $this->donationService->findAll()
+            'donations' => $this->donationService->findAllForUser(Auth::user())
         ]);
     }
 
