@@ -24,5 +24,3 @@ mix.js("resources/js/app.js", "public/js")
     )
     .copyDirectory("resources/img", "public/img")
     .copyDirectory("resources/fonts", "public/fonts");
-
-mix.browserSync('http://localhost:8000');

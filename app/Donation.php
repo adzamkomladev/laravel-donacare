@@ -15,7 +15,7 @@ class Donation extends Model
         'user_id', 'service_id', 'location_id', 'description',
         'hospital_name', 'date_needed', 'payment_status', 'payment_method',
         'hospital_location', 'share_location', 'type', 'status', 'value',
-        'cost', 'quantity', 'blood_unit_name', 'blood_unit_location', 'value_type'
+        'cost', 'quantity', 'value_type'
     ];
 
     /**

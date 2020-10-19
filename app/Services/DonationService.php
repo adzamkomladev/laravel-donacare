@@ -90,32 +90,22 @@ class DonationService
      *
      * @return App\Donation
      **/
-    public function store(array $validatedData, array $images)
+    public function store(array $validatedData, $images, bool $isWebRequest = true)
     {
         $validatedData['date_needed'] = Carbon::parse($validatedData['date_needed']);
         $validatedData['status'] = 'initiated';
 
         $donation = Donation::create($validatedData);
 
-        if (count($images) > 0) {
-            $this->prescriptionService->createMany($images, $donation);
+        if ($isWebRequest) {
+            if (count($images) > 0) {
+                $this->prescriptionService->createManyFromFiles($images, $donation);
+            }
+        } else {
+            $this->prescriptionService->createManyFromFileUrls($images, $donation);
         }
 
-        if ($donation->payment_status === 'free') {
-            $donation->payments()->create([
-                'type' => $donation->payment_status,
-                'amount' => 0.0
-            ]);
-        }
-
-        if ($donation->payment_method === 'Cash') {
-            $donation->payments()->create([
-                'type' => $donation->payment_method,
-                'amount' => $donation->cost
-            ]);
-        }
-
-        $donation->load('patient', 'payments');
+        $donation->load('patient', 'donationDonors');
 
         $donors = User::ofRole('donor')->get()->filter(function ($donor) use ($donation) {
             return $donor->profile->blood_group === $donation->patient->profile->blood_group;

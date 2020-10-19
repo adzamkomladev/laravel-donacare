@@ -19,7 +19,7 @@ $factory->define(Donation::class, function (Faker $faker) {
         ]),
         'description' => $faker->paragraph(4),
         'date_needed' => now(),
-        'cost' => $faker->randomFloat(2, 10, 999.99),
+        'cost' => 2000,
         'payment_status' => $faker->randomElement([
             'free', 'charged'
         ]),

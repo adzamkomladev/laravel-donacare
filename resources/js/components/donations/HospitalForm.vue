@@ -14,7 +14,7 @@
                     placeholder="Hospital"
                     required
                     :value="hospitalDetails.hospitalName"
-                    @input="onInput($event, 'hospitalName')"
+                    @input="onInputHospital($event)"
                 />
                 <datalist id="hospitals">
                     <option
@@ -76,7 +76,23 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-round">
+        <div class="row">
+            <div class="col-md-6 mb-3 form-group">
+                <label for="date-needed">Date Needed</label>
+                <input
+                    id="date-needed"
+                    :min="currentDate"
+                    type="date"
+                    class="form-control"
+                    placeholder="content"
+                    :value="hospitalDetails.dateNeeded"
+                    required
+                    @input="onInput($event, 'dateNeeded')"
+                />
+            </div>
+        </div>
+
+        <button type="submit" class=" mx-3 btn btn-primary btn-round">
             Next
         </button>
     </form>
@@ -94,10 +110,11 @@ export default {
                 value
             });
         },
+        onInputHospital({ target: { value } }) {
+            this.$store.commit("donation/UPDATE_DONATION_HOSPITAL", value);
+        },
         onChange({ target: { files } }) {
-            this.$store.commit("donation/UPDATE_DONATION_PRESCRIPTIONS", {
-                files
-            });
+            this.$store.commit("donation/UPDATE_DONATION_PRESCRIPTIONS", files);
         },
         onSubmit() {
             if (!this.hospitalDetails.hospitalName) {
@@ -112,10 +129,10 @@ export default {
                     "The location is required!",
                     "danger"
                 );
-            } else if (!this.hospitalDetails.) {
+            } else if (this.hospitalDetails.prescriptions.length === 0) {
                 this.showNotification(
                     "fas fa-times",
-                    "Select a gender!",
+                    "Add prescription images!",
                     "danger"
                 );
             } else {
@@ -124,6 +141,13 @@ export default {
         }
     },
     computed: {
+        currentDate() {
+            return new Date()
+                .toISOString()
+                .replace(/T.*/, "")
+                .split("-")
+                .join("-");
+        },
         ...mapGetters("donation", ["hospitalDetails", "hospitals"])
     },
     filters: {
@@ -135,5 +159,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

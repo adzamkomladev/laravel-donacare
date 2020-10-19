@@ -15,9 +15,13 @@ import PaymentForm from "../components/donations/PaymentForm.vue";
 
 export default {
     name: "CreateDonation",
+    props: ["service", "type"],
+    mounted() {
+        store.dispatch('donation/initializeState', this.service)
+    },
     router: new VueRouter({
         mode: "history",
-        base: "/donations/",
+        base: "/donations/create/",
         routes: [
             {
                 path: "/hospital",

@@ -99,6 +99,9 @@ export const Service = {
 export const SettingService = {
     create(data) {
         return axios.post("/api/v1/settings", data);
+    },
+    current() {
+        return axios.get("/api/v1/settings/current");
     }
 };
 
