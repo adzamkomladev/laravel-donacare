@@ -89,7 +89,7 @@ class DonationController extends Controller
             'share_location' => 'required|boolean',
             'type' => ['required', Rule::in(['blood', 'organ', 'funds'])],
             'quantity' => 'required|integer',
-            'service_id' => 'required|integer|exists:services,id',
+            //'service_id' => 'required|integer|exists:services,id',
             'cost' => 'nullable|numeric',
         ]);
 
