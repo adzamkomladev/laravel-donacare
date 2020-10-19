@@ -62,6 +62,12 @@ window.axios = require("axios");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 window.axios.interceptors.request.use(req => {
+    if (req.data?.doNotUseInterceptors) {
+        req.data = req.data.formData;
+
+        return req;
+    }
+
     const oldData = _.clone(req.data);
     const data = {};
 

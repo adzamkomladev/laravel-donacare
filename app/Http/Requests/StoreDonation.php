@@ -25,21 +25,19 @@ class StoreDonation extends FormRequest
     public function rules()
     {
         return [
-            'patient_id' => 'required|integer|exists:users,id',
+            'user_id' => 'required|integer|exists:users,id',
             'value' => 'required|string',
             'value_type' => 'required|string',
-            'hospital_name' => 'string|string|max:255',
-            'hospital_location' => 'string|string|max:255',
-            'blood_unit_name' => 'string|string|max:255',
-            'blood_unit_location' => 'string|string|max:255',
+            'hospital_name' => 'required|string|max:255',
+            'hospital_location' => 'required|string|max:255',
             'description' => 'nullable|string',
             'date_needed' => 'required|date',
             'payment_status' => ['required', Rule::in(['free', 'charged'])],
-            'payment_method' => 'nullable|string',
+            'payment_method' => 'sometimes|string',
             'share_location' => 'required|boolean',
             'type' => ['required', Rule::in(['blood', 'organ', 'funds'])],
-            'quantity' => 'nullable|integer',
-            'service_id' => 'nullable|integer|exists:services,id',
+            'quantity' => 'required|integer',
+            'service_id' => 'required|integer|exists:services,id',
             'cost' => 'nullable|numeric',
         ];
     }

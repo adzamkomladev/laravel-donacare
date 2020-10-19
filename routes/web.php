@@ -73,8 +73,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('donation-payments', 'DonationPaymentController@index')->name('donation_payments.index');
 
         // Prescriptions
-        Route::get('prescriptions', 'PrescriptionController@index')->name('prescriptions.index');
-        Route::get('prescriptions/{prescription}', 'PrescriptionController@show')->name('prescriptions.show');
+        Route::resource('prescriptions', 'PrescriptionController')->only([
+            'index', 'show'
+        ]);
 
         // UserReviews
         Route::get('user-reviews', 'UserReviewController@index')->name('user_reviews.index');

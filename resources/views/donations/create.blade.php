@@ -11,14 +11,9 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                <donation-form type="{{ $type }}" :services="{{ $services }}" paystack-public-key="{{ config('paystack.publicKey') }}"></donation-form>
+                <create-donation type="{{ $type }}" :service="{{ $services[0] }}"></create-donation>
                 </div>
             </div>
         </div>
     </div>
-    <donation-form-summary></donation-form-summary>
-
-    @push('scripts')
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-    @endpush
 @endsection

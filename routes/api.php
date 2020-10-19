@@ -48,6 +48,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     // Settings
     Route::post('settings', 'SettingController@store');
+    Route::get('settings/current', 'CurrentSettings');
 });
 
 Route::group(['prefix' => 'v2'], function () {
@@ -81,6 +82,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('locations/{id}', 'API\LocationController@update');
 
             Route::get('services', 'API\ServiceController@index');
+
+            Route::get('settings/current', 'API\CurrentSettings');
         });
     });
 });

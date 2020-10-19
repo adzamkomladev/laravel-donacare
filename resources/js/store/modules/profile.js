@@ -1,5 +1,4 @@
-import Auth from "../../services/auth";
-import { ProfileService } from "../../common/api.service";
+import { Auth, ProfileService } from "../../common/api.service";
 
 const state = () => ({
     profile: { gender: "male", role: "patient", bloodGroup: "O+" }

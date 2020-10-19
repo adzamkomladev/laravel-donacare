@@ -205,7 +205,6 @@ export default {
         async durationToDestination(donation) {
             const [currentLocation, targetLocation] = await Promise.all([
                 LocationService.findByUserId(Auth.currentUser().id),
-                LocationService.findByUserId(donation.donorId)
             ]);
             // const origin = new gmapApi.LatLng(
             //     currentLocation.data.lat,

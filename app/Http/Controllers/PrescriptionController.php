@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Donation;
 use App\File;
+use App\Services\PrescriptionService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 
 class PrescriptionController extends Controller
 {
+    /** @var \App\Services\PrescriptionService $prescriptionService  */
+    protected $prescriptionService;
+
+    public function __construct(PrescriptionService $prescriptionService)
+    {
+        $this->prescriptionService = $prescriptionService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,13 +28,9 @@ class PrescriptionController extends Controller
      */
     public function index()
     {
-        $id = Auth::id();
-
-        $prescriptions = File::with('donation')->latest()->get()->reject(function ($file) use ($id) {
-            return $file->donation->patient_id !== $id;
-        });
-
-        return view('prescriptions.index', ['prescriptions' => $prescriptions]);
+        return view('prescriptions.index', [
+            'prescriptions' => $this->prescriptionService->findAllByUserId(Auth::id())
+        ]);
     }
 
     /**

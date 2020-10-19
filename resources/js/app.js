@@ -116,10 +116,7 @@ Vue.component(
     "update-jurisdiction",
     require("./pages/users/UpdateJurisdiction.vue").default
 );
-Vue.component(
-    "donation-form",
-    require("./components/donations/DonationForm.vue").default
-);
+Vue.component("create-donation", require("./pages/CreateDonation.vue").default);
 Vue.component(
     "display-donors",
     require("./components/users/DisplayDonors.vue").default
@@ -127,10 +124,6 @@ Vue.component(
 Vue.component(
     "search-box",
     require("./components/layouts/SearchBox.vue").default
-);
-Vue.component(
-    "donation-form-summary",
-    require("./components/donations/DonationFormSummary.vue").default
 );
 Vue.component("eta-map", require("./components/donations/ETAMap.vue").default);
 Vue.component(

@@ -39,6 +39,12 @@
   */
 
 /*!
+  * vue-router v3.4.6
+  * (c) 2020 Evan You
+  * @license MIT
+  */
+
+/*!
  * Sizzle CSS Selector Engine v2.3.5
  * https://sizzlejs.com/
  *

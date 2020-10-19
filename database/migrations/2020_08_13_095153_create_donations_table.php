@@ -27,7 +27,7 @@ class CreateDonationsTable extends Migration
             $table->text('value_type');
             $table->text('description')->nullable();
             $table->date('date_needed');
-            $table->double('cost', 10, 2)->nullable();
+            $table->integer('cost')->nullable();
             $table->integer('quantity')->unsigned()->default(1);
             $table->enum('payment_status', ['free', 'charged']);
             $table->string('payment_method', 100)->nullable();

@@ -78,18 +78,18 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'patient_id' => 'required|integer|exists:users,id',
+            'user_id' => 'required|integer|exists:users,id',
             'value' => 'required|string',
             'hospital_name' => 'string|string|max:255',
             'hospital_location' => 'string|string|max:255',
             'description' => 'nullable|string',
             'date_needed' => 'required',
             'payment_status' => ['required', Rule::in(['free', 'charged'])],
-            'payment_method' => 'nullable|string',
+            'payment_method' => 'sometimes|string',
             'share_location' => 'required|boolean',
             'type' => ['required', Rule::in(['blood', 'organ', 'funds'])],
-            'quantity' => 'nullable|integer',
-            'service_id' => 'nullable|integer|exists:services,id',
+            'quantity' => 'required|integer',
+            'service_id' => 'required|integer|exists:services,id',
             'cost' => 'nullable|numeric',
         ]);
 
@@ -103,7 +103,7 @@ class DonationController extends Controller
         $validated = $request->all();
         $imageUrls = $validated['images'] ?? [];
 
-        $donation = $this->donationService->store($validated, $imageUrls);
+        $donation = $this->donationService->store($validated, $imageUrls, false);
 
         return response([
             'error' => false,
