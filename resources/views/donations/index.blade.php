@@ -25,8 +25,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-
-                        {{ $donations->links() }}
                     </div>
                 </div>
             </div>

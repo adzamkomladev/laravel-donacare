@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             canShow: true,
-            donation: this.toCamelCase(_.deepClone(this.rowDonation))
+            donation: this.toCamelCase(_.cloneDeep(this.rowDonation))
         };
     },
     computed: {
@@ -45,9 +45,7 @@ export default {
         displayName() {
             const isDonor = Auth.currentUser().role === "donor";
 
-            return isDonor
-                ? this.donation.patient?.profile?.fullName
-                : this.donation.donor?.profile?.fullName;
+            return  this.donation.patient?.profile?.fullName ?? 'N/A'
         },
         isLow() {
             return (

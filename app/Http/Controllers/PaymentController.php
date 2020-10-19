@@ -22,15 +22,15 @@ class PaymentController extends Controller
     public function redirectToGateway(Request $request)
     {
 
-        $data1 = [
+        $data = [
             'amount' => 1,
-            'user' => auth()->user()->full_name,
-            'email' => $request->input('email'),
-            'currency' => $request->input('currency'),
-            'orderID' => $request->input('orderID'),
+            'user' => 'Komla Adzam',
+            'email' => 'adzamkomla.dev@gmail.com',
+            'currency' => 'GHS',
+            'orderID' => rand(18227, 29398423),
             'quantity' => 1,
-            'reference' => $request->input('reference'),
-            'callback_url' => '/paid'
+            'reference' => 'dkdjdkjf-' . rand(18227, 29398423),
+            'callback_url' => route('payments.paid')
         ];
 
         /** Initiate the client for url's */
@@ -63,14 +63,14 @@ class PaymentController extends Controller
             /** The fields returned should be json encoded */
             CURLOPT_POSTFIELDS => json_encode($data1),
 
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
 
                 /** The headers for the curl array can be set here: Auth_key */
                 "accept: */*",
-                "authorization: Bearer sk_test_1234567890",
+                "authorization: Bearer sk_test_ef8a9ef63bc98540ebda09d685a087ccfec5ea3c",
                 "accept-language: en-US,en;q=0.8",
                 "content-type: application/json",
-            )
+            ]
         ));
 
         /** The response gotten from the client for urls */
@@ -129,7 +129,7 @@ class PaymentController extends Controller
             /** Set the client for url header values passed */
             CURLOPT_HTTPHEADER => [
                 "accept: application/json",
-                "authorization: Bearer sk_test_1234567890",
+                "authorization: Bearer sk_test_ef8a9ef63bc98540ebda09d685a087ccfec5ea3c",
                 "cache-control: no-cache"
             ],
         ));
@@ -141,13 +141,13 @@ class PaymentController extends Controller
         $err = curl_error($curl);
 
         if($err){
-            print_r('Api returned error'. $err);
+            dd('Api returned error' . $err);
         }
 
         /** The transaction details and stats would be returned */
         $trans = json_decode($response);
         if(!$trans->status){
-            die('Api returned Error'. $trans->message);
+            dd('Api returned Error' . $trans->message);
         }
 
         /** If the transaction stats are successful snd to DB */
