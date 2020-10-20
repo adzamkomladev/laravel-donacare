@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\DonationService;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserDonations extends Controller
 {
@@ -23,10 +24,10 @@ class UserDonations extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, int $id)
+    public function __invoke(Request $request)
     {
         try {
-            $user = User::findOrFail($id);
+            $user = User::findOrFail(Auth::id());
 
             return response([
                 'error' => false,

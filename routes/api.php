@@ -72,10 +72,11 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('donations/{id}', 'API\DonationController@userDonations');
             Route::post('donations', 'API\DonationController@store');
 
-            Route::resource('donation-donors', 'API\DonationDonorController')->only([
-                'store', 'update', 'destroy'
-            ]);
-            Route::get('user-donations/{id}', 'API\UserDonations');
+            Route::post('donation-donors', 'API\DonationDonorController@store');
+            Route::put('donation-donors', 'API\DonationDonorController@update');
+            Route::delete('donation-donors', 'API\DonationDonorController@destroy');
+
+            Route::get('user-donations', 'API\UserDonations');
             Route::get('incoming-donations', 'API\IncomingDonations');
             Route::get('active-donation', 'API\ActiveDonation');
 
