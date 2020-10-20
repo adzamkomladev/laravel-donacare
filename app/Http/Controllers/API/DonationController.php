@@ -80,6 +80,7 @@ class DonationController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'value' => 'required|string',
+            'value_type' => 'required|string',
             'hospital_name' => 'string|string|max:255',
             'hospital_location' => 'string|string|max:255',
             'description' => 'nullable|string',

@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Services\DonationService;
-use App\User;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserDonations extends Controller
+class AllUserPayments extends Controller
 {
-    /** @var \App\Services\DonationService $donationService  */
-    protected $donationService;
+    /** @var \App\Services\PaymentService $paymentService  */
+    protected $paymentService;
 
-    public function __construct(DonationService $donationService)
+    public function __construct(PaymentService $paymentService)
     {
-        $this->donationService = $donationService;
+        $this->paymentService = $paymentService;
     }
 
     /**
@@ -27,18 +26,16 @@ class UserDonations extends Controller
     public function __invoke(Request $request)
     {
         try {
-            $user = User::findOrFail(Auth::id());
-
             return response([
                 'error' => false,
                 'payload' => [
-                    'donations' => $this->donationService->findAllForUser($user)
+                    'payments' => $this->paymentService->findAllByUser(Auth::user())
                 ]
             ], 200);
         } catch (\Exception $exception) {
             return response([
                 'error' => true,
-                'payload' => ['message' => 'User not found']
+                'payload' => ['message' => 'Cannot retrieve all payments by user']
             ], 404);
         }
     }

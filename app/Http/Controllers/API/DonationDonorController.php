@@ -57,12 +57,13 @@ class DonationDonorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'blood_unit_name' => 'sometimes|string',
             'blood_unit_location' => 'sometimes|string',
-            'date_donated' => 'sometimes'
+            'date_donated' => 'sometimes',
+            'donation_donor_id' => 'required|integer|exists:donation_donors,id'
         ]);
 
         if ($validator->fails()) {
@@ -73,7 +74,7 @@ class DonationDonorController extends Controller
         }
 
         try {
-            $donationDonor = DonationDonor::findOrFail($id);
+            $donationDonor = DonationDonor::findOrFail($request->input('donation_donor_id'));
 
             return response([
                 'error' => false,
@@ -94,10 +95,21 @@ class DonationDonorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'donation_donor_id' => 'required|integer|exists:donation_donors,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'error' => true,
+                'payload' => ['errors' => $validator->errors()->all()]
+            ], 422);
+        }
+
         try {
-            $donationDonor = DonationDonor::findOrFail($id);
+            $donationDonor = DonationDonor::findOrFail($request->input('donation_donor_id'));
 
             return response([
                 'error' => false,

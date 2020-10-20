@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Donation;
 use App\DonationDonor;
 use App\Payment;
 use App\User;
@@ -112,5 +113,26 @@ class PaymentService
             'error' => $err,
             'response' => $response
         ];
+    }
+
+    /**
+     * All Payments by a user in the database.
+     *
+     * @return \App\Payment[]
+     **/
+    public function findAllByUser(User $user)
+    {
+        if ($user->role === 'patient') {
+            $donationIds = Donation::where('user_id', $user->id)->get()->pluck('id')->toArray();
+
+            return
+                Payment::with('donationDonor')->get()->filter(function ($payment) use ($donationIds) {
+                    return in_array($payment->donationDonor->donation_id, $donationIds);
+                });
+        }
+
+        return Payment::with('donationDonor')->get()->filter(function ($payment) use ($user) {
+            return $payment->donationDonor->user_id === $user->id;
+        });
     }
 }

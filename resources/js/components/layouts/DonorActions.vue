@@ -276,7 +276,6 @@ export default {
             const hospitalName = donation.hospitalName;
             const value = donation.value;
             const valueType = donation.valueType;
-            const bloodUnitName = donation.bloodUnitName;
 
             return `${patientName} needs ${serviceType} (${value}) ${valueType} @${hospitalName}`;
         }

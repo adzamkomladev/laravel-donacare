@@ -68,16 +68,20 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('users', 'API\UserController@index');
             Route::get('users/{id}', 'API\UserController@show');
             Route::put('users/{id}', 'API\UserController@update');
+            Route::put('update-firebase-id', 'API\UpdateFirebaseId');
 
             Route::get('donations/{id}', 'API\DonationController@userDonations');
             Route::post('donations', 'API\DonationController@store');
 
-            Route::resource('donation-donors', 'API\DonationDonorController')->only([
-                'store', 'update', 'destroy'
-            ]);
-            Route::get('user-donations/{id}', 'API\UserDonations');
+            Route::post('donation-donors', 'API\DonationDonorController@store');
+            Route::put('donation-donors', 'API\DonationDonorController@update');
+            Route::delete('donation-donors', 'API\DonationDonorController@destroy');
+
+            Route::get('user-donations', 'API\UserDonations');
             Route::get('incoming-donations', 'API\IncomingDonations');
             Route::get('active-donation', 'API\ActiveDonation');
+
+            Route::get('all-user-payments', 'API\AllUserPayments');
 
             Route::get('locations/{id}', 'API\LocationController@update');
 
