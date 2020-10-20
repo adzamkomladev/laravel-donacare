@@ -57,7 +57,7 @@
                     <i class="now-ui-icons design_bullet-list-67"></i>
                     <p>
                         <span class="d-lg-none d-md-block">
-                            Active requests
+                            Incomming requests
                         </span>
                     </p>
                 </a>
@@ -125,7 +125,10 @@
                             >. Donor is
                             <span class="text-info">
                                 {{ etaData.distance }} </span
-                            >away
+                            >away. Donation from
+                            <span class="text-secondary"
+                                >{{ etaData.name }}
+                            </span>
                         </a>
                     </template>
                     <div class="dropdown-item" v-else>
@@ -202,9 +205,10 @@ export default {
         getUrl(donationId) {
             return `/donations/${donationId}`;
         },
-        async durationToDestination(donation) {
+        async durationToDestination(donationDonor) {
             const [currentLocation, targetLocation] = await Promise.all([
                 LocationService.findByUserId(Auth.currentUser().id),
+                LocationService.findByUserId(donationDonor.userId)
             ]);
             // const origin = new gmapApi.LatLng(
             //     currentLocation.data.lat,
@@ -229,7 +233,8 @@ export default {
                     const point = response.routes[0].legs[0];
                     this.eta.push({
                         distance: point.distance.text,
-                        duration: point.duration.text
+                        duration: point.duration.text,
+                        donor: "My name is donor"
                     });
                 }
             });
@@ -238,7 +243,12 @@ export default {
             const donation = this.activeDonation;
 
             if (donation) {
-                await this.durationToDestination(donation);
+            console.log("donors", donation.donationDonors);
+                this.eta = [];
+                donation.donationDonors.forEach(
+                    async donationDonor =>
+                        await this.durationToDestination(donationDonor)
+                );
             }
         },
         async pollEta() {
@@ -254,11 +264,13 @@ export default {
             return !this.userDonations || !this.userDonations.length;
         },
         topFourDonations() {
+
             return this.userDonations.slice(0, 4);
         },
         activeDonation() {
+            console.log(this.topFourDonations);
             const [donation] = this.topFourDonations.filter(
-                donation => donation?.status === "assigned"
+                donation => donation?.donationDonors.length > 0
             );
             return donation;
         },
@@ -268,8 +280,7 @@ export default {
         activeRequestText(donation) {
             const typeName =
                 donation.type === "blood" ? "Blood Group" : "Organ";
-            return `(${typeName} ${donation?.value}) - ${donation?.donor
-                ?.profile.fullName || "N/A"}`;
+            return `(${typeName} ${donation?.value}) - ${donation?.quantity} bag(s)`;
         }
     }
 };
