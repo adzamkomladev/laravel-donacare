@@ -81,6 +81,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('incoming-donations', 'API\IncomingDonations');
             Route::get('active-donation', 'API\ActiveDonation');
 
+            Route::get('all-user-payments', 'API\AllUserPayments');
+
             Route::get('locations/{id}', 'API\LocationController@update');
 
             Route::get('services', 'API\ServiceController@index');

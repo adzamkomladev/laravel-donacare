@@ -37,11 +37,11 @@
                                             @endif
                                         </td>
                                         <td class="text-right" id="complstgrn">
-                                            @if ($donationDonor->donation->payment_method === 'Mobile money' && !$donationDonor->payment->confirmed)
-                                                <a id="comp"
-                                                    href="{{ route('initiate-payment', ['donationDonor' => $donationDonor->id]) }}"
-                                                    class="btn btn-round btn-primary">Payment(click
-                                                    to initiate)</a>
+                                            @if ($donationDonor->donation->payment_method === 'Mobile money')
+                                                    <a id="comp"
+                                                        href="{{ route('initiate-payment', ['donationDonor' => $donationDonor->id]) }}"
+                                                        class="btn btn-round btn-primary">Payment(click
+                                                        to initiate)</a>
                                             @else
                                                 Unavailable
                                             @endif
