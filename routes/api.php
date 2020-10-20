@@ -68,6 +68,7 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('users', 'API\UserController@index');
             Route::get('users/{id}', 'API\UserController@show');
             Route::put('users/{id}', 'API\UserController@update');
+            Route::put('update-firebase-id', 'API\UpdateFirebaseId');
 
             Route::get('donations/{id}', 'API\DonationController@userDonations');
             Route::post('donations', 'API\DonationController@store');
