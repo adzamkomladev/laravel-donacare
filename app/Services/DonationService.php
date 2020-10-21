@@ -76,6 +76,24 @@ class DonationService
     }
 
     /**
+     * Get all pending donations for a user
+     *
+     * @return \App\Donation[]
+     **/
+    public function findAllPendingForUser(User $user)
+    {
+        $donations = [];
+
+        if ($user->role === 'patient') {
+            $donations  = $user->donations->filter(function ($donation) {
+                return $donation->donationDonors->count() === 0;
+            });
+        }
+
+        return $donations;
+    }
+
+    /**
      * Find a donation by id
      *
      * @return \App\Donation;
@@ -251,20 +269,36 @@ class DonationService
     public function activeDonationOfUser(User $user)
     {
         if ($user->role === 'donor') {
-            return $this->activeDonationOfDonor($user);
+            return $this->activeDonationsOfDonor($user)->first();
         }
 
         if ($user->role === 'patient') {
-            return $this->activeDonationOfPatient($user);
+            return $this->activeDonationsOfPatient($user)->first();
         }
     }
 
     /**
-     * Active donation of a donor
+     * The current / active donations of a user
      *
-     * @return \App\Donation
+     * @return \App\Donation[]|Collection
      **/
-    private function activeDonationOfDonor(User $user)
+    public function activeDonationsOfUser(User $user)
+    {
+        if ($user->role === 'donor') {
+            return array_values($this->activeDonationsOfDonor($user)->toArray());
+        }
+
+        if ($user->role === 'patient') {
+            return array_values($this->activeDonationsOfPatient($user)->toArray());
+        }
+    }
+
+    /**
+     * Active donations of a donor
+     *
+     * @return \App\Donation[]|Collection
+     **/
+    private function activeDonationsOfDonor(User $user)
     {
         return DonationDonor::with(['donation'])
         ->where('user_id', $user->id)
@@ -276,25 +310,23 @@ class DonationService
                 return $donationDonor->created_at;
             })->map(function ($donationDonor) {
                 return $donationDonor->donation;
-            })
-            ->first();
+        });
     }
 
     /**
-     * Active donation of a patient
+     * Active donations of a patient
      *
-     * @return \App\Donation
+     * @return \App\Donation[]|Collection
      **/
-    private function activeDonationOfPatient(User $user)
+    private function activeDonationsOfPatient(User $user)
     {
         return Donation::with(['donationDonors'])
-        ->where('patient_id', $user->id)
+            ->where('user_id', $user->id)
             ->where('status', 'initiated')
             ->orWhere('status', 'assigned')
             ->get()
             ->filter(function ($donation) {
                 return count($donation->donationDonors) > 0;
-            })
-            ->first();
+            });
     }
 }
