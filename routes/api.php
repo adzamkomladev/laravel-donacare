@@ -79,7 +79,8 @@ Route::group(['prefix' => 'v2'], function () {
 
             Route::get('user-donations', 'API\UserDonations');
             Route::get('incoming-donations', 'API\IncomingDonations');
-            Route::get('active-donation', 'API\ActiveDonation');
+            Route::get('active-donations', 'API\ActiveDonations');
+            Route::get('pending-donations', 'API\PendingDonations');
 
             Route::get('all-user-payments', 'API\AllUserPayments');
 

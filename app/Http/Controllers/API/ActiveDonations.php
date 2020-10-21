@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ActiveDonation extends Controller
+class ActiveDonations extends Controller
 {
     /** @var \App\Services\DonationService $donationService  */
     protected $donationService;
@@ -32,7 +32,7 @@ class ActiveDonation extends Controller
             return response([
                 'error' => false,
                 'payload' => [
-                    'donation' => $this->donationService->activeDonationOfUser($user)
+                    'donations' => $this->donationService->activeDonationsOfUser($user)
                 ]
             ], 200);
         } catch (\Exception $exception) {

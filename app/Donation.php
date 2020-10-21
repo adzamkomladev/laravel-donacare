@@ -25,6 +25,18 @@ class Donation extends Model
      */
     protected $with = ['files', 'patient'];
 
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $appends = ['formatted_cost'];
+
+    public function getFormattedCostAttribute()
+    {
+        return round($this->cost / 100.0, 2);
+    }
+
     public function patient()
     {
         return $this->belongsTo(User::class, 'user_id');

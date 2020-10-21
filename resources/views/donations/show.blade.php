@@ -29,18 +29,6 @@
                                 <p id="hospital-location">{{ $donation->hospital_location ?? 'N/A' }}</p>
                             </div>
                             <div class="item">
-                                <label for="blood-unit-name">
-                                    <i class="fas fa-hospital"></i> Blood unit name
-                                </label>
-                                <p id="blood-unit-name">{{ $donation->blood_unit_name ?? 'N/A' }}</p>
-                            </div>
-                            <div class="item">
-                                <label for="blood-unit-location">
-                                    <i class="fas fa-location-arrow"></i> Blood unit location
-                                </label>
-                                <p id="blood-unit-location">{{ $donation->blood_unit_location ?? 'N/A' }}</p>
-                            </div>
-                            <div class="item">
                                 <label for="value">
                                     <i class="fas fa-bed"></i> Request item
                                 </label>
