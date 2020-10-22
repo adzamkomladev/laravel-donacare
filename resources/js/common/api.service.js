@@ -11,18 +11,12 @@ export const ComplaintService = {
 };
 
 export const DonationService = {
-    selectDonor(donationId, data) {
-        return axios.patch(
-            `/api/v1/donations/${donationId}/select-donor`,
-            data
-        );
+    selectDonor( data) {
+        return axios.post("/api/v1/donation-donors", data);
     },
 
-    deselectDonor(donationId, data) {
-        return axios.patch(
-            `/api/v1/donations/${donationId}/deselect-donor`,
-            data
-        );
+    deselectDonor(donationDonorId) {
+        return axios.delete(`/api/v1/donation-donors/${donationDonorId}`);
     },
 
     updateStatus(donationId, data) {
