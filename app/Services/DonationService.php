@@ -65,7 +65,7 @@ class DonationService
                 ->toArray();
 
             $donations  = Donation::with(['patient', 'donationDonors', 'service'])
-            ->whereIn('id', $donationIds)
+                ->whereIn('id', $donationIds)
                 ->get();
         } else {
             $donations  =
@@ -87,7 +87,7 @@ class DonationService
         if ($user->role === 'patient') {
             $donations  = $user->donations->filter(function ($donation) {
                 return $donation->donationDonors->count() === 0;
-            });
+            })->values();
         }
 
         return $donations;
@@ -213,8 +213,8 @@ class DonationService
             ]);
 
             DB::table('notifications')
-            ->where('type', 'App\Notifications\DonationRequested')
-            ->where('data->donation->id', $donation->id)
+                ->where('type', 'App\Notifications\DonationRequested')
+                ->where('data->donation->id', $donation->id)
                 ->delete();
         }
 
@@ -285,11 +285,11 @@ class DonationService
     public function activeDonationsOfUser(User $user)
     {
         if ($user->role === 'donor') {
-            return array_values($this->activeDonationsOfDonor($user)->toArray());
+            return $this->activeDonationsOfDonor($user)->values();
         }
 
         if ($user->role === 'patient') {
-            return array_values($this->activeDonationsOfPatient($user)->toArray());
+            return $this->activeDonationsOfPatient($user)->values();
         }
     }
 
@@ -301,7 +301,7 @@ class DonationService
     private function activeDonationsOfDonor(User $user)
     {
         return DonationDonor::with(['donation'])
-        ->where('user_id', $user->id)
+            ->where('user_id', $user->id)
             ->get()
             ->filter(function ($donationDonor) {
                 return count($donationDonor->donation->donationDonors) > 0;
@@ -310,7 +310,7 @@ class DonationService
                 return $donationDonor->created_at;
             })->map(function ($donationDonor) {
                 return $donationDonor->donation;
-        });
+            });
     }
 
     /**
