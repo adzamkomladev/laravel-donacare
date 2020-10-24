@@ -12,9 +12,9 @@ class Donation extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'service_id', 'location_id', 'description',
-        'hospital_name', 'date_needed', 'payment_status', 'payment_method',
-        'hospital_location', 'share_location', 'type', 'status', 'value',
+        'user_id', 'service_id', 'hospital_id', 'description',
+        'date_needed', 'payment_status', 'payment_method',
+        'share_location', 'type', 'status', 'value',
         'cost', 'quantity', 'value_type'
     ];
 
@@ -23,7 +23,7 @@ class Donation extends Model
      *
      * @var array
      */
-    protected $with = ['files', 'patient'];
+    protected $with = ['files', 'patient', 'hospital'];
 
     /**
      * The relationships that should always be loaded.
@@ -65,5 +65,10 @@ class Donation extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class);
     }
 }

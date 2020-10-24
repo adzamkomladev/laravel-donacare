@@ -17,7 +17,7 @@ export default {
     name: "CreateDonation",
     props: ["service", "type"],
     mounted() {
-        store.dispatch('donation/initializeState', this.service)
+        store.dispatch('donation/initializeState', this.service);
     },
     router: new VueRouter({
         mode: "history",

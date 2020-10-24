@@ -93,5 +93,8 @@ Route::middleware(['auth'])->group(function () {
 
         // Settings
         Route::get('settings/show', 'SettingController@show')->name('settings.show');
+
+        // Hospitals
+        Route::get('hospitals', 'HospitalController@index')->name('hospitals.index');
     });
 });

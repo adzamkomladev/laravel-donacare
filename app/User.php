@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'telephone', 'role', 'password', 'activated', 'otp', 'firebase_id'
+        'telephone', 'role', 'password', 'activated', 'otp', 'firebase_id', 'location_id'
     ];
 
     /**
@@ -96,7 +96,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function location()
     {
-        return $this->hasOne(Location::class);
+        return $this->belongsTo(Location::class);
     }
 
     public function reviews()

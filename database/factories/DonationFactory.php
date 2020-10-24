@@ -26,8 +26,7 @@ $factory->define(Donation::class, function (Faker $faker) {
         'payment_method' => $faker->randomElement([
             'Mobile money', 'Cash', 'Credit/Debit card'
         ]),
-        'hospital_name' => $faker->company,
-        'hospital_location' => $faker->city,
+        'hospital_id' => $faker->randomElement([1, 2, 3]),
         'share_location' => $faker->boolean,
         'quantity' => $faker->randomElement([
             1, 2, 3, 4

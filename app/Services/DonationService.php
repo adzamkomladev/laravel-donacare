@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\Services\PrescriptionService;
-use Prophecy\Promise\ReturnPromise;
 
 class DonationService
 {
@@ -198,8 +197,7 @@ class DonationService
             return null;
         }
 
-        $requestData['blood_unit_name'] = $donation->hospital_name;
-        $requestData['blood_unit_location'] = $donation->hospital_location;
+        $requestData['blood_unit_id'] = $donation->hospital_id;
 
         DonationDonor::create($requestData);
 
@@ -254,7 +252,6 @@ class DonationService
         if (array_key_exists('date_donated', $requestData)) {
             $requestData['date_donated'] = Carbon::parse($requestData['date_donated']);
         }
-
 
         $donationDonor->update($requestData);
 

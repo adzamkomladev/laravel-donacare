@@ -49,6 +49,10 @@ Route::group(['prefix' => 'v1'], function () {
     // Settings
     Route::post('settings', 'SettingController@store');
     Route::get('settings/current', 'CurrentSettings');
+
+    // Hospitals
+    Route::post('hospitals', 'HospitalController@store');
+    Route::get('all-hospitals', 'AllHospitals');
 });
 
 Route::group(['prefix' => 'v2'], function () {
@@ -89,6 +93,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('services', 'API\ServiceController@index');
 
             Route::get('settings/current', 'API\CurrentSettings');
+
+            Route::get('all-hospitals', 'API\AllHospitals');
         });
     });
 });

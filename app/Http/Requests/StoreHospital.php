@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDonationDonor extends FormRequest
+class StoreHospital extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class UpdateDonationDonor extends FormRequest
     public function rules()
     {
         return [
-            'blood_unit_id' => 'sometimes|integer|exists:hospitals,id',
-            'date_donated' => 'sometimes',
+            'location_name' => 'required|string',
+            'location_address' => 'required|string',
+            'lng' => 'required',
+            'lat' => 'required',
         ];
     }
 }

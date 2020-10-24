@@ -12,11 +12,16 @@ class Location extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'name', 'address', 'lng', 'lat',
+        'name', 'address', 'lng', 'lat',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
+    }
+
+    public function hospital()
+    {
+        return $this->hasOne(Hospital::class);
     }
 }

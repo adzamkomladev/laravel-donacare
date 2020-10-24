@@ -218,7 +218,7 @@ export default {
         async onRemoveFromDonorDonations(donation) {
             try {
                 const { data } = await DonationService.deselectDonor(
-                    donation.id,
+                    donation.id
                 );
 
                 this.userDonations = this.userDonations.filter(

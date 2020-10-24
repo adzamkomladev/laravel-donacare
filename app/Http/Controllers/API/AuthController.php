@@ -110,7 +110,22 @@ class AuthController extends Controller
 
         if ($token = JWTAuth::attempt(['telephone' => $request['telephone'], 'password' => $request['password']])) {
             $requestData = $request->all();
-            Location::updateOrCreate(['user_id' => auth()->user()->id], $requestData);
+            $user = User::findOrFail(auth()->user()->id);
+
+            if ($user->location) {
+                $user->location()->update([
+                    'lng' => $requestData['lng'],
+                    'lat' => $requestData['lat'],
+                ]);
+            } else {
+                $location = Location::create([
+                    'lng' => $requestData['lng'],
+                    'lat' => $requestData['lat'],
+                ]);
+
+                $user->location_id = $location->id;
+                $user->save();
+            }
 
             return response([
                 'error' => false,
