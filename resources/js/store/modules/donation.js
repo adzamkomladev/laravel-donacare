@@ -1,7 +1,8 @@
 import {
     Auth,
     DonationService,
-    SettingService
+    SettingService,
+    HospitalService,
 } from "../../common/api.service";
 
 const toCamelCase = obj => {
@@ -122,17 +123,14 @@ const mutations = {
     UPDATE_DONATION_HOSPITAL(state, value) {
         const donation = _.cloneDeep(state.donation);
         donation.hospitalName = value;
-        donation.hospitalLocation = state.hospitals[value];
-
+        donation.hospitalLocation = state.hospitals.find(hospital => hospital.location.name == value).location.address;
         state.donation = donation;
     },
     UPDATE_COST(state) {
         const donation = _.cloneDeep(state.donation);
         const amount = donation.quantity * state.service.price;
-        const percentageAmount =
-            amount * (state.settings.percentageCharge / 100.0);
-        donation.cost = amount + percentageAmount + state.settings.systemCharge;
-        console.log({ amount, percentageAmount, donationCost: donation.cost });
+        donation.cost = amount + state.settings.systemCharge;
+        console.log({ amount, donationCost: donation.cost });
         state.donation = donation;
     },
     SET_SETTINGS(state, settings) {
@@ -142,7 +140,11 @@ const mutations = {
         state.service = _.cloneDeep(service);
     },
     SET_DONATION(state, donation) {
+        console.log({ donation });
         state.donation = _.cloneDeep(donation);
+    },
+    SET_HOSPITALS(state, hospitals) {
+        state.hospitals = _.cloneDeep(hospitals);
     }
 };
 
@@ -152,6 +154,12 @@ const actions = {
             const { data } = await SettingService.current();
             const settings = toCamelCase(JSON.parse(data.data));
             commit("SET_SETTINGS", settings);
+
+            const { data2 } = await HospitalService.findAll();
+
+            console.log({ data2 });
+
+            commit("SET_HOSPITALS", data2);
         } catch (error) {
             console.log({ error }, "Hey");
         }
