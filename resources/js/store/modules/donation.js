@@ -123,7 +123,9 @@ const mutations = {
     UPDATE_DONATION_HOSPITAL(state, value) {
         const donation = _.cloneDeep(state.donation);
         donation.hospitalName = value;
-        donation.hospitalLocation = state.hospitals.find(hospital => hospital.location.name == value).location.address;
+        const hospital = state.hospitals.find(hospital => hospital.location.name == value);
+        donation.hospitalId = hospital.id;
+        donation.hospitalLocation = hospital.location.address;
         state.donation = donation;
     },
     UPDATE_COST(state) {
