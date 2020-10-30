@@ -19,7 +19,7 @@
                                 v-for="(bloodGroup, index) in bloodGroups"
                                 :value="bloodGroup.value"
                                 :selected="
-                                    medicalDetails.bloodGroup ===
+                                    medicalDetails.value ===
                                         bloodGroup.value
                                 "
                                 :key="index"
@@ -43,7 +43,7 @@
                                 :key="index"
                                 :value="bloodType"
                                 :selected="
-                                    bloodType === medicalDetails.bloodType
+                                    bloodType === medicalDetails.valueType
                                 "
                                 >{{ bloodType }}</option
                             >
@@ -127,6 +127,7 @@ export default {
             });
         },
         onSubmit() {
+            console.log({dd: this.medicalDetails});
             if (!this.medicalDetails.valueType) {
                 this.showNotification(
                     "fas fa-times",

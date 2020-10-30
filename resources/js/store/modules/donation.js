@@ -153,15 +153,13 @@ const mutations = {
 const actions = {
     async initializeState({ state, commit }, service) {
         try {
-            const { data } = await SettingService.current();
-            const settings = toCamelCase(JSON.parse(data.data));
+            let { data } = await SettingService.current();
+            const settings = toCamelCase(JSON.parse(data?.data));
             commit("SET_SETTINGS", settings);
 
-            const { data2 } = await HospitalService.findAll();
+             const hospitalData  = await HospitalService.findAll();
 
-            console.log({ data2 });
-
-            commit("SET_HOSPITALS", data2);
+            commit("SET_HOSPITALS", hospitalData?.data || []);
         } catch (error) {
             console.log({ error }, "Hey");
         }

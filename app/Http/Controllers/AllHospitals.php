@@ -14,6 +14,7 @@ class AllHospitals extends Controller
     {
         $this->hospitalService = $hospitalService;
     }
+
     /**
      * Handle the incoming request.
      *
