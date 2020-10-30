@@ -291,6 +291,42 @@ class DonationService
     }
 
     /**
+     * The cancelled donations of a user
+     *
+     * @return \App\Donation[]|Collection
+     **/
+    public function findAllCancelledForUser(User $user)
+    {
+        return [];
+    }
+
+    /**
+     * The completed donations of a user
+     *
+     * @return \App\Donation[]|Collection
+     **/
+    public function findAllCompletedForUser(User $user)
+    {
+        if ($user->role === 'donor') {
+            return $this->findAllCompletedOfDonor($user)->values();
+        }
+
+        if ($user->role === 'patient') {
+            return $this->findAllCompletedOfPatient($user)->values();
+        }
+    }
+
+    /**
+     * The confirmed donations of a user
+     *
+     * @return \App\Donation[]|Collection
+     **/
+    public function findAllConfirmedForUser(User $user)
+    {
+        return [];
+    }
+
+    /**
      * Active donations of a donor
      *
      * @return \App\Donation[]|Collection
@@ -324,6 +360,44 @@ class DonationService
             ->get()
             ->filter(function ($donation) {
                 return count($donation->donationDonors) > 0;
+            });
+    }
+
+    /**
+     * Completed donations of a donor
+     *
+     * @return \App\Donation[]|Collection
+     **/
+    private function findAllCompletedOfDonor(User $user)
+    {
+        return DonationDonor::with(['donation'])
+            ->where('user_id', $user->id)
+            ->get()
+            ->filter(function ($donationDonor) {
+                return count($donationDonor->donation->donationDonors) == $donationDonor->donation->quantity;
+            })
+            ->sortBy(function ($donationDonor) {
+                return $donationDonor->created_at;
+            })->map(function ($donationDonor) {
+                return $donationDonor->donation;
+            })->filter(function ($donation) {
+                return $donation->status === 'completed';
+            });
+    }
+
+    /**
+     * Completed donations of a patient
+     *
+     * @return \App\Donation[]|Collection
+     **/
+    private function findAllCompletedOfPatient(User $user)
+    {
+        return Donation::with(['donationDonors'])
+            ->where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->get()
+            ->filter(function ($donation) {
+                return count($donation->donationDonors) == $donation->quantity;
             });
     }
 }
