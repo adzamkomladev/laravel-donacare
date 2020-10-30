@@ -95,6 +95,8 @@ Route::group(['prefix' => 'v2'], function () {
             Route::get('settings/current', 'API\CurrentSettings');
 
             Route::get('all-hospitals', 'API\AllHospitals');
+
+            Route::get('dashboard-summary', 'API\DashboardSummary');
         });
     });
 });
