@@ -92,4 +92,50 @@
             </div>
         </div>
     </div> --}}
+
+    <div class="home row px-4 py-3 justify-content-center">
+        <div class="stats-card col-md-10 p-4 row text-center">
+            <div class="col-md-3">
+                <x-total-cash-flow-stat-card />
+            </div>
+
+            <div class="col-md-3">
+                <x-total-donations-stat-card />
+            </div>
+
+            <div class="col-md-3">
+                <x-total-users-stat-card />
+            </div>
+
+            <div class="col-md-3 last">
+                <x-total-users-stat-card />
+            </div>
+        </div>
+    </div>
+    <div class="chart-table-section row mt-4 p-4 ">
+        <div class="col-md-6">
+            <h4>Donation request summary</h4>
+            <!-- Chart's container -->
+            <div id="chart" style="height: 300px;"></div>
+        </div>
+        <div class="last col-md-6">
+            <h4>Latest Donation Requests</h4>
+            <x-latest-donations-table />
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    <!-- Charting library -->
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+    <!-- Your application script -->
+    <script>
+        const chart = new Chartisan({
+            el: '#chart',
+            url: "@chart('donation_pie_chart')",
+        });
+
+    </script>
+@endpush

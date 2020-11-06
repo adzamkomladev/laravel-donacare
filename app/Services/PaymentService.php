@@ -131,6 +131,10 @@ class PaymentService
                 });
         }
 
+        if ($user->role === 'admin') {
+            return Payment::all();
+        }
+
         return Payment::with('donationDonor')->get()->filter(function ($payment) use ($user) {
             return $payment->donationDonor->user_id === $user->id;
         });

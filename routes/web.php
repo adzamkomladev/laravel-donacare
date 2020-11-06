@@ -71,7 +71,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('paymentsd', 'PaymentController@myPaid')->name('payments.paid');
         Route::get('initiate-payment/{donationDonor}', 'InitiatePayment')->name('initiate-payment');
         Route::get('verify-payment', 'VerifyPayment')->name('verify-payment');
-        Route::post('paystack/webhook', '\App\Http\Controllers\PaystackWebhookController@handleWebhook');
         Route::get('donation-payments/{payment}/confirm', 'DonationPaymentController@confirm')->name('donation_payments.confirm');
         Route::get('donation-payments', 'DonationPaymentController@index')->name('donation_payments.index');
 
