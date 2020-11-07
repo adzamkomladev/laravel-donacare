@@ -39,6 +39,6 @@ class DonationDonor extends Model
 
     public function bloodUnit()
     {
-        return $this->hasOne(Hospital::class, 'blood_unit_id');
+        return $this->belongsTo(Hospital::class, 'blood_unit_id');
     }
 }
