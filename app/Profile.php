@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
@@ -31,6 +32,27 @@ class Profile extends Model
     {
         return $this->avatar ? asset('img/' . $this->avatar) : null;
     }
+
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanDonateTo(Builder $query, string $bloodGroup)
+    {
+        return $query->whereIn('blood_group', config('bloodgroups.' . $bloodGroup)['receives']);
+    }
+
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanReceiveFrom(Builder $query, string $bloodGroup)
+    {
+        return $query->whereIn('blood_group', config('bloodgroups.' . $bloodGroup)['gives']);
+    }
+
 
     public function user()
     {

@@ -60,7 +60,7 @@ Route::group(['prefix' => 'v2'], function () {
     Route::post('register', 'API\AuthController@register');
 
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::get('/user', 'API\AuthController@currentUser');
+        Route::get('user', 'API\AuthController@currentUser');
 
         Route::post('verify-otp', 'API\AuthController@verifyOtp');
 

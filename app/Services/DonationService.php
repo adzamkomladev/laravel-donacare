@@ -125,9 +125,9 @@ class DonationService
 
         $donation->load('patient', 'donationDonors');
 
-        $donors = User::ofRole('donor')->get()->filter(function ($donor) use ($donation) {
-            return $donor->profile->blood_group === $donation->patient->profile->blood_group;
-        });
+        $donors = User::ofRole('donor')
+            ->canDonateTo($donation->patient->profile->blood_group)
+            ->get();
 
         Notification::send($donors, new DonationRequested($donation));
 
@@ -165,7 +165,9 @@ class DonationService
             'status' => 'initiated'
         ]);
 
-        $donors = User::ofRole('donor')->get();
+        $donors = User::ofRole('donor')
+            ->canDonateTo($donation->patient->profile->blood_group)
+            ->get();
 
         Notification::send($donors, new DonationRequested($donation));
 
@@ -236,7 +238,9 @@ class DonationService
 
         $donation->refresh();
 
-        $donors = User::ofRole('donor')->get();
+        $donors = User::ofRole('donor')
+            ->canDonateTo($donation->patient->profile->blood_group)
+            ->get();
         Notification::send($donors, new DonationRequested($donation));
 
         return $donation;

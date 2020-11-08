@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Donation;
+use App\Profile;
 use App\Service;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {

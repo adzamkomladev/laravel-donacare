@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Donation extends Model
@@ -70,5 +72,25 @@ class Donation extends Model
     public function hospital()
     {
         return $this->belongsTo(Hospital::class);
+    }
+
+    public function scopeIsAvailable(Builder $query)
+    {
+        return $query->where('status', 'initiated')->orWhere('status', 'assigned');
+    }
+
+    public function scopeIsNotExpired(Builder $query)
+    {
+        return $query->whereDate('date_needed', '>=', Carbon::now());
+    }
+
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanMakeDonation(Builder $query, string $bloodGroup)
+    {
+        return $query->whereIn('value', config('bloodgroups.' . $bloodGroup)['gives']);
     }
 }
