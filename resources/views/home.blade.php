@@ -108,7 +108,7 @@
             </div>
 
             <div class="col-md-3 last">
-                <x-total-users-stat-card />
+                <x-donation-stat-card />
             </div>
         </div>
     </div>

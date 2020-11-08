@@ -49,7 +49,7 @@ class DonationService
     /**
      * Get all donations for a user
      *
-     * @return array
+     * @return \App\Donation[]|Collection
      **/
     public function findAllForUser(User $user)
     {

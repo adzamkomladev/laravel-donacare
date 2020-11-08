@@ -32,11 +32,17 @@ class TotalUsersStatCard extends Component
     public function totalUsers()
     {
         if (Auth::user()->role ===  'donor') {
-            return User::ofRole('patient')->get()->count();
+            return User::ofRole('patient')
+                ->canDonateTo(Auth::user()->profile->blood_group)
+                ->get()
+                ->count();
         }
 
         if (Auth::user()->role ===  'patient') {
-            return User::ofRole('donor')->get()->count();
+            return User::ofRole('donor')
+                ->canReceiveFrom(Auth::user()->profile->blood_group)
+                ->get()
+                ->count();
         }
 
         return User::all()->count();
