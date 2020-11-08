@@ -18,7 +18,25 @@ class LocationController extends Controller
     {
         $requestData = $request->all();
 
-        return Location::updateOrCreate(['user_id' => $requestData['user_id']], $requestData);
+        $user = User::findOrFail($requestData['user_id']);
+
+        if ($user->location) {
+            $user->location()->update([
+                'lng' => $requestData['lng'],
+                'lat' => $requestData['lat'],
+            ]);
+            return $user->location;
+        }
+
+        $location = Location::create([
+            'lng' => $requestData['lng'],
+            'lat' => $requestData['lat'],
+        ]);
+
+        $user->location_id = $location->id;
+        $user->save();
+
+        return $user->location;
     }
 
     /**

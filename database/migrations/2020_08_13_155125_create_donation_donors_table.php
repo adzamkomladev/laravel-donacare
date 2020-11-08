@@ -17,8 +17,8 @@ class CreateDonationDonorsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('donation_id')->nullable()->constrained();
-            $table->string('blood_unit_name', 255);
-            $table->string('blood_unit_location', 255);
+            $table->unsignedBigInteger('blood_unit_id')->nullable();
+            $table->foreign('blood_unit_id')->references('id')->on('hospitals');
             $table->date('date_donated')->nullable();
             $table->timestamps();
         });

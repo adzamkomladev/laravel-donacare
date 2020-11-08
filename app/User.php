@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'telephone', 'role', 'password', 'activated', 'otp', 'firebase_id'
+        'telephone', 'role', 'password', 'activated', 'otp', 'firebase_id', 'location_id'
     ];
 
     /**
@@ -79,6 +80,64 @@ class User extends Authenticatable implements JWTSubject
         return $query->where('role', $role);
     }
 
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanDonateTo(Builder $query, string $bloodGroup)
+    {
+        foreach (config('bloodgroups.' . $bloodGroup)['receives'] as $key => $bg) {
+            if ($key == 0) {
+                $query->where(function ($query) {
+                    $query->select('blood_group')
+                    ->from('profiles')
+                    ->whereColumn('user_id', 'users.id')
+                    ->limit(1);
+                }, $bg);
+
+                continue;
+            }
+            $query->orWhere(function ($query) {
+                $query->select('blood_group')
+                ->from('profiles')
+                ->whereColumn('user_id', 'users.id')
+                ->limit(1);
+            }, $bg);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Scope a query to only include users of a given role.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanReceiveFrom(Builder $query, string $bloodGroup)
+    {
+        foreach (config('bloodgroups.' . $bloodGroup)['gives'] as $key => $bg) {
+            if ($key == 0) {
+                $query->where(function ($query) {
+                    $query->select('blood_group')
+                    ->from('profiles')
+                    ->whereColumn('user_id', 'users.id')
+                    ->limit(1);
+                }, $bg);
+
+                continue;
+            }
+            $query->orWhere(function ($query) {
+                $query->select('blood_group')
+                ->from('profiles')
+                ->whereColumn('user_id', 'users.id')
+                ->limit(1);
+            }, $bg);
+        }
+
+        return $query;
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
@@ -96,7 +155,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function location()
     {
-        return $this->hasOne(Location::class);
+        return $this->belongsTo(Location::class);
     }
 
     public function reviews()

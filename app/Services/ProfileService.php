@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Donation;
+use App\Notifications\DonationRequested;
 use App\Profile;
 use App\User;
 
@@ -18,6 +20,16 @@ class ProfileService
 
         if ($requestData['role']) {
             $user->update(['role' => $requestData['role']]);
+        }
+
+        if ($user->role === 'donor') {
+            Donation::isAvailable()
+                ->isNotExpired()
+                ->canMakeDonation($user->profile->blood_group)
+                ->get()
+                ->each(function ($donation) use ($user) {
+                    $user->notify(new DonationRequested($donation));
+                });
         }
 
         return $user->profile;

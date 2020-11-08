@@ -39,7 +39,7 @@ class ProfileController extends Controller
      */
     public function store(StoreProfile $request, User $user)
     {
-        return $this->profileService->ccreate($user, $request->validated());
+        return $this->profileService->create($user, $request->validated());
     }
 
 

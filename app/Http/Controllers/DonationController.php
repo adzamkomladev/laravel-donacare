@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 
 class DonationController extends Controller
 {
-    /** @var DonationService $donationService  */
+    /** @var \App\Services\DonationService $donationService  */
     protected $donationService;
 
     public function __construct(DonationService $donationService)

@@ -12,8 +12,15 @@ class DonationDonor extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'donation_id', 'date_donated', 'blood_unit_name', 'blood_unit_location'
+        'user_id', 'donation_id', 'date_donated', 'blood_unit_id',
     ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['bloodUnit'];
 
     public function user()
     {
@@ -28,5 +35,10 @@ class DonationDonor extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function bloodUnit()
+    {
+        return $this->belongsTo(Hospital::class, 'blood_unit_id');
     }
 }

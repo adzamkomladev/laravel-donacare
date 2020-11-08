@@ -11,47 +11,43 @@ export const ComplaintService = {
 };
 
 export const DonationService = {
-    selectDonor(donationId, data) {
-        return axios.patch(
-            `/api/v1/donations/${donationId}/select-donor`,
-            data
-        );
-    },
+           selectDonor(data) {
+               return axios.post("/api/v1/donation-donors", data);
+           },
 
-    deselectDonor(donationId, data) {
-        return axios.patch(
-            `/api/v1/donations/${donationId}/deselect-donor`,
-            data
-        );
-    },
+           deselectDonor(donationDonorId) {
+               return axios.delete(
+                   `/api/v1/donation-donors/${donationDonorId}`
+               );
+           },
 
-    updateStatus(donationId, data) {
-        return axios.patch(
-            `/api/v1/donations/${donationId}/update-status`,
-            data
-        );
-    },
+           updateStatus(donationId, data) {
+               return axios.patch(
+                   `/api/v1/donations/${donationId}/update-status`,
+                   data
+               );
+           },
 
-    donationWithinJurisdiction(jurisdiction = null) {
-        let url = "/api/v1/donations";
+           donationWithinJurisdiction(jurisdiction = null) {
+               let url = "/api/v1/donations";
 
-        if (jurisdiction) {
-            url += "?jurisdiction=" + jurisdiction;
-        }
+               if (jurisdiction) {
+                   url += "?jurisdiction=" + jurisdiction;
+               }
 
-        return axios.get(url);
-    },
+               return axios.get(url);
+           },
 
-    userDonations(userId) {
-        return axios.get(`/api/v1/users/${userId}/donations`);
-    },
+           userDonations(userId) {
+               return axios.get(`/api/v1/users/${userId}/donations`);
+           },
 
-    save(data) {
-        return axios.post("/api/v1/donations", data, {
-            headers: { "content-type": "multipart/form-data" }
-        });
-    }
-};
+           save(data) {
+               return axios.post("/api/v1/donations", data, {
+                   headers: { "content-type": "multipart/form-data" }
+               });
+           }
+       };
 
 export const LocationService = {
     save(data) {
@@ -60,6 +56,19 @@ export const LocationService = {
 
     findByUserId(userId) {
         return axios.get(`/api/v1/locations/${userId}`);
+    },
+
+    async currentLocation() {
+        let location;
+
+        navigator.geolocation.getCurrentPosition(position => {
+            location = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+        });
+
+        return location;
     }
 };
 
@@ -108,5 +117,14 @@ export const SettingService = {
 export const UserService = {
     toggleActivation(userId) {
         return axios.patch(`/api/v1/users/${userId}/toggle-activation`, {});
+    }
+};
+
+export const HospitalService = {
+    findAll() {
+        return axios.get("/api/v1/all-hospitals");
+    },
+    create(data) {
+        return axios.post("/api/v1/hospitals", data);
     }
 };

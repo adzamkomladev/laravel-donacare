@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Donation;
 use App\Http\Controllers\Controller;
+use App\Notifications\DonationRequested;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
@@ -38,7 +40,7 @@ class ProfileController extends Controller
             'mobile_money_name' => 'required|string|max:100',
             'mobile_money_number' => 'required|string|max:15',
             'blood_group' => 'required|string|max:100',
-            'type' => ['nullable' , Rule::in(['organ', 'blood', 'funds'])],
+            'type' => ['nullable', Rule::in(['organ', 'blood', 'funds'])],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'medical_details' => 'nullable|string',
             'home_address' => 'nullable|string|max:100',
@@ -48,7 +50,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response([
                 'error' => true,
-                'payload'=> ['errors' => $validator->errors()->all()]
+                'payload' => ['errors' => $validator->errors()->all()]
             ], 422);
         }
 
@@ -56,6 +58,16 @@ class ProfileController extends Controller
         $profileData['user_id'] = Auth::id();
 
         $profile = Profile::create($profileData);
+
+        if (Auth::user()->role === 'donor') {
+            Donation::isAvailable()
+                ->isNotExpired()
+                ->canMakeDonation($profile->blood_group)
+                ->get()
+                ->each(function ($donation) use ($profile) {
+                    $profile->user->notify(new DonationRequested($donation));
+                });
+        }
 
         return response([
             'error' => false,
@@ -103,7 +115,7 @@ class ProfileController extends Controller
             'mobile_money_name' => 'required|string|max:100',
             'mobile_money_number' => 'required|string|max:15',
             'blood_group' => 'required|string|max:100',
-            'type' => ['nullable' , Rule::in(['organ', 'blood', 'funds'])],
+            'type' => ['nullable', Rule::in(['organ', 'blood', 'funds'])],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'medical_details' => 'nullable|string',
             'home_address' => 'nullable|string|max:100',
@@ -113,7 +125,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response([
                 'error' => true,
-                'payload'=> ['errors' => $validator->errors()->all()]
+                'payload' => ['errors' => $validator->errors()->all()]
             ], 422);
         }
 
@@ -142,6 +154,5 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-
     }
 }

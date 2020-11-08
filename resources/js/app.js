@@ -131,6 +131,7 @@ Vue.component(
     require("./components/settings/UpdateSetting.vue").default
 );
 Vue.component("create-profile", require("./pages/CreateProfile.vue").default);
+Vue.component("hospitals", require("./pages/Hospitals.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

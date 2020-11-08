@@ -15,12 +15,9 @@ class CreateDonationsTable extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('service_id')->nullable()->constrained();
-            $table->foreignId('location_id')->nullable()->constrained();
-
+            $table->foreignId('hospital_id')->nullable()->constrained();
             $table->enum('status', ['initiated', 'incomplete', 'assigned', 'completed', 'done', 'pending'])->default('incomplete');
             $table->enum('type', ['blood', 'organ', 'funds']);
             $table->text('value');
@@ -31,8 +28,6 @@ class CreateDonationsTable extends Migration
             $table->integer('quantity')->unsigned()->default(1);
             $table->enum('payment_status', ['free', 'charged']);
             $table->string('payment_method', 100)->nullable();
-            $table->string('hospital_name', 255);
-            $table->string('hospital_location', 255);
             $table->boolean('share_location')->nullable()->default(false);
 
             $table->timestamps();

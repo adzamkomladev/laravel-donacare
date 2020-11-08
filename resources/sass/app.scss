@@ -1,4 +1,3 @@
-
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
 
@@ -8,3 +7,63 @@
 // Application css
 @import "./layouts/app";
 @import "./auth/app";
+
+// Home
+.home {
+    .stats-card {
+        border-radius: 4px;
+        background-color: white;
+
+        [class*="col-"]:after {
+            position: absolute;
+            right: 0;
+            top: 20px;
+            width: 1px;
+            height: calc(100% - 40px);
+            content: "";
+            background: #ddd;
+        }
+
+        .last:after {
+            display: none;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        .fa-users {
+            color: rgb(110, 91, 65);
+        }
+
+        .fa-money-bill {
+            color: green;
+        }
+
+        .fa-hospital {
+            color: #f96332;
+        }
+    }
+}
+
+.chart-table-section {
+    background-color: white;
+
+    .donations-table {
+        font-size: 12px;
+    }
+
+    [class*="col-"]:after {
+        position: absolute;
+        right: 0;
+        top: 20px;
+        width: 1px;
+        height: calc(100% - 40px);
+        content: "";
+        background: #ddd;
+    }
+
+    .last:after {
+        display: none;
+    }
+}

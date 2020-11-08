@@ -60,8 +60,7 @@ class DonationDonorController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'blood_unit_name' => 'sometimes|string',
-            'blood_unit_location' => 'sometimes|string',
+            'blood_unit_id' => 'sometimes|integer|exists:hospitals,id',
             'date_donated' => 'sometimes',
             'donation_donor_id' => 'required|integer|exists:donation_donors,id'
         ]);

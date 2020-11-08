@@ -170,7 +170,7 @@ export default {
 
             if (data) {
                 this.notifications = [...data];
-            } else  {
+            } else {
                 this.notifications = [];
             }
         },
@@ -191,12 +191,10 @@ export default {
             const { donation } = notification.data;
 
             try {
-                const { data } = await DonationService.selectDonor(
-                    donation.id,
-                    {
-                        donorId: this.user.id
-                    }
-                );
+                const { data } = await DonationService.selectDonor({
+                    userId: this.user.id,
+                    donationId: donation.id
+                });
 
                 this.userDonations.push(_.cloneDeep(data));
 
@@ -220,10 +218,7 @@ export default {
         async onRemoveFromDonorDonations(donation) {
             try {
                 const { data } = await DonationService.deselectDonor(
-                    donation.id,
-                    {
-                        donorId: this.user.id
-                    }
+                    donation.id
                 );
 
                 this.userDonations = this.userDonations.filter(

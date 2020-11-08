@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('location_id')->nullable()->constrained();
             $table->string('firebase_id', 1000)->nullable();
             $table->string('telephone', 9)->unique();
             $table->string('otp', 6);

@@ -24,8 +24,8 @@ class UpdateDonationDonor extends FormRequest
     public function rules()
     {
         return [
-            'blood_unit_name' => 'required|string',
-            'blood_unit_location' => 'required|string'
+            'blood_unit_id' => 'sometimes|integer|exists:hospitals,id',
+            'date_donated' => 'sometimes',
         ];
     }
 }

@@ -18,9 +18,9 @@
                 />
                 <datalist id="hospitals">
                     <option
-                        v-for="(address, name) in hospitals"
-                        :value="name"
-                        :key="address"
+                        v-for="(hospital, index) in hospitals"
+                        :value="hospital.location.name"
+                        :key="index"
                     >
                     </option>
                 </datalist>
