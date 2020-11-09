@@ -199,6 +199,12 @@ class DonationService
             return null;
         }
 
+        $user = User::find($requestData['user_id']);
+
+        if ($user == null || $this->activeDonationOfUser($user) != null) {
+            return null;
+        }
+
         $requestData['blood_unit_id'] = $donation->hospital_id;
 
         DonationDonor::create($requestData);
